@@ -29,26 +29,32 @@
         <div class="border-bottom border-gray-300 mw-50 w-100"></div>
     </div>
     <!--end::Separator--> --}}
-
-
-
-        <input type="hidden" value="{{ 'User' . Str::upper(Str::random(6)) }}" name="name">
-        {{-- <!--begin::Input group-->
-    <div class="fv-row mb-7">
-        <label class="form-label fw-bolder text-dark fs-6">Name</label>
-        <input class="@error('name') is-invalid @enderror form-control form-control-lg form-control-solid" type="text" placeholder="" name="name" autocomplete="off" value="{{ old('name') }}"/>
-        @error('name')
-            <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-    <!--end::Input group--> --}}
-
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <label class="form-label fw-bolder text-dark fs-6">Name</label>
+            <input class="@error('name') is-invalid @enderror form-control form-control-lg form-control-solid"
+                type="text" placeholder="" name="name" autocomplete="off" value="{{ old('name') }}" />
+            @error('name')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <!--end::Input group-->
         <!--begin::Input group-->
         <div class="fv-row mb-7">
             <label class="form-label fw-bolder text-dark fs-6">Email</label>
             <input class="@error('email') is-invalid @enderror form-control form-control-lg form-control-solid"
                 type="email" placeholder="" name="email" autocomplete="off" value="{{ old('email') }}" />
             @error('email')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <label class="form-label fw-bolder text-dark fs-6">Phone</label>
+            <input class="@error('phone') is-invalid @enderror form-control form-control-lg form-control-solid"
+                type="text" placeholder="" name="phone" autocomplete="off" value="{{ old('phone') }}" />
+            @error('phone')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
