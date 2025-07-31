@@ -16,7 +16,7 @@ class PackageController extends Controller
     public function index()
     {
         $packages = Package::all();
-        return view('packages.index', compact('packages'));
+        return view('backend.package.index', compact('packages'));
     }
     /**
      * Show the form for creating a new resource.
@@ -39,11 +39,12 @@ class PackageController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            // add more validations
         ]);
 
-        Package::create($request->all());
-        return redirect()->route('packages.index')->with('success', 'Package created successfully.');
+        Package::create($request->except('_token') + [
+            'user_id' => auth()->id()
+        ]);
+        return redirect()->route('package.index')->with('success', 'Package created successfully.');
     }
 
     /**
