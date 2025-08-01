@@ -25,7 +25,7 @@ class PackageController extends Controller
      */
     public function create()
     {
-        return view('packages.create');
+        return view('package.create');
     }
 
     /**
@@ -55,7 +55,7 @@ class PackageController extends Controller
      */
     public function show(Package $package)
     {
-        return view('packages.show', compact('package'));
+        return view('package.show', compact('package'));
     }
 
     /**
@@ -66,7 +66,7 @@ class PackageController extends Controller
      */
     public function edit(Package $package)
     {
-        return view('packages.edit', compact('package'));
+        return view('backend.package.edit', compact('package'));
     }
 
     /**
@@ -85,7 +85,7 @@ class PackageController extends Controller
         ]);
 
         $package->update($request->all());
-        return redirect()->route('packages.index')->with('success', 'Package updated successfully.');
+        return redirect()->route('package.index')->with('success', 'Package updated successfully.');
     }
 
     /**
@@ -97,6 +97,7 @@ class PackageController extends Controller
     public function destroy(Package $package)
     {
         $package->delete();
-        return redirect()->route('packages.index')->with('success', 'Package deleted successfully.');
+        return redirect()->route('package.index')->with('destroy_success', 'Package deleted successfully.');
+        // return redirect()->route('package.index')->with('success', 'Package deleted successfully.');
     }
 }
