@@ -31,7 +31,7 @@
     <!--end::Separator--> --}}
         <!--begin::Input group-->
         <div class="fv-row mb-7">
-            <label class="form-label fw-bolder text-dark fs-6">Name</label>
+            <label class="form-label fw-bolder text-dark fs-6">নাম লিখুনঃ</label>
             <input class="@error('name') is-invalid @enderror form-control form-control-lg form-control-solid"
                 type="text" placeholder="" name="name" autocomplete="off" value="{{ old('name') }}" />
             @error('name')
@@ -41,7 +41,7 @@
         <!--end::Input group-->
         <!--begin::Input group-->
         <div class="fv-row mb-7">
-            <label class="form-label fw-bolder text-dark fs-6">Email</label>
+            <label class="form-label fw-bolder text-dark fs-6">ইমেইলঃ</label>
             <input class="@error('email') is-invalid @enderror form-control form-control-lg form-control-solid"
                 type="email" placeholder="" name="email" autocomplete="off" value="{{ old('email') }}" />
             @error('email')
@@ -51,10 +51,20 @@
         <!--end::Input group-->
         <!--begin::Input group-->
         <div class="fv-row mb-7">
-            <label class="form-label fw-bolder text-dark fs-6">Phone</label>
+            <label class="form-label fw-bolder text-dark fs-6">ফোন নাম্বারঃ</label>
             <input class="@error('phone') is-invalid @enderror form-control form-control-lg form-control-solid"
                 type="text" placeholder="" name="phone" autocomplete="off" value="{{ old('phone') }}" />
             @error('phone')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+        <!--end::Input group-->
+        <!--begin::Input group-->
+        <div class="fv-row mb-7">
+            <label class="form-label fw-bolder text-dark fs-6">পেইজের নাম (ইংরেজিতে):</label>
+            <input class="@error('page_name') is-invalid @enderror form-control form-control-lg form-control-solid"
+                type="text" placeholder="" name="page_name" autocomplete="off" value="{{ old('page_name') }}" />
+            @error('page_name')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
@@ -64,7 +74,7 @@
             <!--begin::Wrapper-->
             <div class="mb-1">
                 <!--begin::Label-->
-                <label class="form-label fw-bolder text-dark fs-6">Password</label>
+                <label class="form-label fw-bolder text-dark fs-6">পাসওয়ার্ডঃ</label>
                 <!--end::Label-->
                 <!--begin::Input wrapper-->
                 <div class="position-relative mb-3">
@@ -86,7 +96,7 @@
         <!--end::Input group=-->
         <!--begin::Input group-->
         <div class="fv-row mb-5">
-            <label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
+            <label class="form-label fw-bolder text-dark fs-6">কনফার্ম পাসওয়ার্ডঃ</label>
             <input class="form-control form-control-lg form-control-solid" type="password" placeholder=""
                 name="password_confirmation" autocomplete="off" />
         </div>
