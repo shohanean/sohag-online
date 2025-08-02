@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Page;
+use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -76,6 +77,7 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'page_name' => $data['page_name'],
         ]);
+        $user->assignRole('Client');
         return $user;
     }
 }

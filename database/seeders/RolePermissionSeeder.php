@@ -36,5 +36,7 @@ class RolePermissionSeeder extends Seeder
         $role->syncPermissions(Permission::all());
         //assign the user that role
         User::find(1)->assignRole($role);
+        Role::create(['name' => 'Client']);
+        Role::create(['name' => 'Worker']);
     }
 }

@@ -13,6 +13,23 @@
 @endsection
 
 @section('content')
+<div class="row g-5 g-xl-10 mb-5 mb-xl-10 @if(!auth()->user()->page?->page_name) d-none @endif">
+    <div class="col-12">
+      <div class="card shadow-sm border-0 rounded-3">
+        <div class="card-body d-flex justify-content-between align-items-center">
+          <div class="d-flex align-items-center">
+            <i class="fab fa-facebook-square fa-4x text-primary me-3"></i>
+            <div>
+              <h1 class="mb-0 text-muted">{{ auth()->user()->page?->page_name }}</h1>
+            </div>
+          </div>
+          <a href="https://www.facebook.com/CreativeIT.BD" target="_blank" class="btn btn-primary">
+            Enter
+          </a>
+        </div>
+      </div>
+    </div>
+</div>
 <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
     <!--begin::Col-->
     <div class="col-xl-3">
