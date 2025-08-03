@@ -146,6 +146,16 @@
                                     </a>
                                 </div>
                             @endcanany
+                            @canany(['can manage doller rate'])
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('doller.rate')" href="{{ route('doller.rate') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-dollar-sign"></i>
+                                        </span>
+                                        <span class="menu-title">Doller Rate</span>
+                                    </a>
+                                </div>
+                            @endcanany
                             <div class="menu-item">
                                 <a class="menu-link @yield('profile.index')" href="{{ route('profile.index') }}">
                                     <span class="menu-icon">

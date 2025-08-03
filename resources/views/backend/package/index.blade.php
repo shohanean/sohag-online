@@ -8,7 +8,7 @@
     @includeIf('parts.toolbar', [
         'links' => [
             'home' => 'home',
-            'users' => 'user.index',
+            'Add Package' => 'package.index',
         ],
     ])
 @endsection
@@ -25,6 +25,14 @@
                     <form action="{{ route('package.store') }}" class="form mb-15" method="post" id="kt_contact_form">
                         @csrf
                         <h1 class="fw-bolder text-dark mb-9">Add Package</h1>
+                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <ul>
+                                <li>Edit not working properly</li>
+                                <li>After Delete no success message</li>
+                            </ul>
+                        </div>
+
                         @session('success')
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
@@ -104,11 +112,11 @@
                             <div class="text-gray-700 fs-3 fw-bold">৳{{ $package->price }}</div>
                             <p>{{ $package->description }}</p>
                             <!--end::Description-->
-                            @if ($package->id != 1)
-                                <div class="d-flex m-auto">
-                                    <a href="{{ route('package.edit', $package->id) }}" class="btn btn-sm btn-dark me-2">
-                                        <i class="fa fa-edit"></i> Edit
-                                    </a>
+                            <div class="d-flex m-auto">
+                                <a href="{{ route('package.edit', $package->id) }}" class="btn btn-sm btn-dark me-2">
+                                    <i class="fa fa-edit"></i> Edit
+                                </a>
+                                @if ($package->id != 1)
                                     <form action="{{ route('package.destroy', $package->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -116,12 +124,8 @@
                                             <i class="fas fa-trash-alt"></i> Delete
                                         </button>
                                     </form>
-                                </div>
-                            @else
-                                <div class="alert alert-primary" role="alert">
-                                    Default Package
-                                </div>
-                            @endif
+                                @endif
+                            </div>
                         </div>
                         <!--end::Address-->
                     </div>
