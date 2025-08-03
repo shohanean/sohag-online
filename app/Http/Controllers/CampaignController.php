@@ -51,7 +51,7 @@ class CampaignController extends Controller
             'page_id' => $request->page_id,
             'added_by' => auth()->id(),
         ]);
-        return redirect()->route('campaign.create')->with('success', 'Package created successfully.');
+        return redirect()->route('campaign.create')->with('success', 'Campaign created successfully.');
     }
 
     /**

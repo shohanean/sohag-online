@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('package.index')
+@section('campaign.index')
     active
 @endsection
 
@@ -25,7 +25,15 @@
                     <!--begin::Form-->
                     <form action="{{ route('campaign.store') }}" class="form mb-15" method="post" id="kt_contact_form">
                         @csrf
-                        <h1 class="fw-bolder text-dark mb-9">Add Campaign</h1>
+                        <div class="d-flex justify-content-between align-items-center mb-9">
+                            <h1 class="fw-bolder text-dark mb-0">
+                                Add Campaign
+                            </h1>
+                            <a href="{{ route('campaign.index') }}"
+                            class="btn btn-primary">
+                                Campaign List
+                            </a>
+                        </div>
                         @session('success')
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}

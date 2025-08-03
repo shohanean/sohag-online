@@ -19,14 +19,23 @@
         <div class="card-body p-lg-17">
             <!--begin::Row-->
             <div class="row g-5 mb-5 mb-lg-15">
-                <h1 class="fw-bolder text-dark mb-9">
-                    Campaign List
-                </h1>
+                <div class="d-flex justify-content-between align-items-center mb-9">
+                    <h1 class="fw-bolder text-dark mb-0">
+                        Campaign List
+                    </h1>
+                    <a href="{{ route('campaign.create') }}"
+                    class="btn btn-primary">
+                        Add Campaign
+                    </a>
+                </div>
+
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
+                    <table class="table table-bordered table-striped align-middle text-center">
                         <thead>
                             <tr>
                                 <th>SL. No.</th>
+                                <th>Name</th>
+                                <th>Page Name</th>
                                 <th>Campaign Name</th>
                                 <th>Total</th>
                                 <th>Paid</th>
@@ -34,20 +43,30 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($campaigns as $campaign)
+                            @forelse ($campaigns as $campaign)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>
-                                        {{ $campaign->name }}
-                                        <p> <i class="fa fa-user"></i> {{ $campaign->user->name }} <i
-                                                class="fab fa-facebook-square"></i> {{ $campaign->page->page_name }}</p>
-                                    </td>
+                                    <td><i class="fa fa-user"></i> {{ $campaign->user->name }}</td>
+                                    <td><i class="fab fa-facebook-square"></i> {{ $campaign->page->page_name }}</td>
+                                    <td>{{ $campaign->name }}</td>
                                     <td>{{ $campaign->total }}</td>
                                     <td>{{ $campaign->paid }}</td>
                                     <td>{{ $campaign->due }}</td>
                                 </tr>
-                            @endforeach
+                            @empty
+                            <tr class="text-center">
+                                <td colspan="50" class="text-danger">Nothing to show here</td>
+                            </tr>
+                            @endforelse
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4">Sub Total</th>
+                                <th>{{ $campaigns->sum('total') }}</th>
+                                <th>{{ $campaigns->sum('paid') }}</th>
+                                <th>{{ $campaigns->sum('due') }}</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>
