@@ -90,18 +90,21 @@
             <!--end::Row-->
             <!--begin::Row-->
             <div class="row g-5 mb-5 mb-lg-15">
+                <h1 class="fw-bolder text-dark mb-9">
+                    Doller Rate History
+                </h1>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">SL. No.</th>
-                                <th scope="col">Date</th>
-                                <th scope="col">Rate</th>
+                                <th>SL. No.</th>
+                                <th>Date</th>
+                                <th>Rate</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($doller_rates as $doller_rate)
-                                <tr class="">
+                                <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $doller_rate->created_at }}</td>
                                     <td>{{ $doller_rate->rate }}</td>

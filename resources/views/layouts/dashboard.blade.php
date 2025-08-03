@@ -146,6 +146,16 @@
                                     </a>
                                 </div>
                             @endcanany
+                            @canany(['can manage campaign'])
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('campaign.index')" href="{{ route('campaign.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-bullhorn"></i>
+                                        </span>
+                                        <span class="menu-title">Campaign</span>
+                                    </a>
+                                </div>
+                            @endcanany
                             @canany(['can manage doller rate'])
                                 <div class="menu-item">
                                     <a class="menu-link @yield('doller.rate')" href="{{ route('doller.rate') }}">
