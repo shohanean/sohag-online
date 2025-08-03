@@ -31,7 +31,7 @@
 
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped align-middle text-center">
-                        <thead>
+                        <thead class="fw-bold">
                             <tr>
                                 <th>SL. No.</th>
                                 <th>Name</th>
@@ -40,6 +40,7 @@
                                 <th>Total</th>
                                 <th>Paid</th>
                                 <th>Due</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -52,6 +53,9 @@
                                     <td>{{ $campaign->total }}</td>
                                     <td>{{ $campaign->paid }}</td>
                                     <td>{{ $campaign->due }}</td>
+                                    <td>
+                                        <a href="{{ route('campaign.show', $campaign->id) }}" class="btn btn-sm bg-secondary">Details</button>
+                                    </td>
                                 </tr>
                             @empty
                             <tr class="text-center">
@@ -59,7 +63,7 @@
                             </tr>
                             @endforelse
                         </tbody>
-                        <tfoot>
+                        <tfoot class="fw-bold">
                             <tr>
                                 <th colspan="4">Sub Total</th>
                                 <th>{{ $campaigns->sum('total') }}</th>

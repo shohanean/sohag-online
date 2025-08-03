@@ -156,13 +156,13 @@
                                     </a>
                                 </div>
                             @endcanany
-                            @canany(['can manage doller rate'])
+                            @canany(['can manage dollar rate'])
                                 <div class="menu-item">
-                                    <a class="menu-link @yield('doller.rate')" href="{{ route('doller.rate') }}">
+                                    <a class="menu-link @yield('dollar.rate')" href="{{ route('dollar.rate') }}">
                                         <span class="menu-icon">
                                             <i class="fa fa-dollar-sign"></i>
                                         </span>
-                                        <span class="menu-title">Doller Rate</span>
+                                        <span class="menu-title">Dollar Rate</span>
                                     </a>
                                 </div>
                             @endcanany

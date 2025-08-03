@@ -30,7 +30,7 @@ class RolePermissionSeeder extends Seeder
         Permission::create(['name' => 'can take backup']);
         Permission::create(['name' => 'can restore user']);
         Permission::create(['name' => 'can manage package']);
-        Permission::create(['name' => 'can manage doller rate']);
+        Permission::create(['name' => 'can manage dollar rate']);
         Permission::create(['name' => 'can manage campaign']);
         //create the role
         $role = Role::create(['name' => 'Super Admin']);

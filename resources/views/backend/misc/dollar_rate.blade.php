@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('doller.rate')
+@section('dollar.rate')
     active
 @endsection
 
@@ -8,7 +8,7 @@
     @includeIf('parts.toolbar', [
         'links' => [
             'home' => 'home',
-            'doller rate' => 'doller.rate',
+            'dollar rate' => 'dollar.rate',
         ],
     ])
 @endsection
@@ -22,17 +22,17 @@
                 <!--begin::Col-->
                 <div class="col-md-12 pe-lg-10">
                     <!--begin::Form-->
-                    <form action="{{ route('doller.rate.insert') }}" class="form mb-15" method="post" id="kt_contact_form">
+                    <form action="{{ route('dollar.rate.insert') }}" class="form mb-15" method="post" id="kt_contact_form">
                         @csrf
                         <h1 class="fw-bolder text-dark mb-9">
-                            Doller Rate
-                            @if ($doller_rates->count() != 0)
-                                - ৳{{ $doller_rates->first()->rate }}
+                            Dollar Rate
+                            @if ($dollar_rates->count() != 0)
+                                - ৳{{ $dollar_rates->first()->rate }}
                             @endif
                         </h1>
-                        @if ($doller_rates->count() == 0)
+                        @if ($dollar_rates->count() == 0)
                             <div class="alert alert-danger" role="alert">
-                                No doller rate set yet
+                                No dollar rate set yet
                             </div>
                         @endif
                         @session('success')
@@ -91,7 +91,7 @@
             <!--begin::Row-->
             <div class="row g-5 mb-5 mb-lg-15">
                 <h1 class="fw-bolder text-dark mb-9">
-                    Doller Rate History
+                    Dollar Rate History
                 </h1>
                 <div class="table-responsive">
                     <table class="table table-bordered table-striped">
@@ -103,11 +103,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($doller_rates as $doller_rate)
+                            @foreach ($dollar_rates as $dollar_rate)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $doller_rate->created_at }}</td>
-                                    <td>{{ $doller_rate->rate }}</td>
+                                    <td>{{ $dollar_rate->created_at }}</td>
+                                    <td>{{ $dollar_rate->rate }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

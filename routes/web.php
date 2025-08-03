@@ -24,8 +24,8 @@ Route::post('/import', [HomeController::class, 'import'])->name('import');
 
 //Misc. Routes
 
-Route::get('/doller/rate', [HomeController::class, 'doller_rate'])->name('doller.rate');
-Route::post('/doller/rate/insert', [HomeController::class, 'doller_rate_insert'])->name('doller.rate.insert');
+Route::get('/dollar/rate', [HomeController::class, 'dollar_rate'])->name('dollar.rate');
+Route::post('/dollar/rate/insert', [HomeController::class, 'dollar_rate_insert'])->name('dollar.rate.insert');
 
 //Email Verification Routes
 Route::get('/email/verify', function () {

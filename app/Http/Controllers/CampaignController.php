@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Campaign;
 use App\Http\Controllers\Controller;
 use App\Models\Page;
+use App\Models\Dollar_rate;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -62,7 +63,11 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
-        //
+        $dollar_rate = Dollar_rate::latest()->first();
+        if(!$dollar_rate){
+            return "Set Dollar Rate First";
+        }
+        return view('backend.campaign.show', compact('campaign', 'dollar_rate'));
     }
 
     /**

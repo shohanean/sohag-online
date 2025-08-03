@@ -42,13 +42,13 @@ class HomeController extends Controller
         Excel::import(new UsersImport, $request->file('import'));
         return back();
     }
-    public function doller_rate()
+    public function dollar_rate()
     {
-        return view('backend.misc.doller_rate', [
-            'doller_rates' => Dollar_rate::latest()->get()
+        return view('backend.misc.dollar_rate', [
+            'dollar_rates' => Dollar_rate::latest()->get()
         ]);
     }
-    public function doller_rate_insert(Request $request)
+    public function dollar_rate_insert(Request $request)
     {
         $request->validate([
             'rate' => 'required|numeric',
