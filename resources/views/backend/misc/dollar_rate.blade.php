@@ -61,7 +61,7 @@
                                 <!--begin::Input-->
                                 <input type="number"
                                     class="form-control form-control-solid @error('rate') border-danger is-invalid @enderror"
-                                    name="rate" step="0.01" value="{{ old('rate') }}" />
+                                    name="rate" step="0.01" value="{{ old('rate') }}" autofocus />
                                 <!--end::Input-->
                                 @error('rate')
                                     <div class="invalid-feedback">{{ $message }}</div>

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');     // Client user
             $table->unsignedBigInteger('page_id');     // Facebook page
             $table->unsignedBigInteger('added_by');    // Admin or added user
-            $table->float('total', 10, 2)->default(0);
-            $table->float('paid', 10, 2)->default(0);
-            $table->float('due', 10, 2)->default(0);
+            $table->decimal('total', 10, 2)->default(0);
+            $table->decimal('paid', 10, 2)->default(0);
+            $table->decimal('due', 10, 2)->default(0);
             $table->timestamps();
         });
     }

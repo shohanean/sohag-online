@@ -1122,6 +1122,7 @@
     <!--end::Page Custom Javascript-->
     <!--end::Javascript-->
     @livewireScripts
+    @yield('footer_scripts')
 </body>
 <!--end::Body-->
 

@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Campaign;
 use App\Http\Controllers\Controller;
+use App\Models\Campaign;
 use App\Models\Page;
 use App\Models\Dollar_rate;
+use App\Models\Transection;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -63,11 +64,12 @@ class CampaignController extends Controller
      */
     public function show(Campaign $campaign)
     {
+        $transections = Transection::where('campaign_id', $campaign->id)->latest()->get();
         $dollar_rate = Dollar_rate::latest()->first();
-        if(!$dollar_rate){
+        if (!$dollar_rate) {
             return "Set Dollar Rate First";
         }
-        return view('backend.campaign.show', compact('campaign', 'dollar_rate'));
+        return view('backend.campaign.show', compact('campaign', 'dollar_rate', 'transections'));
     }
 
     /**
@@ -102,5 +104,67 @@ class CampaignController extends Controller
     public function destroy(Campaign $campaign)
     {
         //
+    }
+
+    public function add_expense(Campaign $campaign, Request $request)
+    {
+        $request->validate([
+            'amount' => 'required',
+            'date' => 'required'
+        ]);
+
+        $old_history = Transection::where([
+            ['campaign_id', '=', $campaign->id],
+            ['transaction_type', '=', 'expense'],
+        ])->latest()->first();
+        if (empty($old_history)) {
+            //means there are old entry of this campaign
+            $old_amount = 0;
+        } else {
+            //means there are no entry of this campaign
+            $old_amount = $old_history->current_amount;
+        }
+        $current_amount = $request->amount;
+        $spent_amount = $current_amount - $old_amount;
+        $dollar_rate = Dollar_rate::latest()->first()->rate;
+        Transection::create([
+            'user_id' => $campaign->user_id,
+            'date' => $request->date,
+            'page_id' => $campaign->page_id,
+            'campaign_id' => $campaign->id,
+            'old_amount' => $old_amount,
+            'current_amount' => $current_amount,
+            'spent_amount' => $spent_amount,
+            'dollar_rate' => $dollar_rate,
+            'amount' => $dollar_rate * $spent_amount,
+            'transaction_type' => 'expense',
+            'added_id' => auth()->id(),
+        ]);
+        $campaign->increment('total', $dollar_rate * $spent_amount);
+        $campaign->increment('due', $dollar_rate * $spent_amount);
+        return back()->with('success', 'Expense added successfully!');
+    }
+
+    public function add_payment(Campaign $campaign, Request $request)
+    {
+        $request->validate([
+            'pamount' => 'required',
+            'pdate' => 'required'
+        ]);
+
+        return $request;
+        // Transection::create([
+        //     'user_id' => $campaign->user_id,
+        //     'date' => $request->date,
+        //     'page_id' => $campaign->page_id,
+        //     'campaign_id' => $campaign->id,
+        //     'old_amount' => $old_amount,
+        //     'current_amount' => $current_amount,
+        //     'spent_amount' => $spent_amount,
+        //     'dollar_rate' => $dollar_rate,
+        //     'amount' => $dollar_rate * $spent_amount,
+        //     'transaction_type' => 'expense',
+        //     'added_id' => auth()->id(),
+        // ]);
     }
 }
