@@ -44,19 +44,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($campaigns as $campaign)
-                                <tr>
-                                    <td>{{ $loop->index + 1 }}</td>
-                                    <td><i class="fa fa-user"></i> {{ $campaign->user->name }}</td>
-                                    <td><i class="fab fa-facebook-square"></i> {{ $campaign->page->page_name }}</td>
-                                    <td>{{ $campaign->name }}</td>
-                                    <td>{{ $campaign->total }}</td>
-                                    <td>{{ $campaign->paid }}</td>
-                                    <td>{{ $campaign->due }}</td>
-                                    <td>
-                                        <a href="{{ route('campaign.show', $campaign->id) }}" class="btn btn-sm bg-secondary">Details</button>
-                                    </td>
+                            @forelse ($campaigns as $user_id => $camp)
+                                <tr class="border border-info">
+                                    <td colspan="50">{{ App\Models\User::find($user_id)->name }}</td>
                                 </tr>
+                                @foreach ($camp as $campaign)
+                                    <tr>
+                                        <td>{{ $loop->index + 1 }}</td>
+                                        <td><i class="fa fa-user"></i> {{ $campaign->user->name }}</td>
+                                        <td><i class="fab fa-facebook-square"></i> {{ $campaign->page->page_name }}</td>
+                                        <td>{{ $campaign->name }}</td>
+                                        <td>{{ $campaign->total }}</td>
+                                        <td>{{ $campaign->paid }}</td>
+                                        <td>{{ $campaign->due }}</td>
+                                        <td>
+                                            <a href="{{ route('campaign.show', $campaign->id) }}" class="btn btn-sm bg-secondary">Details</button>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @empty
                             <tr class="text-center">
                                 <td colspan="50" class="text-danger">Nothing to show here</td>
