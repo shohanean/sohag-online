@@ -108,12 +108,12 @@
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             Last:
-                                            <span id="old_amount">{{ $transections->first()?->current_amount ?? 0 }}</span>
+                                            <span id="old_amount">{{ $transections->where('transaction_type', 'expense')->first()?->current_amount ?? 0 }}</span>
                                         </span>
                                         <input id="payment_amount" type="number"
                                             class="form-control @error('amount') is-invalid @enderror" name="amount"
                                             value="{{ old('amount') }}"
-                                            min="{{ $transections->first()?->current_amount ?? 0 }}" step="0.01" />
+                                            min="{{ $transections->where('transaction_type', 'expense')->first()?->current_amount ?? 0 }}" step="0.01" />
                                         <span class="input-group-text">x{{ $dollar_rate->rate }}=<span
                                                 id="xxx">{{ $dollar_rate->rate }}</span></span>
                                         @error('amount')
@@ -153,6 +153,11 @@
                     <!--end::Header-->
                     <!--begin::Body-->
                     <div class="card-body pb-0">
+                        @session('psuccess')
+                            <div class="alert alert-success" role="alert">
+                                {{ session('psuccess') }}
+                            </div>
+                        @endsession
                         <form action="{{ route('add.payment', $campaign->id) }}" method="POST">
                             @csrf
                             <div class="row pb-9">
@@ -184,7 +189,7 @@
                                 <div class="col-md-4">
                                     <label class="fs-5 fw-bold mb-2"> &nbsp; </label>
                                     <!--begin::Submit-->
-                                    <button type="submit" class="btn btn-success form-control">
+                                    <button @if ($transections->count()==0) disabled @endif type="submit" class="btn btn-success form-control">
                                         <!--begin::Indicator-->
                                         <span class="indicator-label">Payment</span>
                                         <!--end::Indicator-->
@@ -238,7 +243,11 @@
                                 <td>{{ $transection->dollar_rate }}</td>
                                 <td>{{ $transection->amount }}</td>
                                 <td>
-                                    <span class="badge bg-info">{{ Str::title($transection->transaction_type) }}</span>
+                                    <span class="badge @if ($transection->transaction_type == 'expense')
+                                        bg-info
+                                    @else
+                                        bg-success
+                                    @endif">{{ Str::title($transection->transaction_type) }}</span>
                                 </td>
                                 <td>{{ $transection->created_at->diffForHumans() }}</td>
                             </tr>

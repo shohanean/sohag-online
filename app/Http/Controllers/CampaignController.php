@@ -151,20 +151,22 @@ class CampaignController extends Controller
             'pamount' => 'required',
             'pdate' => 'required'
         ]);
-
-        return $request;
-        // Transection::create([
-        //     'user_id' => $campaign->user_id,
-        //     'date' => $request->date,
-        //     'page_id' => $campaign->page_id,
-        //     'campaign_id' => $campaign->id,
-        //     'old_amount' => $old_amount,
-        //     'current_amount' => $current_amount,
-        //     'spent_amount' => $spent_amount,
-        //     'dollar_rate' => $dollar_rate,
-        //     'amount' => $dollar_rate * $spent_amount,
-        //     'transaction_type' => 'expense',
-        //     'added_id' => auth()->id(),
-        // ]);
+        Transection::create([
+            'user_id' => $campaign->user_id,
+            'date' => $request->pdate,
+            'page_id' => $campaign->page_id,
+            'campaign_id' => $campaign->id,
+            //these are nullable
+            // 'old_amount' => $old_amount,
+            // 'current_amount' => $current_amount,
+            // 'spent_amount' => $spent_amount,
+            // 'dollar_rate' => $dollar_rate,
+            'amount' => $request->pamount,
+            'transaction_type' => 'payment',
+            'added_id' => auth()->id(),
+        ]);
+        $campaign->increment('paid', $request->pamount);
+        $campaign->decrement('due', $request->pamount);
+        return back()->with('psuccess', 'Payment added successfully!');
     }
 }
