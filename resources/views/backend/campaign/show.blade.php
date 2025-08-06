@@ -108,12 +108,14 @@
                                     <div class="input-group">
                                         <span class="input-group-text">
                                             Last:
-                                            <span id="old_amount">{{ $transections->where('transaction_type', 'expense')->first()?->current_amount ?? 0 }}</span>
+                                            <span
+                                                id="old_amount">{{ $transections->where('transaction_type', 'expense')->first()?->current_amount ?? 0 }}</span>
                                         </span>
                                         <input id="payment_amount" type="number"
                                             class="form-control @error('amount') is-invalid @enderror" name="amount"
                                             value="{{ old('amount') }}"
-                                            min="{{ $transections->where('transaction_type', 'expense')->first()?->current_amount ?? 0 }}" step="0.01" />
+                                            min="{{ $transections->where('transaction_type', 'expense')->first()?->current_amount ?? 0 }}"
+                                            step="0.01" />
                                         <span class="input-group-text">x{{ $dollar_rate->rate }}=<span
                                                 id="xxx">{{ $dollar_rate->rate }}</span></span>
                                         @error('amount')
@@ -189,7 +191,8 @@
                                 <div class="col-md-4">
                                     <label class="fs-5 fw-bold mb-2"> &nbsp; </label>
                                     <!--begin::Submit-->
-                                    <button @if ($transections->count()==0) disabled @endif type="submit" class="btn btn-success form-control">
+                                    <button @if ($transections->count() == 0) disabled @endif type="submit"
+                                        class="btn btn-success form-control">
                                         <!--begin::Indicator-->
                                         <span class="indicator-label">Payment</span>
                                         <!--end::Indicator-->
@@ -243,13 +246,19 @@
                                 <td>{{ $transection->dollar_rate }}</td>
                                 <td>{{ $transection->amount }}</td>
                                 <td>
-                                    <span class="badge @if ($transection->transaction_type == 'expense')
-                                        bg-info
+                                    <span
+                                        class="badge @if ($transection->transaction_type == 'expense') bg-info
                                     @else
-                                        bg-success
-                                    @endif">{{ Str::title($transection->transaction_type) }}</span>
+                                        bg-success @endif">{{ Str::title($transection->transaction_type) }}</span>
                                 </td>
-                                <td>{{ $transection->created_at->diffForHumans() }}</td>
+                                <td>
+                                    {{ $transection->created_at->diffForHumans() }}
+                                    @if ($loop->index == 0)
+                                        <button class="btn btn-sm btn-danger">
+                                            Delete
+                                        </button>
+                                    @endif
+                                </td>
                             </tr>
                         @empty
                             <tr class="text-center">

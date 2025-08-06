@@ -18,7 +18,7 @@ class CampaignController extends Controller
      */
     public function index()
     {
-        $campaigns = Campaign::latest()->get()->groupBy('user_id');
+        $campaigns = Campaign::with('user')->latest()->get()->groupBy('user_id');
         return view('backend.campaign.index', compact('campaigns'));
     }
 

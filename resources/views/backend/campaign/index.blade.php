@@ -23,20 +23,18 @@
                     <h1 class="fw-bolder text-dark mb-0">
                         Campaign List
                     </h1>
-                    <a href="{{ route('campaign.create') }}"
-                    class="btn btn-primary">
+                    <a href="{{ route('campaign.create') }}" class="btn btn-primary">
                         Add Campaign
                     </a>
                 </div>
 
                 <div class="table-responsive">
-                    <table class="table table-bordered table-striped align-middle text-center">
+                    <table class="table table-bordered table-striped align-middle">
                         <thead class="fw-bold">
                             <tr>
                                 <th>SL. No.</th>
                                 <th>Name</th>
-                                <th>Page Name</th>
-                                <th>Campaign Name</th>
+                                <th>Campaign</th>
                                 <th>Total</th>
                                 <th>Paid</th>
                                 <th>Due</th>
@@ -44,38 +42,39 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($campaigns as $user_id => $camp)
-                                <tr class="border border-info">
-                                    <td colspan="50">{{ App\Models\User::find($user_id)->name }}</td>
+                            @forelse ($campaigns as $userId => $userCampaigns)
+                                <tr>
+                                    <td>
+                                        {{ $loop->index + 1 }}
+                                    </td>
+                                    <td>
+                                        {{ $userCampaigns->first()->user->name }}
+                                    </td>
+                                    <td>
+                                        {{ $userCampaigns->count() }}
+                                    </td>
+                                    <td>
+                                        {{ $userCampaigns->sum('total') }}
+                                    </td>
+                                    <td>
+                                        {{ $userCampaigns->sum('paid') }}
+                                    </td>
+                                    <td>
+                                        {{ $userCampaigns->sum('due') }}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-success">Details</button>
+                                        @foreach ($userCampaigns as $campaign)
+                                            <a href="{{ route('campaign.show', $campaign->id) }}">Show</a>
+                                        @endforeach
+                                    </td>
                                 </tr>
-                                @foreach ($camp as $campaign)
-                                    <tr>
-                                        <td>{{ $loop->index + 1 }}</td>
-                                        <td><i class="fa fa-user"></i> {{ $campaign->user->name }}</td>
-                                        <td><i class="fab fa-facebook-square"></i> {{ $campaign->page->page_name }}</td>
-                                        <td>{{ $campaign->name }}</td>
-                                        <td>{{ $campaign->total }}</td>
-                                        <td>{{ $campaign->paid }}</td>
-                                        <td>{{ $campaign->due }}</td>
-                                        <td>
-                                            <a href="{{ route('campaign.show', $campaign->id) }}" class="btn btn-sm bg-secondary">Details</button>
-                                        </td>
-                                    </tr>
-                                @endforeach
                             @empty
-                            <tr class="text-center">
-                                <td colspan="50" class="text-danger">Nothing to show here</td>
-                            </tr>
+                                <tr class="text-center">
+                                    <td colspan="50" class="text-danger">Nothing to show here</td>
+                                </tr>
                             @endforelse
                         </tbody>
-                        <tfoot class="fw-bold">
-                            <tr>
-                                <th colspan="4">Sub Total</th>
-                                <th>{{ $campaigns->sum('total') }}</th>
-                                <th>{{ $campaigns->sum('paid') }}</th>
-                                <th>{{ $campaigns->sum('due') }}</th>
-                            </tr>
-                        </tfoot>
                     </table>
                 </div>
             </div>
