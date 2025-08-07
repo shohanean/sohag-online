@@ -101,9 +101,14 @@ class CampaignController extends Controller
      * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Campaign $campaign)
+    public function destroy($transection_id)
     {
-        //
+        $transection = Transection::findOrFail($transection_id);
+        $campaign = Campaign::findOrFail($transection->campaign_id);
+        $campaign->decrement('total', $transection->amount);
+        $campaign->decrement('due', $transection->amount);
+        Transection::findOrFail($transection_id)->forceDelete();
+        return redirect()->back()->with('delete_success', 'Payment details permanently deleted.');
     }
 
     public function add_expense(Campaign $campaign, Request $request)

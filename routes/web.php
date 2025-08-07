@@ -63,7 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('package', PackageController::class);
 
     //Campaign Routes
-    Route::resource('campaign', CampaignController::class);
     Route::post('/add/expense/{campaign}', [CampaignController::class, 'add_expense'])->name('add.expense');
     Route::post('/add/payment/{campaign}', [CampaignController::class, 'add_payment'])->name('add.payment');
+    Route::resource('campaign', CampaignController::class);
 });

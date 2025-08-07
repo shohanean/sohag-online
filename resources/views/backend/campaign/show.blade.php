@@ -219,6 +219,11 @@
         <!--end::Header-->
         <!--begin::Body-->
         <div class="card-body py-3">
+            @session('delete_success')
+                <div class="alert alert-danger" role="alert">
+                    {{ session('delete_success') }}
+                </div>
+            @endsession
             <!--begin::Table container-->
             <div class="table-responsive">
                 <table class="table table-bordered table-striped align-middle text-center">
@@ -254,9 +259,14 @@
                                 <td>
                                     {{ $transection->created_at->diffForHumans() }}
                                     @if ($loop->index == 0)
-                                        <button class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
+                                        <form action="{{ route('campaign.destroy', $transection->id) }}" method="POST"
+                                            style="display:inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fa fa-trash"></i>
+                                            </button>
+                                        </form>
                                     @endif
                                 </td>
                             </tr>
