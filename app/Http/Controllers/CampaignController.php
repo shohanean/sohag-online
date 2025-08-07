@@ -49,6 +49,7 @@ class CampaignController extends Controller
         ]);
         Campaign::create([
             'name' => $request->name,
+            'ad_id' => $request->ad_id,
             'user_id' => Page::find($request->page_id)->user_id,
             'page_id' => $request->page_id,
             'added_by' => auth()->id(),

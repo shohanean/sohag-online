@@ -29,8 +29,7 @@
                             <h1 class="fw-bolder text-dark mb-0">
                                 Add Campaign
                             </h1>
-                            <a href="{{ route('campaign.index') }}"
-                            class="btn btn-primary">
+                            <a href="{{ route('campaign.index') }}" class="btn btn-primary">
                                 Campaign List
                             </a>
                         </div>
@@ -39,7 +38,6 @@
                                 {{ session('success') }}
                             </div>
                         @endsession
-                        <!--begin::Input group-->
                         <div class="row mb-5">
                             <!--begin::Col-->
                             <div class="col-md-6 fv-row">
@@ -67,8 +65,7 @@
                                 <label class="fs-5 fw-bold mb-2 required">Campaign Name</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input type="text"
-                                    class="form-control form-control-solid @error('name') border-danger is-invalid @enderror"
+                                <input type="text" class="form-control @error('name') border-danger is-invalid @enderror"
                                     placeholder="" name="name" value="{{ old('name') }}" />
                                 <!--end::Input-->
                                 @error('name')
@@ -77,7 +74,18 @@
                             </div>
                             <!--end::Col-->
                         </div>
-                        <!--end::Input group-->
+                        <div class="row mb-5">
+                            <!--begin::Col-->
+                            <div class="col-md-12 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2">Ad ID</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control" placeholder="" name="ad_id" value="" />
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                        </div>
                         <!--begin::Submit-->
                         <button type="submit" class="btn btn-primary" id="kt_contact_submit_button">
                             <!--begin::Indicator-->

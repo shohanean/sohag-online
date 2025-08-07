@@ -43,9 +43,8 @@
                                 <th>Page Owner</th>
                                 <th>Page Name</th>
                                 <th>Campaign Name</th>
+                                <th>Ad ID</th>
                                 <th>Total</th>
-                                <th>Paid</th>
-                                <th>Due</th>
                             </tr>
                         </thead>
                         <tbody class="border">
@@ -53,9 +52,10 @@
                                 <td>{{ $campaign->page->user->name }}</td>
                                 <td>{{ $campaign->page->page_name }}</td>
                                 <td>{{ $campaign->name }}</td>
+                                <td>
+                                    <span class="badge bg-secondary text-dark">{{ $campaign->ad_id }}</span>
+                                </td>
                                 <td>{{ $campaign->total }}</td>
-                                <td>{{ $campaign->paid }}</td>
-                                <td>{{ $campaign->due }}</td>
                             </tr>
                         </tbody>
                     </table>
