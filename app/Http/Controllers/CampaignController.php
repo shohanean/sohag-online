@@ -46,6 +46,7 @@ class CampaignController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'page_id' => 'required',
             'name' => 'required'
         ]);
         Campaign::create([
@@ -55,7 +56,7 @@ class CampaignController extends Controller
             'page_id' => $request->page_id,
             'added_by' => auth()->id(),
         ]);
-        return redirect()->route('campaign.create')->with('success', 'Campaign created successfully.');
+        return back()->with('success', 'Campaign created successfully.');
     }
 
     /**
@@ -66,8 +67,9 @@ class CampaignController extends Controller
      */
     public function show($user_id)
     {
-        $campaigns = Campaign::where('user_id', $user_id)->get();
-        return view('backend.campaign.show', compact('campaigns'));
+        $campaigns = Campaign::where('user_id', $user_id)->latest()->get();
+        $pages = Page::where('user_id', $user_id)->get();
+        return view('backend.campaign.show', compact('campaigns', 'pages'));
     }
 
     /**

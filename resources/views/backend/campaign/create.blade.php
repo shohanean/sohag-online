@@ -45,7 +45,7 @@
                                 <label class="fs-5 fw-bold mb-2 required">Page Name</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <select class="form-select" name="page_id">
+                                <select class="form-select @error('page_id') is-invalid @enderror" name="page_id">
                                     @foreach ($pages as $page)
                                         <optgroup label="{{ $page->first()->user->name }}">
                                             @foreach ($page as $p)
@@ -54,7 +54,7 @@
                                         </optgroup>
                                     @endforeach
                                 </select>
-                                @error('price')
+                                @error('page_id')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
