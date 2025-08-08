@@ -63,14 +63,10 @@ class CampaignController extends Controller
      * @param  \App\Models\Campaign  $campaign
      * @return \Illuminate\Http\Response
      */
-    public function show(Campaign $campaign)
+    public function show($user_id)
     {
-        $transections = Transection::where('campaign_id', $campaign->id)->latest()->get();
-        $dollar_rate = Dollar_rate::latest()->first();
-        if (!$dollar_rate) {
-            return "Set Dollar Rate First";
-        }
-        return view('backend.campaign.show', compact('campaign', 'dollar_rate', 'transections'));
+        $campaigns = Campaign::where('user_id', $user_id)->get();
+        return view('backend.campaign.show', compact('campaigns'));
     }
 
     /**
@@ -81,7 +77,12 @@ class CampaignController extends Controller
      */
     public function edit(Campaign $campaign)
     {
-        //
+        $transections = Transection::where('campaign_id', $campaign->id)->latest()->get();
+        $dollar_rate = Dollar_rate::latest()->first();
+        if (!$dollar_rate) {
+            return "Set Dollar Rate First";
+        }
+        return view('backend.campaign.edit', compact('campaign', 'dollar_rate', 'transections'));
     }
 
     /**
@@ -107,7 +108,6 @@ class CampaignController extends Controller
         $transection = Transection::findOrFail($transection_id);
         $campaign = Campaign::findOrFail($transection->campaign_id);
         $campaign->decrement('total', $transection->amount);
-        $campaign->decrement('due', $transection->amount);
         Transection::findOrFail($transection_id)->forceDelete();
         return redirect()->back()->with('delete_success', 'Payment details permanently deleted.');
     }
@@ -147,7 +147,6 @@ class CampaignController extends Controller
             'added_id' => auth()->id(),
         ]);
         $campaign->increment('total', $dollar_rate * $spent_amount);
-        $campaign->increment('due', $dollar_rate * $spent_amount);
         return back()->with('success', 'Expense added successfully!');
     }
 

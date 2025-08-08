@@ -63,10 +63,7 @@
                                         {{ $userCampaigns->sum('due') }}
                                     </td>
                                     <td>
-                                        <button class="btn btn-sm btn-success">Details</button>
-                                        @foreach ($userCampaigns as $campaign)
-                                            <a href="{{ route('campaign.show', $campaign->id) }}">Show</a>
-                                        @endforeach
+                                        <a href="{{ route('campaign.show', $userId) }}" class="btn btn-sm btn-success">Details</button>
                                     </td>
                                 </tr>
                             @empty
