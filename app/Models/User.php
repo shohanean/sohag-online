@@ -51,4 +51,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Page::class);
     }
+    public function client_wallet()
+    {
+        return $this->hasOne(Client_wallet::class);
+    }
 }

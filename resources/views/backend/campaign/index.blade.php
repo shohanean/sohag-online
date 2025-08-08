@@ -8,7 +8,7 @@
     @includeIf('parts.toolbar', [
         'links' => [
             'home' => 'home',
-            'campaign list' => 'package.index',
+            'campaign list' => 'campaign.index',
         ],
     ])
 @endsection
@@ -54,16 +54,17 @@
                                         {{ $userCampaigns->count() }}
                                     </td>
                                     <td>
-                                        {{ $userCampaigns->sum('total') }}
+                                        {{ $userCampaigns->first()->user->client_wallet->total }}
                                     </td>
                                     <td>
-                                        {{ $userCampaigns->sum('paid') }}
+                                        {{ $userCampaigns->first()->user->client_wallet->paid }}
                                     </td>
                                     <td>
-                                        {{ $userCampaigns->sum('due') }}
+                                        {{ $userCampaigns->first()->user->client_wallet->due }}
                                     </td>
                                     <td>
-                                        <a href="{{ route('campaign.show', $userId) }}" class="btn btn-sm btn-success">Details</button>
+                                        <a href="{{ route('payment.index', $userId) }}" class="btn btn-sm btn-info">Payment</a>
+                                        <a href="{{ route('campaign.show', $userId) }}" class="btn btn-sm btn-success">Details</a>
                                     </td>
                                 </tr>
                             @empty

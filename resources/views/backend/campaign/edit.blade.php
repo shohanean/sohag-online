@@ -27,7 +27,7 @@
                         <h1 class="fw-bolder text-dark mb-0">
                             Campaign Details
                         </h1>
-                        <a href="{{ route('campaign.index') }}" class="btn btn-primary">
+                        <a href="{{ route('campaign.show', $campaign->user_id) }}" class="btn btn-primary">
                             <i class="fa fa-arrow-left"></i> Back
                         </a>
                     </div>
@@ -67,7 +67,7 @@
     <div>
         <div class="row mt-9">
             <!--begin::Col-->
-            <div class="col-xxl-7">
+            <div class="col-xxl-12">
                 <!--begin::Earnings-->
                 <div class="card card-xxl-stretch mb-5 mb-xxl-10">
                     <!--begin::Header-->
@@ -143,7 +143,7 @@
             </div>
             <!--end::Col-->
             <!--begin::Col-->
-            <div class="col-xxl-5">
+            <div class="col-xxl-5 d-none">
                 <!--begin::Earnings-->
                 <div class="card card-xxl-stretch mb-5 mb-xxl-10">
                     <!--begin::Header-->

@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\{Route, Auth};
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\{FrontendController, HomeController, SocialController, ProfileController, BackupController, RoleController, UserController, PackageController, CampaignController};
+use App\Http\Controllers\PaymentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,4 +67,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/add/expense/{campaign}', [CampaignController::class, 'add_expense'])->name('add.expense');
     Route::post('/add/payment/{campaign}', [CampaignController::class, 'add_payment'])->name('add.payment');
     Route::resource('campaign', CampaignController::class);
+
+    //Payment Routes
+    Route::get('payment/{user_id}', [PaymentController::class, 'index'])->name('payment.index');
+    Route::post('payment/{client_wallet_id}', [PaymentController::class, 'store'])->name('payment.store');
 });

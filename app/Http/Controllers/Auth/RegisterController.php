@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use App\Models\Page;
+use App\Models\Client_wallet;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -78,6 +79,9 @@ class RegisterController extends Controller
             'page_name' => $data['page_name'],
         ]);
         $user->assignRole('Client');
+        Client_wallet::create([
+            'user_id' => $user->id
+        ]);
         return $user;
     }
 }

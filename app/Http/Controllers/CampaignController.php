@@ -7,6 +7,7 @@ use App\Models\Campaign;
 use App\Models\Page;
 use App\Models\Dollar_rate;
 use App\Models\Transection;
+use App\Models\Client_wallet;
 use Illuminate\Http\Request;
 
 class CampaignController extends Controller
@@ -108,6 +109,10 @@ class CampaignController extends Controller
         $transection = Transection::findOrFail($transection_id);
         $campaign = Campaign::findOrFail($transection->campaign_id);
         $campaign->decrement('total', $transection->amount);
+        Client_wallet::where('user_id', $campaign->user_id)->decrementEach([
+            'total'=> $transection->amount,
+            'due'=> $transection->amount,
+        ]);
         Transection::findOrFail($transection_id)->forceDelete();
         return redirect()->back()->with('delete_success', 'Payment details permanently deleted.');
     }
@@ -147,6 +152,11 @@ class CampaignController extends Controller
             'added_id' => auth()->id(),
         ]);
         $campaign->increment('total', $dollar_rate * $spent_amount);
+        // update to client wallet
+        Client_wallet::where('user_id', $campaign->user_id)->incrementEach([
+            'total'=> $dollar_rate * $spent_amount,
+            'due'=> $dollar_rate * $spent_amount,
+        ]);
         return back()->with('success', 'Expense added successfully!');
     }
 
