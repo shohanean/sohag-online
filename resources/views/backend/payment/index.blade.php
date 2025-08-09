@@ -91,17 +91,9 @@
                                     <select class="form-select" name="payment_method">
                                         <option value="Bank">Bank</option>
                                         <option value="bKash">bKash</option>
-                                        <option value="ROCKET">ROCKET</option>
                                         <option value="Nagad">Nagad</option>
-                                        <option value="Upay">Upay</option>
-                                        <option value="MYCash">MYCash</option>
-                                        <option value="Islami Bank mCash">Islami Bank mCash</option>
-                                        <option value="Trust Axiata pay: tap">Trust Axiata pay: tap</option>
-                                        <option value="FirstCash">FirstCash</option>
-                                        <option value="OK Wallet">OK Wallet</option>
-                                        <option value="TeleCash">TeleCash</option>
-                                        <option value="Islamic Wallet">Islamic Wallet</option>
-                                        <option value="Meghna Pay">Meghna Pay</option>
+                                        <option value="ROCKET">ROCKET</option>
+                                        <option value="CellFin">CellFin</option>
                                     </select>
                                     <!--end::Input-->
                                 </div>

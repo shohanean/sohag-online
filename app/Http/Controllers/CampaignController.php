@@ -97,7 +97,14 @@ class CampaignController extends Controller
      */
     public function update(Request $request, Campaign $campaign)
     {
-        //
+        $request->validate([
+            'campaign_name' => 'required',
+            'ad_id' => 'required'
+        ]);
+        $campaign->name = $request->campaign_name;
+        $campaign->ad_id = $request->ad_id;
+        $campaign->save();
+        return back()->with('update_success', 'Campaign updated successfully!');
     }
 
     /**
