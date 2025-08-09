@@ -29,6 +29,9 @@
                 </div>
 
                 <div class="table-responsive">
+                    @session('delete_success')
+                        <div class="alert alert-danger">{{ session('delete_success') }}</div>
+                    @endsession
                     <table class="table table-bordered table-striped align-middle">
                         <thead class="fw-bold">
                             <tr>
@@ -43,31 +46,45 @@
                         </thead>
                         <tbody>
                             @forelse ($campaigns as $userId => $userCampaigns)
-                                <tr>
-                                    <td>
-                                        {{ $loop->index + 1 }}
-                                    </td>
-                                    <td>
-                                        {{ $userCampaigns->first()->user->name }}
-                                    </td>
-                                    <td>
-                                        {{ $userCampaigns->count() }}
-                                    </td>
-                                    <td>
-                                        {{ $userCampaigns->first()->user->client_wallet->total }}
-                                    </td>
-                                    <td>
-                                        {{ $userCampaigns->first()->user->client_wallet->paid }}
-                                    </td>
-                                    <td>
-                                        {{ $userCampaigns->first()->user->client_wallet->due }}
-                                    </td>
-                                    <td>
-                                        <a href="" class="btn btn-sm btn-danger">Delete</a>
-                                        <a href="{{ route('payment.index', $userId) }}" class="btn btn-sm btn-info">Payment</a>
-                                        <a href="{{ route('campaign.show', $userId) }}" class="btn btn-sm btn-success">Details</a>
-                                    </td>
-                                </tr>
+                                @if (empty($userCampaigns->first()->user->deleted_at))
+                                    <tr>
+                                        <td>
+                                            {{ $loop->index + 1 }}
+                                        </td>
+                                        <td>
+                                            {{ $userCampaigns->first()->user->name }}
+                                        </td>
+                                        <td>
+                                            {{ $userCampaigns->count() }}
+                                        </td>
+                                        <td>
+                                            {{ $userCampaigns->first()->user->client_wallet->total }}
+                                        </td>
+                                        <td>
+                                            {{ $userCampaigns->first()->user->client_wallet->paid }}
+                                        </td>
+                                        <td>
+                                            {{ $userCampaigns->first()->user->client_wallet->due }}
+                                        </td>
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <form
+                                                    action="{{ route('user.destroy', $userCampaigns->first()->user->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button
+                                                        onclick="return confirm('Are you sure you want to delete this item?')"
+                                                        class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                                </form>
+                                                <a href="{{ route('payment.index', $userId) }}"
+                                                    class="btn btn-sm btn-info">Payment</a>
+                                                <a href="{{ route('campaign.show', $userId) }}"
+                                                    class="btn btn-sm btn-success">Details</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endif
                             @empty
                                 <tr class="text-center">
                                     <td colspan="50" class="text-danger">Nothing to show here</td>

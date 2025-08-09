@@ -47,11 +47,13 @@
                                 <!--begin::Input-->
                                 <select class="form-select @error('page_id') is-invalid @enderror" name="page_id">
                                     @foreach ($pages as $page)
-                                        <optgroup label="{{ $page->first()->user->name }}">
-                                            @foreach ($page as $p)
-                                                <option value="{{ $p->id }}">{{ $p->page_name }}</option>
-                                            @endforeach
-                                        </optgroup>
+                                        @if (empty($page->first()->user->deleted_at))
+                                            <optgroup label="{{ $page->first()->user->name }}">
+                                                @foreach ($page as $p)
+                                                    <option value="{{ $p->id }}">{{ $p->page_name }}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        @endif
                                     @endforeach
                                 </select>
                                 @error('page_id')
