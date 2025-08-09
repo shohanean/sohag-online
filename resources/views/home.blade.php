@@ -13,26 +13,89 @@
 @endsection
 
 @section('content')
-    <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
-        @foreach (auth()->user()->page as $p)
-            <div class="col-12">
-                <div class="card shadow-sm border-0 rounded-3">
-                    <div class="card-body d-flex justify-content-between align-items-center">
-                        <div class="d-flex align-items-center">
-                            <i class="fab fa-facebook-square fa-4x text-primary me-3"></i>
-                            <div>
-                                <h1 class="mb-0 text-muted">{{ $p->page_name }}</h1>
-                                <h6 class="mt-3">Total: ৳7800, Paid: ৳800, Due: ৳7000</h6>
+    @if (auth()->user()->getRoleNames()->first() == 'Client')
+        <div class="row mb-xl-10">
+            <div class="col-xl-3">
+                <!--begin::Stats Widget 29-->
+                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
+                    style="background-position: right top; background-size: 30% auto;">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <i class="text-dark fa fa-bullhorn fa-2x"></i>
+                        <span
+                            class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">{{ $campaigns->count() }}</span>
+                        <span class="font-weight-bold text-muted  font-size-sm">Total Campaigns</span>
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Stats Widget 29-->
+            </div>
+            <div class="col-xl-3">
+                <!--begin::Stats Widget 29-->
+                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
+                    style="background-position: right top; background-size: 30% auto;">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <i class="text-dark fa fa-dollar-sign fa-2x"></i>
+                        <span
+                            class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">{{ $client_wallet->total }}</span>
+                        <span class="font-weight-bold text-muted  font-size-sm">Total Amount</span>
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Stats Widget 29-->
+            </div>
+            <div class="col-xl-3">
+                <!--begin::Stats Widget 29-->
+                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
+                    style="background-position: right top; background-size: 30% auto;">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <i class="text-dark fa fa-check-circle fa-2x"></i>
+                        <span
+                            class="card-title font-weight-bolder text-success font-size-h2 mb-0 mt-6 d-block">{{ $client_wallet->paid }}</span>
+                        <span class="font-weight-bold text-muted  font-size-sm">Total Paid</span>
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Stats Widget 29-->
+            </div>
+            <div class="col-xl-3">
+                <!--begin::Stats Widget 29-->
+                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
+                    style="background-position: right top; background-size: 30% auto;">
+                    <!--begin::Body-->
+                    <div class="card-body">
+                        <i class="text-dark fa fa-exclamation-circle fa-2x"></i>
+                        <span
+                            class="card-title font-weight-bolder text-danger font-size-h2 mb-0 mt-6 d-block">{{ $client_wallet->due }}</span>
+                        <span class="font-weight-bold text-muted  font-size-sm">Total Due</span>
+                    </div>
+                    <!--end::Body-->
+                </div>
+                <!--end::Stats Widget 29-->
+            </div>
+        </div>
+        <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+            @foreach (auth()->user()->page as $p)
+                <div class="col-12">
+                    <div class="card shadow-sm border-0 rounded-3">
+                        <div class="card-body d-flex justify-content-between align-items-center">
+                            <div class="d-flex align-items-center">
+                                <i class="fab fa-facebook-square fa-4x text-primary me-3"></i>
+                                <div>
+                                    <h1 class="mb-0 text-muted">{{ $p->page_name }}</h1>
+                                </div>
                             </div>
+                            <a href="{{ route('page.details', $p->id) }}" class="btn btn-primary">
+                                Enter
+                            </a>
                         </div>
-                        <a href="p/detail/{{ $p->id }}" target="_blank" class="btn btn-primary">
-                            Enter
-                        </a>
                     </div>
                 </div>
-            </div>
-        @endforeach
-    </div>
+            @endforeach
+        </div>
+    @endif
     <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
         <!--begin::Col-->
         <div class="col-xl-3">
@@ -176,9 +239,10 @@
                         style="height: 300px; min-height: 315px;">
                         <div id="apexchartszcnvnmr8" class="apexcharts-canvas apexchartszcnvnmr8 apexcharts-theme-light"
                             style="width: 581.5px; height: 300px;"><svg id="SvgjsSvg1457" width="581.5" height="300"
-                                xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                xmlns:svgjs="http://svgjs.dev" class="apexcharts-svg apexcharts-zoomable"
-                                xmlns:data="ApexChartsNS" transform="translate(0, 0)" style="background: transparent;">
+                                xmlns="http://www.w3.org/2000/svg" version="1.1"
+                                xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev"
+                                class="apexcharts-svg apexcharts-zoomable" xmlns:data="ApexChartsNS"
+                                transform="translate(0, 0)" style="background: transparent;">
                                 <g id="SvgjsG1459" class="apexcharts-inner apexcharts-graphical"
                                     transform="translate(47.835205078125, 30)">
                                     <defs id="SvgjsDefs1458">

@@ -53,7 +53,18 @@
                                 <td>{{ $campaign->page->page_name }}</td>
                                 <td>{{ $campaign->name }}</td>
                                 <td>
-                                    <span class="badge bg-secondary text-dark">{{ $campaign->ad_id }}</span>
+                                    <span id="copyText" class="badge bg-secondary text-dark">{{ $campaign->ad_id }}</span>
+                                    <i id="copy_btn" class="fa fa-copy ms-2" style="cursor:pointer;" onclick="copyText()"></i>
+                                    <script>
+                                        function copyText() {
+                                            const text = document.getElementById("copyText").innerText;
+                                            navigator.clipboard.writeText(text).then(() => {
+                                                document.getElementById("copy_btn").classList.add('text-success');
+                                            }).catch(err => {
+                                                console.error("Failed to copy: ", err);
+                                            });
+                                        }
+                                    </script>
                                 </td>
                                 <td>{{ $campaign->total }}</td>
                             </tr>

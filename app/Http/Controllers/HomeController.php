@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Imports\UsersImport;
 use App\Models\Dollar_rate;
+use App\Models\Client_wallet;
+use App\Models\Campaign;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
@@ -33,9 +35,10 @@ class HomeController extends Controller
         //   'name' => 'can restore user'
         // ]);
         // User::find(1)->assignRole('Super Admin');
-        return view('home', [
-            'users' => User::latest()->paginate(10)
-        ]);
+        $users = User::latest()->paginate(10);
+        $campaigns = Campaign::where('user_id', auth()->id())->get();
+        $client_wallet = Client_wallet::where('user_id', auth()->id())->first();
+        return view('home', compact('users', 'campaigns', 'client_wallet'));
     }
     public function import(Request $request)
     {

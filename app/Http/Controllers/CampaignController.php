@@ -31,6 +31,7 @@ class CampaignController extends Controller
     public function create()
     {
         $pages = Page::select('user_id', 'page_name', 'id')->with('user')
+            ->latest()
             ->orderBy('user_id')
             ->get()
             ->groupBy('user_id');
