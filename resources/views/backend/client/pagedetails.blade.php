@@ -1,6 +1,3 @@
-@php
-    error_reporting(0);
-@endphp
 @extends('layouts.dashboard')
 
 @section('home')
@@ -78,9 +75,26 @@
             <!--end::Row-->
             <div class="row">
                 <div class="table-responsive">
-                    @session('update_success')
-                        <div class="alert alert-warning">{{ session('update_success') }}</div>
-                    @endsession
+                    <table class="table table-bordered text-center">
+                        <thead class="border fw-bold">
+                            <tr>
+                                <th>Total Campaigns</th>
+                                <th>Total</th>
+                                <th>Paid</th>
+                                <th>Due</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border">
+                            <tr>
+                                <td>{{ $campaigns->count() }}</td>
+                                <td>{{ $client_wallet->total }}</td>
+                                <td>{{ $client_wallet->paid }}</td>
+                                <td>{{ $client_wallet->due }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="table-responsive">
                     <table class="table table-bordered text-center">
                         <thead class="border fw-bold">
                             <tr>
@@ -88,7 +102,7 @@
                                 <th>Campaign Name</th>
                                 <th>Ad ID</th>
                                 <th>Total</th>
-                                {{-- <th>Action</th> --}}
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody class="border">
@@ -98,12 +112,13 @@
                                     <td>{{ $campaign->name }}</td>
                                     <td>
                                         <span class="badge bg-secondary text-dark">{{ $campaign->ad_id }}</span>
+                                        {{-- <i class="fa fa-copy"></i> --}}
                                     </td>
                                     <td>{{ $campaign->total }}</td>
-                                    {{-- <td>
+                                    <td>
                                         <a class="btn btn-sm btn-success"
-                                            href="{{ route('campaign.edit', $campaign->id) }}">Show</a>
-                                    </td> --}}
+                                            href="{{ route('campaign.details', $campaign->id) }}">Show</a>
+                                    </td>
                                 </tr>
                             @empty
                                 <tr class="text-danger">

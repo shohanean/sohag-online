@@ -76,4 +76,5 @@ Route::middleware(['auth'])->group(function () {
 
     //Client Routes
     Route::get('page/details/{page_id}', [ClientController::class, 'page_details'])->name('page.details');
+    Route::get('campaign/details/{campaign_id}', [ClientController::class, 'campaign_details'])->name('campaign.details');
 });
