@@ -72,6 +72,7 @@ Route::middleware(['auth'])->group(function () {
     //Payment Routes
     Route::get('payment/{user_id}', [PaymentController::class, 'index'])->name('payment.index');
     Route::post('payment/{client_wallet_id}', [PaymentController::class, 'store'])->name('payment.store');
+    Route::put('payment/{payment}', [PaymentController::class, 'update'])->name('payment.update');
 
     //Client Routes
     Route::get('page/details/{page_id}', [ClientController::class, 'page_details'])->name('page.details');

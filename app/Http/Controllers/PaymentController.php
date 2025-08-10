@@ -32,4 +32,20 @@ class PaymentController extends Controller
         Client_wallet::where('user_id', $user_id)->decrement('due', $request->payment_amount);
         return back()->with('success', 'Payment added successfully!');
     }
+    public function update(Request $request, Payment $payment)
+    {
+        $request->validate([
+            'payment_amount' => 'required'
+        ]);
+        //first take db value and decrement paid & increment due
+        Client_wallet::where('user_id', $payment->user_id)->decrement('paid', $payment->payment_amount);
+        Client_wallet::where('user_id', $payment->user_id)->increment('due', $payment->payment_amount);
+        //second take user value and increment paid & decrement due
+        Client_wallet::where('user_id', $payment->user_id)->increment('paid', $request->payment_amount);
+        Client_wallet::where('user_id', $payment->user_id)->decrement('due', $request->payment_amount);
+        //lastly update payment history
+        $payment->payment_amount = $request->payment_amount;
+        $payment->save();
+        return back()->with('update_success', 'Payment updated successfully!');
+    }
 }

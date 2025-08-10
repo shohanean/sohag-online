@@ -36,7 +36,8 @@
                         <thead class="fw-bold">
                             <tr>
                                 <th>SL. No.</th>
-                                <th>Name</th>
+                                <th>Page Name</th>
+                                <th>Owner Name</th>
                                 <th>Campaign</th>
                                 <th>Total</th>
                                 <th>Paid</th>
@@ -50,6 +51,12 @@
                                     <tr>
                                         <td>
                                             {{ $loop->index + 1 }}
+                                        </td>
+                                        <td>
+                                            @foreach ($userCampaigns->unique('page_id') as $pageinfo)
+                                                {{ $pageinfo->page->page_name }}
+                                                <br>
+                                            @endforeach
                                         </td>
                                         <td>
                                             {{ $userCampaigns->first()->user->name }}

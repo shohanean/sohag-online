@@ -23,7 +23,7 @@
             <!--end::Label-->
             <!--begin::Input-->
             <input class="@error('email') is-invalid @enderror form-control form-control-lg form-control-solid"
-                type="text" name="email" autocomplete="off" value="{{ old('email') }}admin@admin.com" />
+                type="text" name="email" autocomplete="off" value="{{ old('email') }}" />
             <!--end::Input-->
             @error('email')
                 <span class="text-danger">{{ $message }}</span>
@@ -44,7 +44,7 @@
             <!--end::Wrapper-->
             <!--begin::Input-->
             <input class="@error('password') is-invalid @enderror form-control form-control-lg form-control-solid"
-                type="password" name="password" autocomplete="off" value="123456789" />
+                type="password" name="password" autocomplete="off" value="" />
             <!--end::Input-->
             @error('password')
                 <span class="text-danger">{{ $message }}</span>

@@ -102,7 +102,9 @@
                                     <label class="fs-5 fw-bold mb-2 required">Payment Amount</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="number" class="form-control @error('payment_amount') is-invalid @enderror" name="payment_amount" step="0.01" value="" max="{{ $client_wallet->due }}"/>
+                                    <input type="number" class="form-control @error('payment_amount') is-invalid @enderror"
+                                        name="payment_amount" step="0.01" value=""
+                                        max="{{ $client_wallet->due }}" />
                                     <!--end::Input-->
                                     @error('payment_amount')
                                         <small class="text-danger">{{ $message }}</small>
@@ -113,7 +115,8 @@
                                     <label class="fs-5 fw-bold mb-2">Transaction ID</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input type="text" class="form-control @error('transaction_id') is-invalid @enderror" name="transaction_id" value="" />
+                                    <input type="text" class="form-control @error('transaction_id') is-invalid @enderror"
+                                        name="transaction_id" value="" />
                                     <!--end::Input-->
                                 </div>
                                 <div class="col-md-4">
@@ -135,7 +138,8 @@
                                 <div class="col-md-4">
                                     <label class="fs-5 fw-bold mb-2"> &nbsp; </label>
                                     <!--begin::Submit-->
-                                    <button @if ($client_wallet->due == 0) disabled @endif type="submit" class="btn btn-info form-control">
+                                    <button @if ($client_wallet->due == 0) disabled @endif type="submit"
+                                        class="btn btn-info form-control">
                                         <!--begin::Indicator-->
                                         <span class="indicator-label">Add Payment</span>
                                         <!--end::Indicator-->
@@ -162,9 +166,9 @@
         <!--end::Header-->
         <!--begin::Body-->
         <div class="card-body py-3">
-            @session('delete_success')
-                <div class="alert alert-danger" role="alert">
-                    {{ session('delete_success') }}
+            @session('update_success')
+                <div class="alert alert-info" role="alert">
+                    {{ session('update_success') }}
                 </div>
             @endsession
             <!--begin::Table container-->
@@ -181,6 +185,7 @@
                             <th>Status</th>
                             <th>Added By</th>
                             <th>Created At</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -197,6 +202,43 @@
                                 </td>
                                 <td><i class="fa fa-user"></i> {{ \App\Models\User::find($payment->added_by)->name }}</td>
                                 <td>{{ $payment->created_at->diffForHumans() }}</td>
+                                <td>
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModal_{{ $payment->id }}">
+                                        Edit
+                                    </button>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal_{{ $payment->id }}" tabindex="-1"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Edit -
+                                                        {{ $payment->transaction_id }}</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form action="{{ route('payment.update', $payment->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <div class="mb-3">
+                                                            <label for="payment_amount" class="form-label">Payment
+                                                                Amount</label>
+                                                            <input type="text" class="form-control"
+                                                                id="payment_amount" name="payment_amount"
+                                                                value="{{ $payment->payment_amount }}">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary">Save
+                                                            Changes</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                             <tr class="text-center">
