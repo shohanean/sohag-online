@@ -17,14 +17,19 @@ class PaymentController extends Controller
     }
     public function store(Request $request, $client_wallet_id)
     {
+        if ($request->source) {
+            $status = 'pending';
+        } else {
+            $status = 'approved';
+        }
         $request->validate([
             'payment_amount' => 'required'
         ]);
         $user_id = Client_wallet::find($client_wallet_id)->user_id;
-        Payment::create($request->except('_token') + [
+        Payment::create($request->except('_token', 'source') + [
             'user_id' => $user_id,
             'client_wallet_id' => $client_wallet_id,
-            'status' => 'approved',
+            'status' => $status,
             'added_by' => auth()->id()
         ]);
         //now impact on client wallet
@@ -45,6 +50,12 @@ class PaymentController extends Controller
         Client_wallet::where('user_id', $payment->user_id)->decrement('due', $request->payment_amount);
         //lastly update payment history
         $payment->payment_amount = $request->payment_amount;
+        $payment->save();
+        return back()->with('update_success', 'Payment updated successfully!');
+    }
+    public function payment_status_change(Payment $payment)
+    {
+        $payment->status = 'approved';
         $payment->save();
         return back()->with('update_success', 'Payment updated successfully!');
     }

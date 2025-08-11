@@ -21,7 +21,8 @@
                 <!--begin::Col-->
                 <div class="col-md-12 pe-lg-10">
                     <!--begin::Form-->
-                    <form action="" class="form mb-15" method="post" id="kt_contact_form">
+                    <form action="{{ route('payment.store', $client_wallet->id) }}" class="form mb-15" method="post"
+                        id="kt_contact_form">
                         @csrf
                         <div class="d-flex justify-content-between align-items-center mb-9">
                             <h1 class="fw-bolder text-dark mb-0">
@@ -31,30 +32,76 @@
                                 <i class="fa fa-arrow-left"></i> Back
                             </a>
                         </div>
-                        {{-- @session('success')
+                        @session('success')
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
                             </div>
                         @endsession
-                        <div class="row mb-5">
-                            <!--begin::Col-->
-                            <div class="col-md-12 fv-row">
+                        <div class="row">
+                            <input type="hidden" name="source" value="client">
+                            <div class="col-md-4">
                                 <!--begin::Label-->
-                                <label class="fs-5 fw-bold mb-2">Rev</label>
+                                <label class="fs-5 fw-bold mb-2 required">Payment Method</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input type="text" class="form-control" placeholder="" name="ad_id" value="" />
+                                <select class="form-select" name="payment_method">
+                                    <option value="Bank">Bank</option>
+                                    <option value="bKash">bKash</option>
+                                    <option value="Nagad">Nagad</option>
+                                    <option value="ROCKET">ROCKET</option>
+                                    <option value="CellFin">CellFin</option>
+                                </select>
                                 <!--end::Input-->
                             </div>
-                            <!--end::Col-->
+                            <div class="col-md-4">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2 required">Payment Amount</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="number" class="form-control @error('payment_amount') is-invalid @enderror"
+                                    name="payment_amount" step="0.01" value="" max="{{ $client_wallet->due }}" />
+                                <!--end::Input-->
+                                @error('payment_amount')
+                                    <small class="text-danger">{{ $message }}</small>
+                                @enderror
+                            </div>
+                            <div class="col-md-4">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2">Transaction ID</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <input type="text" class="form-control @error('transaction_id') is-invalid @enderror"
+                                    name="transaction_id" value="" />
+                                <!--end::Input-->
+                            </div>
+                            <div class="col-md-4">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2">Account Info</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <textarea class="form-control" name="account_info" rows="1"></textarea>
+                                <!--end::Input-->
+                            </div>
+                            <div class="col-md-4">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2">Remarks</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <textarea class="form-control" name="remarks" rows="1"></textarea>
+                                <!--end::Input-->
+                            </div>
+                            <div class="col-md-4">
+                                <label class="fs-5 fw-bold mb-2"> &nbsp; </label>
+                                <!--begin::Submit-->
+                                <button @if ($client_wallet->due == 0) disabled @endif type="submit"
+                                    class="btn btn-info form-control">
+                                    <!--begin::Indicator-->
+                                    <span class="indicator-label">Add Payment</span>
+                                    <!--end::Indicator-->
+                                </button>
+                                <!--end::Submit-->
+                            </div>
                         </div>
-                        <!--begin::Submit-->
-                        <button type="submit" class="btn btn-primary" id="kt_contact_submit_button">
-                            <!--begin::Indicator-->
-                            <span class="indicator-label">Add Campaign</span>
-                            <!--end::Indicator-->
-                        </button>
-                        <!--end::Submit--> --}}
                     </form>
                     <!--end::Form-->
                 </div>

@@ -198,16 +198,32 @@
                                 <td>{{ $payment->account_info }}</td>
                                 <td>{{ $payment->remarks }}</td>
                                 <td>
-                                    <span class="badge badge-success">{{ $payment->status }}</span>
+                                    @if ($payment->status == 'approved')
+                                        <span class="badge badge-success">{{ $payment->status }}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{ $payment->status }}</span>
+                                    @endif
                                 </td>
                                 <td><i class="fa fa-user"></i> {{ \App\Models\User::find($payment->added_by)->name }}</td>
                                 <td>{{ $payment->created_at->diffForHumans() }}</td>
                                 <td>
-                                    <!-- Button trigger modal -->
-                                    <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal_{{ $payment->id }}">
-                                        Edit
-                                    </button>
+                                    <div class="d-flex gap-2">
+                                        <!-- Button trigger modal -->
+                                        <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal_{{ $payment->id }}">
+                                            Edit
+                                        </button>
+                                        @if ($payment->status == 'pending')
+                                            <form action="{{ route('payment.status.change', $payment->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PUT')
+                                                <button type="submit" class="btn btn-sm btn-success">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </div>
                                     <!-- Modal -->
                                     <div class="modal fade" id="exampleModal_{{ $payment->id }}" tabindex="-1"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
