@@ -18,4 +18,8 @@ class Campaign extends Model
     {
         return $this->belongsTo(Page::class);
     }
+    public function transection()
+    {
+        return $this->HasMany(Transection::class);
+    }
 }

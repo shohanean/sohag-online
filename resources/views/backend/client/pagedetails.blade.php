@@ -59,7 +59,7 @@
                                 <!--end::Label-->
                                 <!--begin::Input-->
                                 <input type="number" class="form-control @error('payment_amount') is-invalid @enderror"
-                                    name="payment_amount" step="0.01" value="" max="{{ $client_wallet->due }}" />
+                                    name="payment_amount" step="0.01" />
                                 <!--end::Input-->
                                 @error('payment_amount')
                                     <small class="text-danger">{{ $message }}</small>
@@ -93,7 +93,7 @@
                             <div class="col-md-4">
                                 <label class="fs-5 fw-bold mb-2"> &nbsp; </label>
                                 <!--begin::Submit-->
-                                <button @if ($client_wallet->due == 0) disabled @endif type="submit"
+                                <button @if ($campaigns->count() == 0) disabled @endif type="submit"
                                     class="btn btn-info form-control">
                                     <!--begin::Indicator-->
                                     <span class="indicator-label">Add Payment</span>
