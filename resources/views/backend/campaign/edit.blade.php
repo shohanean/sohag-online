@@ -54,7 +54,8 @@
                                 <td>{{ $campaign->name }}</td>
                                 <td>
                                     <span id="copyText" class="badge bg-secondary text-dark">{{ $campaign->ad_id }}</span>
-                                    <i id="copy_btn" class="fa fa-copy ms-2" style="cursor:pointer;" onclick="copyText()"></i>
+                                    <i id="copy_btn" class="fa fa-copy ms-2" style="cursor:pointer;"
+                                        onclick="copyText()"></i>
                                     <script>
                                         function copyText() {
                                             const text = document.getElementById("copyText").innerText;
@@ -274,7 +275,8 @@
                                             style="display:inline-block;">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-danger btn-sm">
+                                            <button onclick="return confirm('Are you sure you want to delete this item?')"
+                                                type="submit" class="btn btn-danger btn-sm">
                                                 <i class="fa fa-trash"></i>
                                             </button>
                                         </form>

@@ -236,7 +236,7 @@
                                             <form action="{{ route('payment.destroy', $payment->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                <button onclick="return confirm('Are you sure you want to delete this item?')" type="submit" class="btn btn-sm btn-danger">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>

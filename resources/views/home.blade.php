@@ -227,10 +227,10 @@
                         <!--begin::Info-->
                         <div class="d-flex align-items-center">
                             <span class="fs-4hx text-white fw-bold me-6">
-                                --
+                                {{ $total_campaigns }}
                             </span>
                             <div class="fw-bold fs-6 text-white">
-                                <span class="d-block">Total Active</span>
+                                <span class="d-block">Total</span>
                                 <span class="">Campaigns</span>
                             </div>
                         </div>
