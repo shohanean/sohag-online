@@ -169,6 +169,11 @@
                     {{ session('update_success') }}
                 </div>
             @endsession
+            @session('delete_success')
+                <div class="alert alert-danger" role="alert">
+                    {{ session('delete_success') }}
+                </div>
+            @endsession
             <!--begin::Table container-->
             <div class="table-responsive">
                 <table class="table table-bordered table-striped align-middle text-center">
@@ -224,6 +229,15 @@
                                                 @method('PUT')
                                                 <button type="submit" class="btn btn-sm btn-success">
                                                     <i class="fa fa-check"></i>
+                                                </button>
+                                            </form>
+                                        @endif
+                                        @if ($loop->index == 0)
+                                            <form action="{{ route('payment.destroy', $payment->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-sm btn-danger">
+                                                    <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>
                                         @endif

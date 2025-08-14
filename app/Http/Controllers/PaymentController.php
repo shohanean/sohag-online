@@ -32,9 +32,11 @@ class PaymentController extends Controller
             'status' => $status,
             'added_by' => auth()->id()
         ]);
-        //now impact on client wallet
-        Client_wallet::where('user_id', $user_id)->increment('paid', $request->payment_amount);
-        Client_wallet::where('user_id', $user_id)->decrement('due', $request->payment_amount);
+        if (empty($request->source)) {
+            //now impact on client wallet
+            Client_wallet::where('user_id', $user_id)->increment('paid', $request->payment_amount);
+            Client_wallet::where('user_id', $user_id)->decrement('due', $request->payment_amount);
+        }
         return back()->with('success', 'Payment added successfully!');
     }
     public function update(Request $request, Payment $payment)
@@ -42,12 +44,14 @@ class PaymentController extends Controller
         $request->validate([
             'payment_amount' => 'required'
         ]);
-        //first take db value and decrement paid & increment due
-        Client_wallet::where('user_id', $payment->user_id)->decrement('paid', $payment->payment_amount);
-        Client_wallet::where('user_id', $payment->user_id)->increment('due', $payment->payment_amount);
-        //second take user value and increment paid & decrement due
-        Client_wallet::where('user_id', $payment->user_id)->increment('paid', $request->payment_amount);
-        Client_wallet::where('user_id', $payment->user_id)->decrement('due', $request->payment_amount);
+        if ($payment->status == 'approved') {
+            //first take db value and decrement paid & increment due
+            Client_wallet::where('user_id', $payment->user_id)->decrement('paid', $payment->payment_amount);
+            Client_wallet::where('user_id', $payment->user_id)->increment('due', $payment->payment_amount);
+            //second take user value and increment paid & decrement due
+            Client_wallet::where('user_id', $payment->user_id)->increment('paid', $request->payment_amount);
+            Client_wallet::where('user_id', $payment->user_id)->decrement('due', $request->payment_amount);
+        }
         //lastly update payment history
         $payment->payment_amount = $request->payment_amount;
         $payment->save();
@@ -57,6 +61,17 @@ class PaymentController extends Controller
     {
         $payment->status = 'approved';
         $payment->save();
+        Client_wallet::find($payment->client_wallet_id)->increment('paid', $payment->payment_amount);
+        Client_wallet::find($payment->client_wallet_id)->decrement('due', $payment->payment_amount);
         return back()->with('update_success', 'Payment updated successfully!');
+    }
+    public function destroy(Payment $payment)
+    {
+        if ($payment->status == 'approved') {
+            Client_wallet::find($payment->client_wallet_id)->increment('due', $payment->payment_amount);
+            Client_wallet::find($payment->client_wallet_id)->decrement('paid', $payment->payment_amount);
+        }
+        $payment->delete();
+        return back()->with('delete_success', 'Payment deleted successfully!');
     }
 }

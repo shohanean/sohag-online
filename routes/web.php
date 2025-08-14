@@ -74,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('payment/{client_wallet_id}', [PaymentController::class, 'store'])->name('payment.store');
     Route::put('payment/{payment}', [PaymentController::class, 'update'])->name('payment.update');
     Route::put('payment/status/change/{payment}', [PaymentController::class, 'payment_status_change'])->name('payment.status.change');
+    Route::delete('payment/{payment}', [PaymentController::class, 'destroy'])->name('payment.destroy');
 
     //Client Routes
     Route::get('page/details/{page_id}', [ClientController::class, 'page_details'])->name('page.details');
