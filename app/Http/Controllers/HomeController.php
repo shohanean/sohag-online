@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Imports\UsersImport;
 use App\Models\Dollar_rate;
 use App\Models\Client_wallet;
-use App\Models\Campaign;
+use App\Models\{Campaign, Page};
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
@@ -40,7 +40,8 @@ class HomeController extends Controller
         $users = User::latest()->paginate(10);
         $campaigns = Campaign::where('user_id', auth()->id())->get();
         $client_wallet = Client_wallet::where('user_id', auth()->id())->first();
-        return view('home', compact('active_client_count', 'users', 'campaigns', 'client_wallet'));
+        $pages = Page::all();
+        return view('home', compact('active_client_count', 'users', 'campaigns', 'client_wallet', 'pages'));
     }
     public function import(Request $request)
     {

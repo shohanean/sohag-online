@@ -203,7 +203,13 @@
                                     @endif
                                 </td>
                                 <td><i class="fa fa-user"></i> {{ \App\Models\User::find($payment->added_by)->name }}</td>
-                                <td>{{ $payment->created_at->diffForHumans() }}</td>
+                                <td>
+                                    {{ $payment->created_at->format('jS F, Y') }}
+                                    <br>
+                                    <div class="badge bg-secondary text-dark">
+                                        {{ $payment->created_at->diffForHumans() }}
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="d-flex gap-2">
                                         <!-- Button trigger modal -->

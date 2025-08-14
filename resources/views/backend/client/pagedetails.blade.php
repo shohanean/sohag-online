@@ -113,6 +113,67 @@
                 <div class="col-md-12 pe-lg-10">
                     <div class="d-flex justify-content-between align-items-center mb-9">
                         <h1 class="fw-bolder text-dark mb-0">
+                            Payment List
+                        </h1>
+                    </div>
+                </div>
+                <!--end::Col-->
+            </div>
+            <div class="row">
+                <table class="table table-bordered table-striped align-middle text-center">
+                    <thead class="fw-bold">
+                        <tr>
+                            <th>SL. No.</th>
+                            <th>Payment Method</th>
+                            <th>Payment Amount</th>
+                            <th>Transaction ID</th>
+                            <th>Account Info</th>
+                            <th>Remarks</th>
+                            <th>Status</th>
+                            <th>Added By</th>
+                            <th>Created At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($payments as $payment)
+                            <tr>
+                                <td>{{ $loop->index + 1 }}</td>
+                                <td>{{ $payment->payment_method }}</td>
+                                <td>{{ $payment->payment_amount }}</td>
+                                <td>{{ $payment->transaction_id }}</td>
+                                <td>{{ $payment->account_info }}</td>
+                                <td>{{ $payment->remarks }}</td>
+                                <td>
+                                    @if ($payment->status == 'approved')
+                                        <span class="badge badge-success">{{ $payment->status }}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{ $payment->status }}</span>
+                                    @endif
+                                </td>
+                                <td><i class="fa fa-user"></i> {{ \App\Models\User::find($payment->added_by)->name }}</td>
+                                <td>
+                                    {{ $payment->created_at->format('jS F, Y') }}
+                                    <br>
+                                    <div class="badge bg-secondary text-dark">
+                                        {{ $payment->created_at->diffForHumans() }}
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr class="text-center">
+                                <td colspan="50" class="text-danger">Nothing to show here</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+            <!--end::Row-->
+            <!--begin::Row-->
+            <div class="row mb-3">
+                <!--begin::Col-->
+                <div class="col-md-12 pe-lg-10">
+                    <div class="d-flex justify-content-between align-items-center mb-9">
+                        <h1 class="fw-bolder text-dark mb-0">
                             Campaigns List
                         </h1>
                     </div>

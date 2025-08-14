@@ -193,7 +193,7 @@
                         <!--begin::Info-->
                         <div class="d-flex align-items-center">
                             <span class="fs-4hx text-white fw-bold me-6">
-                                --
+                                {{ $pages->count() }}
                             </span>
                             <div class="fw-bold fs-6 text-white">
                                 <span class="d-block">Total</span>
