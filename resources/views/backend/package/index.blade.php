@@ -25,14 +25,6 @@
                     <form action="{{ route('package.store') }}" class="form mb-15" method="post" id="kt_contact_form">
                         @csrf
                         <h1 class="fw-bolder text-dark mb-9">Add Package</h1>
-                        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            <ul>
-                                <li>Edit not working properly</li>
-                                <li>After Delete no success message</li>
-                            </ul>
-                        </div>
-
                         @session('success')
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}
@@ -93,6 +85,11 @@
             <!--end::Row-->
             <!--begin::Row-->
             <div class="row g-5 mb-5 mb-lg-15">
+                @session('destroy_success')
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('destroy_success') }}
+                    </div>
+                @endsession
                 @foreach ($packages as $package)
                     <!--begin::Col-->
                     <div class="col-sm-3 ps-lg-10">

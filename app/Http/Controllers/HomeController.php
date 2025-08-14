@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Imports\UsersImport;
 use App\Models\Dollar_rate;
 use App\Models\Client_wallet;
-use App\Models\{Campaign, Page};
+use App\Models\{Campaign, Page, Package};
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
@@ -36,13 +36,15 @@ class HomeController extends Controller
         //   'name' => 'can restore user'
         // ]);
         // User::find(1)->assignRole('Super Admin');
-        $active_client_count = Role::where('name', 'Client')->first()->users()->count();
-        $users = User::latest()->paginate(10);
+        $packages = Package::all();
+        $active_clients = Role::where('name', 'Client')->first()->users()->get();
+        // return $active_clients;
+        $users = User::latest()->get();
         $campaigns = Campaign::where('user_id', auth()->id())->get();
         $total_campaigns = Campaign::count();
         $client_wallet = Client_wallet::where('user_id', auth()->id())->first();
         $pages = Page::all();
-        return view('home', compact('active_client_count', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
+        return view('home', compact('packages', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
     }
     public function import(Request $request)
     {

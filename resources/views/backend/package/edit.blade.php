@@ -22,12 +22,14 @@
                 <!--begin::Col-->
                 <div class="col-md-12 pe-lg-10">
                     <!--begin::Form-->
-                    <form action="" class="form mb-15" method="post" id="kt_contact_form">
+                    <form action="{{ route('package.update', $package->id) }}" class="form mb-15" method="post"
+                        id="kt_contact_form">
                         @csrf
+                        @method('PUT')
                         <h1 class="fw-bolder text-dark mb-9">Update Package - {{ $package->name }}</h1>
-                        @session('success')
-                            <div class="alert alert-success" role="alert">
-                                {{ session('success') }}
+                        @session('update_success')
+                            <div class="alert alert-info" role="alert">
+                                {{ session('update_success') }}
                             </div>
                         @endsession
                         <!--begin::Input group-->

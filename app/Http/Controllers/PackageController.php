@@ -81,11 +81,9 @@ class PackageController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
-            // add more validations
         ]);
-
         $package->update($request->all());
-        return redirect()->route('package.index')->with('success', 'Package updated successfully.');
+        return back()->with('update_success', 'Package updated successfully!');
     }
 
     /**
@@ -97,7 +95,6 @@ class PackageController extends Controller
     public function destroy(Package $package)
     {
         $package->delete();
-        return redirect()->route('package.index')->with('destroy_success', 'Package deleted successfully.');
-        // return redirect()->route('package.index')->with('success', 'Package deleted successfully.');
+        return back()->with('destroy_success', 'Package deleted successfully.');
     }
 }
