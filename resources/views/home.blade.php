@@ -22,65 +22,50 @@
                     </a>
                 </div>
             </div>
-            <div class="col-xl-3">
-                <!--begin::Stats Widget 29-->
-                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
-                    style="background-position: right top; background-size: 30% auto;">
-                    <!--begin::Body-->
-                    <div class="card-body">
-                        <i class="text-dark fa fa-bullhorn fa-2x"></i>
-                        <span
-                            class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">{{ $campaigns->count() }}</span>
-                        <span class="font-weight-bold text-muted  font-size-sm">Total Campaigns</span>
+            <div class="row g-4">
+                <!-- Total Campaigns -->
+                <div class="col-12 col-md-3">
+                    <div class="card text-center shadow-sm border-0 bg-primary text-white">
+                        <div class="card-body">
+                            <i class="fa fa-bullhorn fa-2x mb-2 text-dark"></i>
+                            <h6 class="fw-bold">Total Campaigns</h6>
+                            <h1 class="fw-bolder">{{ $campaigns->count() }}</h1>
+                        </div>
                     </div>
-                    <!--end::Body-->
                 </div>
-                <!--end::Stats Widget 29-->
-            </div>
-            <div class="col-xl-3">
-                <!--begin::Stats Widget 29-->
-                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
-                    style="background-position: right top; background-size: 30% auto;">
-                    <!--begin::Body-->
-                    <div class="card-body">
-                        <i class="text-dark fa fa-dollar-sign fa-2x"></i>
-                        <span
-                            class="card-title font-weight-bolder text-dark-75 font-size-h2 mb-0 mt-6 d-block">{{ $client_wallet->total }}</span>
-                        <span class="font-weight-bold text-muted  font-size-sm">Total Amount</span>
+
+                <!-- Total Amount -->
+                <div class="col-12 col-md-3">
+                    <div class="card text-center shadow-sm border-0 bg-success text-white">
+                        <div class="card-body">
+                            <i class="fa fa-dollar-sign fa-2x mb-2 text-dark"></i>
+                            <h6 class="fw-bold">Total Amount</h6>
+                            <h1 class="fw-bolder">{{ $client_wallet->total }}</h1>
+                        </div>
                     </div>
-                    <!--end::Body-->
                 </div>
-                <!--end::Stats Widget 29-->
-            </div>
-            <div class="col-xl-3">
-                <!--begin::Stats Widget 29-->
-                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
-                    style="background-position: right top; background-size: 30% auto;">
-                    <!--begin::Body-->
-                    <div class="card-body">
-                        <i class="text-dark fa fa-check-circle fa-2x"></i>
-                        <span
-                            class="card-title font-weight-bolder text-success font-size-h2 mb-0 mt-6 d-block">{{ $client_wallet->paid }}</span>
-                        <span class="font-weight-bold text-muted  font-size-sm">Total Paid</span>
+
+                <!-- Total Paid -->
+                <div class="col-12 col-md-3">
+                    <div class="card text-center shadow-sm border-0 bg-info text-white">
+                        <div class="card-body">
+                            <i class="fa fa-money-bill-wave fa-2x mb-2 text-dark"></i>
+                            <h6 class="fw-bold">Total Paid</h6>
+                            <h1 class="fw-bolder">{{ $client_wallet->paid }}</h1>
+                        </div>
                     </div>
-                    <!--end::Body-->
                 </div>
-                <!--end::Stats Widget 29-->
-            </div>
-            <div class="col-xl-3">
-                <!--begin::Stats Widget 29-->
-                <div class="card card-custom bgi-no-repeat card-stretch gutter-b bg-secondary"
-                    style="background-position: right top; background-size: 30% auto;">
-                    <!--begin::Body-->
-                    <div class="card-body">
-                        <i class="text-dark fa fa-exclamation-circle fa-2x"></i>
-                        <span
-                            class="card-title font-weight-bolder text-danger font-size-h2 mb-0 mt-6 d-block">{{ $client_wallet->due }}</span>
-                        <span class="font-weight-bold text-muted  font-size-sm">Total Due</span>
+
+                <!-- Total Due -->
+                <div class="col-12 col-md-3">
+                    <div class="card text-center shadow-sm border-0 bg-danger text-white">
+                        <div class="card-body">
+                            <i class="fa fa-exclamation-circle fa-2x mb-2 text-dark"></i>
+                            <h6 class="fw-bold">Total Due</h6>
+                            <h1 class="fw-bolder">{{ $client_wallet->due }}</h1>
+                        </div>
                     </div>
-                    <!--end::Body-->
                 </div>
-                <!--end::Stats Widget 29-->
             </div>
         </div>
         <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
@@ -95,7 +80,7 @@
                                 </div>
                             </div>
                             <a href="{{ route('page.details', $p->id) }}" class="btn btn-primary">
-                                Enter
+                                View Campaigns
                             </a>
                         </div>
                     </div>

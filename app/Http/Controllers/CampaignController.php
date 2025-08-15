@@ -12,6 +12,15 @@ use Illuminate\Http\Request;
 
 class CampaignController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            if (auth()->user()->roles->first()->name !== 'Super Admin') {
+                abort(404);
+            }
+            return $next($request);
+        });
+    }
     /**
      * Display a listing of the resource.
      *
