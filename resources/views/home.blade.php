@@ -289,7 +289,7 @@
 
                             <!--begin::Input group-->
                             <div class="input-group mb-5">
-                                <button type="submit" class="btn btn-success btn-sm">Upload</button>
+                                <button disabled type="submit" class="btn btn-success btn-sm">Upload</button>
                             </div>
                             <!--end::Input group-->
                         </form>

@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Page;
+use App\Models\Package;
+use App\Models\Subscription;
+use App\Models\Subscription_fee;
 use App\Models\Client_wallet;
 use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -81,6 +85,22 @@ class RegisterController extends Controller
         $user->assignRole('Client');
         Client_wallet::create([
             'user_id' => $user->id
+        ]);
+        $package = Package::find(1);
+        $subscription = Subscription::create([
+            'user_id' => $user->id,
+            'package_name' => $package->name,
+            'package_price' => $package->price,
+        ]);
+        Subscription_fee::create([
+            'subscription_id' => $subscription->id,
+            'user_id' => $user->id,
+            'package_name' => $package->name,
+            'package_price' => $package->price,
+            'generated_date' => Carbon::now()->toDateString(),
+            'due_date' => Carbon::now()->addMonthNoOverflow()->toDateString(),
+            'status' => 'unpaid',
+            'generated_by' => $user->id,
         ]);
         return $user;
     }

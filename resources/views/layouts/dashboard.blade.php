@@ -1063,6 +1063,10 @@
                             <span class="text-muted fw-bold me-1">{{ \Carbon\Carbon::today()->format('Y') }} ©</span>
                             <a href="#" target="_blank"
                                 class="text-gray-800 text-hover-primary">{{ env('APP_NAME') }}</a>
+                            | Developed by
+                            <a href="https://wa.me/8801834833973" target="_blank" class="text-success">
+                                <i class="fab fa-whatsapp"></i> Shohan Hossain Ean
+                            </a>
                         </div>
                         <!--end::Copyright-->
                     </div>

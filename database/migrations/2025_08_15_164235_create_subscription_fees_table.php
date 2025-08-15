@@ -13,11 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
+        Schema::create('subscription_fees', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('subscription_id');
             $table->unsignedBigInteger('user_id');
             $table->string('package_name');
             $table->decimal('package_price', 8, 2);
+            $table->date('generated_date');
+            $table->date('due_date');
+            $table->date('paid_date')->nullable();
+            $table->string('status');
+            $table->unsignedBigInteger('generated_by');
+            $table->text('remarks')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +37,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::dropIfExists('subscription_fees');
     }
 };

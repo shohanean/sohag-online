@@ -7,7 +7,7 @@ use App\Models\User;
 use App\Imports\UsersImport;
 use App\Models\Dollar_rate;
 use App\Models\Client_wallet;
-use App\Models\{Campaign, Page, Package};
+use App\Models\{Campaign, Page, Package, Subscription, Subscription_fee};
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
@@ -36,9 +36,28 @@ class HomeController extends Controller
         //   'name' => 'can restore user'
         // ]);
         // User::find(1)->assignRole('Super Admin');
+
         $packages = Package::all();
         $active_clients = Role::where('name', 'Client')->first()->users()->get();
-        // return $active_clients;
+        // foreach ($active_clients as $key => $active_client) {
+        //     $subscription = Subscription::create([
+        //         'user_id' => $active_client->id,
+        //         'package_name' => 'Default Package',
+        //         'package_price' => 200.00,
+        //     ]);
+        //     Subscription_fee::create([
+        //         'subscription_id' => $subscription->id,
+        //         'user_id' => $active_client->id,
+        //         'package_name' => 'Default Package',
+        //         'package_price' => 200.00,
+        //         'generated_date' => Carbon::now()->toDateString(),
+        //         'due_date' => Carbon::now()->addMonthNoOverflow()->toDateString(),
+        //         'status' => 'unpaid',
+        //         'generated_by' => auth()->id(),
+        //     ]);
+        // }
+        // return "Done";
+
         $users = User::latest()->get();
         $campaigns = Campaign::where('user_id', auth()->id())->get();
         $total_campaigns = Campaign::count();
