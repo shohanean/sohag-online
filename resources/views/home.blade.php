@@ -100,7 +100,8 @@
                                     {{ $user_subscription->package->description }}
                                 </p>
                             @endif
-                            <button class="btn btn-light btn-sm text-dark">Details</button>
+                            <a href="{{ route('subscription.details', $user_subscription->id) }}"
+                                class="btn btn-light btn-sm text-dark">Details</a>
                         </div>
                     </div>
                 </div>

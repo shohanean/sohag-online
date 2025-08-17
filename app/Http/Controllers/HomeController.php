@@ -36,36 +36,15 @@ class HomeController extends Controller
         //   'name' => 'can restore user'
         // ]);
         // User::find(1)->assignRole('Super Admin');
-
         $packages = Package::all();
         $active_clients = Role::where('name', 'Client')->first()->users()->get();
-        // foreach ($active_clients as $key => $active_client) {
-        //     $subscription = Subscription::create([
-        //         'user_id' => $active_client->id,
-        //         'package_id' => 1,
-        //         'package_name' => 'Default Package',
-        //         'package_price' => 200.00,
-        //     ]);
-        //     Subscription_fee::create([
-        //         'subscription_id' => $subscription->id,
-        //         'user_id' => $active_client->id,
-        //         'package_id' => 1,
-        //         'package_name' => 'Default Package',
-        //         'package_price' => 200.00,
-        //         'generated_date' => Carbon::now()->toDateString(),
-        //         'due_date' => Carbon::now()->addMonthNoOverflow()->toDateString(),
-        //         'status' => 'unpaid',
-        //         'generated_by' => auth()->id(),
-        //     ]);
-        // }
-        // return "Done";
         $users = User::latest()->get();
         $campaigns = Campaign::where('user_id', auth()->id())->get();
         $total_campaigns = Campaign::count();
         $client_wallet = Client_wallet::where('user_id', auth()->id())->first();
         $pages = Page::all();
         $user_subscriptions = Subscription::where('user_id', auth()->id())->latest()->get();
-        return view('home', compact('user_subscriptions','packages', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
+        return view('home', compact('user_subscriptions', 'packages', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
     }
     public function import(Request $request)
     {

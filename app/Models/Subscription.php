@@ -15,4 +15,8 @@ class Subscription extends Model
     {
         return $this->belongsTo(Package::class)->withTrashed();
     }
+    public function subscription_fees()
+    {
+        return $this->hasMany(Subscription_fee::class);
+    }
 }
