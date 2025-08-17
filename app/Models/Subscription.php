@@ -11,4 +11,8 @@ class Subscription extends Model
     use HasFactory;
     use SoftDeletes;
     protected $guarded = [];
+    public function package()
+    {
+        return $this->belongsTo(Package::class)->withTrashed();
+    }
 }

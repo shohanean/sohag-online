@@ -42,12 +42,14 @@ class HomeController extends Controller
         // foreach ($active_clients as $key => $active_client) {
         //     $subscription = Subscription::create([
         //         'user_id' => $active_client->id,
+        //         'package_id' => 1,
         //         'package_name' => 'Default Package',
         //         'package_price' => 200.00,
         //     ]);
         //     Subscription_fee::create([
         //         'subscription_id' => $subscription->id,
         //         'user_id' => $active_client->id,
+        //         'package_id' => 1,
         //         'package_name' => 'Default Package',
         //         'package_price' => 200.00,
         //         'generated_date' => Carbon::now()->toDateString(),
@@ -57,13 +59,13 @@ class HomeController extends Controller
         //     ]);
         // }
         // return "Done";
-
         $users = User::latest()->get();
         $campaigns = Campaign::where('user_id', auth()->id())->get();
         $total_campaigns = Campaign::count();
         $client_wallet = Client_wallet::where('user_id', auth()->id())->first();
         $pages = Page::all();
-        return view('home', compact('packages', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
+        $user_subscriptions = Subscription::where('user_id', auth()->id())->latest()->get();
+        return view('home', compact('user_subscriptions','packages', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
     }
     public function import(Request $request)
     {

@@ -87,6 +87,25 @@
                 </div>
             @endforeach
         </div>
+        <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+            @foreach ($user_subscriptions as $user_subscription)
+                <div class="col-4">
+                    <div style="background: rgb(147, 235, 255)" class="card shadow rounded-3">
+                        <div class="card-body text-center">
+                            <h4 class="card-title">{{ $user_subscription->package_name }}</h4>
+                            <p class="card-text">৳ {{ $user_subscription->package_price }} / month</p>
+                            @if ($user_subscription->package->description)
+                                <p class="mb-2">Description:</p>
+                                <p class="mb-2">
+                                    {{ $user_subscription->package->description }}
+                                </p>
+                            @endif
+                            <button class="btn btn-light btn-sm text-dark">Details</button>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
     @endif
     @if (auth()->user()->getRoleNames()->first() == 'Super Admin')
         <div class="row g-5 g-xl-10 mb-5 mb-xl-10">

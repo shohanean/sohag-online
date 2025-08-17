@@ -89,12 +89,14 @@ class RegisterController extends Controller
         $package = Package::find(1);
         $subscription = Subscription::create([
             'user_id' => $user->id,
+            'package_id' => $package->id,
             'package_name' => $package->name,
             'package_price' => $package->price,
         ]);
         Subscription_fee::create([
             'subscription_id' => $subscription->id,
             'user_id' => $user->id,
+            'package_id' => $package->id,
             'package_name' => $package->name,
             'package_price' => $package->price,
             'generated_date' => Carbon::now()->toDateString(),

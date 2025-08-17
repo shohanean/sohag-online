@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('subscription_id');
             $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('package_id');
             $table->string('package_name');
             $table->decimal('package_price', 8, 2);
             $table->date('generated_date');
