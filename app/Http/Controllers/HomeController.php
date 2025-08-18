@@ -36,15 +36,15 @@ class HomeController extends Controller
         //   'name' => 'can restore user'
         // ]);
         // User::find(1)->assignRole('Super Admin');
-        $packages = Package::all();
         $active_clients = Role::where('name', 'Client')->first()->users()->get();
         $users = User::latest()->get();
         $campaigns = Campaign::where('user_id', auth()->id())->get();
         $total_campaigns = Campaign::count();
         $client_wallet = Client_wallet::where('user_id', auth()->id())->first();
         $pages = Page::all();
+        $subscriptions = Subscription::paginate(10);
         $user_subscriptions = Subscription::where('user_id', auth()->id())->latest()->get();
-        return view('home', compact('user_subscriptions', 'packages', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
+        return view('home', compact('subscriptions', 'user_subscriptions', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
     }
     public function import(Request $request)
     {

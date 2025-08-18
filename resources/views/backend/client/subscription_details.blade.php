@@ -37,16 +37,16 @@
                             <tr>
                                 <th>Package Name</th>
                                 <th>Package Price</th>
-                                <th>--</th>
-                                <th>--</th>
+                                <th>Domain Name</th>
+                                <th>Created At</th>
                             </tr>
                         </thead>
                         <tbody class="border">
                             <tr>
                                 <td>{{ $subscription->package_name }}</td>
                                 <td>{{ $subscription->package_price }}</td>
-                                <td>--</td>
-                                <td>--</td>
+                                <td>{{ $subscription->domain_name ?? "Not Set Yet" }}</td>
+                                <td>{{ $subscription->created_at->diffForHumans() }}</td>
                             </tr>
                         </tbody>
                     </table>

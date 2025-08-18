@@ -246,40 +246,6 @@
                 <!--end::Card widget 3-->
             </div>
             <!--end::Col-->
-            <!--begin::Col-->
-            <div class="col-xl-3">
-                <!--begin::Card widget 3-->
-                <div class="card card-flush bgi-no-repeat bgi-size-contain bgi-position-x-end"
-                    style="background-color: #7239EA">
-                    <!--begin::Header-->
-                    <div class="card-header pt-5 mb-3">
-                        <!--begin::Icon-->
-                        <div class="d-flex flex-center rounded-circle h-80px w-80px"
-                            style="border: 1px dashed rgba(255, 255, 255, 0.4);background-color: #7239EA">
-                            <i class='fas fa-box text-white fa-2x'></i>
-                        </div>
-                        <!--end::Icon-->
-                    </div>
-                    <!--end::Header-->
-                    <!--begin::Card body-->
-                    <div class="card-body d-flex align-items-end mb-3">
-                        <!--begin::Info-->
-                        <div class="d-flex align-items-center">
-                            <span class="fs-4hx text-white fw-bold me-6">
-                                {{ $packages->count() }}
-                            </span>
-                            <div class="fw-bold fs-6 text-white">
-                                <span class="d-block">Total</span>
-                                <span class="">Packages</span>
-                            </div>
-                        </div>
-                        <!--end::Info-->
-                    </div>
-                    <!--end::Card body-->
-                </div>
-                <!--end::Card widget 3-->
-            </div>
-            <!--end::Col-->
         </div>
         <div class="row gy-5 g-xl-8">
             <!--begin::Col-->
@@ -327,8 +293,9 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">User Statistics</span>
-                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $users->count() }} members</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Subscription Statistics</span>
+                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $subscriptions->count() }}
+                                subscriptions</span>
                         </h3>
                     </div>
                     <!--end::Header-->
@@ -347,26 +314,27 @@
                                                     data-kt-check="true" data-kt-check-target=".widget-9-check">
                                             </div>
                                         </th>
-                                        <th class="min-w-200px">Authors</th>
-                                        <th class="min-w-150px">Company</th>
-                                        <th class="min-w-150px">Progress</th>
-                                        <th class="min-w-100px text-end">Actions</th>
+                                        <th class="min-w-200px">Package Name</th>
+                                        <th class="min-w-150px">Package Price</th>
+                                        <th class="min-w-100px text-end">Created At</th>
                                     </tr>
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-                                    <tr>
-                                        <td>asd</td>
-                                        <td>asd</td>
-                                        <td>asd</td>
-                                        <td>asd</td>
-                                        <td>asd</td>
-                                    </tr>
+                                    @foreach ($subscriptions as $subscription)
+                                        <tr>
+                                            <td>#</td>
+                                            <td>{{ $subscription->package_name }}</td>
+                                            <td>{{ $subscription->package_price }}</td>
+                                            <td>{{ $subscription->created_at }}</td>
+                                        </tr>
+                                    @endforeach
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
                             <!--end::Table-->
+                            {{ $subscriptions->links() }}
                         </div>
                         <!--end::Table container-->
                     </div>
