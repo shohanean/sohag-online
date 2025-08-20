@@ -178,7 +178,6 @@ class CampaignController extends Controller
         ]);
         return back()->with('success', 'Expense added successfully!');
     }
-
     public function add_payment(Campaign $campaign, Request $request)
     {
         $request->validate([
@@ -202,5 +201,10 @@ class CampaignController extends Controller
         $campaign->increment('paid', $request->pamount);
         $campaign->decrement('due', $request->pamount);
         return back()->with('psuccess', 'Payment added successfully!');
+    }
+    public function change_running_status (Campaign $campaign){
+        $campaign->running_status = !$campaign->running_status;
+        $campaign->save();
+        return back();
     }
 }

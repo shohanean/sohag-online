@@ -121,6 +121,7 @@
                                 <th>Ad ID</th>
                                 <th>Total</th>
                                 <th>Last Updated</th>
+                                <th>Running Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -140,6 +141,16 @@
                                         <div class="badge bg-secondary text-dark">
                                             {{ $campaign->transection()->latest()->first()?->updated_at?->diffForHumans() }}
                                         </div>
+                                    </td>
+                                    <td>
+                                        <form action="{{ route('change.running.status', $campaign->id) }}" method="POST">
+                                            @csrf
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="runningStatus"
+                                                    name="runningStatus" @if ($campaign->running_status) checked @endif
+                                                    onchange="this.form.submit()">
+                                            </div>
+                                        </form>
                                     </td>
                                     <td>
                                         <!-- Button trigger modal -->
