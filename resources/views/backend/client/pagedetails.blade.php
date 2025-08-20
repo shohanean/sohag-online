@@ -217,6 +217,7 @@
                                 <th>Campaign Name</th>
                                 <th>Ad ID</th>
                                 <th>Total</th>
+                                <th>Running Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -230,6 +231,13 @@
                                         {{-- <i class="fa fa-copy"></i> --}}
                                     </td>
                                     <td>{{ $campaign->total }}</td>
+                                    <td>
+                                        @if ($campaign->running_status)
+                                            <span class="badge badge-info">Yes</span>
+                                        @else
+                                            <span class="badge badge-danger">No</span>
+                                        @endif
+                                    </td>
                                     <td>
                                         <a class="btn btn-sm btn-success"
                                             href="{{ route('campaign.details', $campaign->id) }}">Show</a>
