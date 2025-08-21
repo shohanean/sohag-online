@@ -68,4 +68,22 @@ class HomeController extends Controller
         ]);
         return back()->with('success', 'Dollar rate saved successfully.');
     }
+    public function active_clients()
+    {
+        return view('backend.misc.active_clients', [
+            'clients' => User::role('Client')->get()
+        ]);
+    }
+    public function change_client_info(User $user, Request $request)
+    {
+        $request->validate([
+            'new_name' => 'required',
+            'new_email' => 'required|email|unique:users,email,' . $user->id,
+        ]);
+        $user->name = $request->new_name;
+        $user->email = $request->new_email;
+        $user->password = bcrypt($request->new_password);
+        $user->save();
+        return back()->with('success', 'Client Information Changed Successfully!');
+    }
 }

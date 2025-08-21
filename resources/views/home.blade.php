@@ -173,6 +173,7 @@
                         </div>
                         <!--end::Info-->
                     </div>
+                    <a href="{{ route('active.clients') }}" class="btn btn-sm bg-warning">View</a>
                     <!--end::Card body-->
                 </div>
                 <!--end::Card widget 3-->

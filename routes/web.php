@@ -25,9 +25,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::post('/import', [HomeController::class, 'import'])->name('import');
 
 //Misc. Routes
-
 Route::get('/dollar/rate', [HomeController::class, 'dollar_rate'])->name('dollar.rate');
 Route::post('/dollar/rate/insert', [HomeController::class, 'dollar_rate_insert'])->name('dollar.rate.insert');
+Route::get('/active/clients', [HomeController::class, 'active_clients'])->name('active.clients');
+Route::post('/change/client/info/{user}', [HomeController::class, 'change_client_info'])->name('change.client.info');
 
 //Email Verification Routes
 Route::get('/email/verify', function () {
