@@ -15,6 +15,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -92,6 +93,7 @@ class RegisterController extends Controller
             'package_id' => $package->id,
             'package_name' => $package->name,
             'package_price' => $package->price,
+            'domain_name' => Str::lower(Str::remove(' ', $data['page_name'])).".com"
         ]);
         Subscription_fee::create([
             'subscription_id' => $subscription->id,

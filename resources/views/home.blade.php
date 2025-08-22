@@ -189,7 +189,7 @@
                         <!--begin::Icon-->
                         <div class="d-flex flex-center rounded-circle h-80px w-80px"
                             style="border: 1px dashed rgba(255, 255, 255, 0.4);background-color: #7239EA">
-                            <i class='fab fa-facebook-f text-white fa-2x'></i>
+                            <i class='fas fa-calendar text-white fa-2x'></i>
                         </div>
                         <!--end::Icon-->
                     </div>
@@ -199,15 +199,16 @@
                         <!--begin::Info-->
                         <div class="d-flex align-items-center">
                             <span class="fs-4hx text-white fw-bold me-6">
-                                {{ $pages->count() }}
+                                {{ $subscriptions->total() }}
                             </span>
                             <div class="fw-bold fs-6 text-white">
                                 <span class="d-block">Total</span>
-                                <span class="">Pages</span>
+                                <span class="">Subscriptions</span>
                             </div>
                         </div>
                         <!--end::Info-->
                     </div>
+                    <a href="{{ route('subscriptions') }}" class="btn btn-sm bg-warning">View</a>
                     <!--end::Card body-->
                 </div>
                 <!--end::Card widget 3-->

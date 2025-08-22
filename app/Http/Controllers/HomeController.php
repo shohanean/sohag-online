@@ -8,6 +8,7 @@ use App\Imports\UsersImport;
 use App\Models\Dollar_rate;
 use App\Models\Client_wallet;
 use App\Models\{Campaign, Page, Package, Subscription, Subscription_fee};
+use App\Models\Server;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
@@ -84,6 +85,21 @@ class HomeController extends Controller
         $user->email = $request->new_email;
         $user->password = bcrypt($request->new_password);
         $user->save();
+
+        //changing the page name
+        Page::find($request->page_id)->update([
+            'page_name' => $request->new_page_name
+        ]);
         return back()->with('success', 'Client Information Changed Successfully!');
+    }
+    public function subscriptions()
+    {
+        return view('backend.misc.subscriptions', [
+            'clients' => User::role('Client')->get()
+        ]);
+    }
+    public function subscriptions_list(User $user)
+    {
+        return view('backend.misc.subscriptions_list', compact('user'));
     }
 }
