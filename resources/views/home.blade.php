@@ -323,9 +323,9 @@
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-                                    @foreach ($subscriptions as $subscription)
+                                    @foreach ($subscriptions as $key => $subscription)
                                         <tr>
-                                            <td>#</td>
+                                            <td>{{ $subscriptions->firstItem() + $key }}</td>
                                             <td>{{ $subscription->package_name }}</td>
                                             <td>{{ $subscription->package_price }}</td>
                                             <td>{{ $subscription->created_at }}</td>

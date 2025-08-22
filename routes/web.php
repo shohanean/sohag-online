@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\{FrontendController, HomeController, SocialController, ProfileController, BackupController, RoleController, UserController, PackageController, CampaignController};
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\BkashController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -82,4 +83,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('page/details/{page_id}', [ClientController::class, 'page_details'])->name('page.details');
     Route::get('campaign/details/{campaign_id}', [ClientController::class, 'campaign_details'])->name('campaign.details');
     Route::get('subscription/details/{subscription_id}', [ClientController::class, 'subscription_details'])->name('subscription.details');
+
+    //bKash Payment Routes
+    Route::post('/bkash/pay/{subscription_fee_id}', [BkashController::class, 'pay'])->name('pay');
 });
+Route::get('/bkash/callback', [BkashController::class, 'callback'])->name('callback');
