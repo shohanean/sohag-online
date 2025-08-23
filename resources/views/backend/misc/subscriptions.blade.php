@@ -8,7 +8,7 @@
     @includeIf('parts.toolbar', [
         'links' => [
             'home' => 'home',
-            'active clients' => 'active.clients',
+            'client wise subscriptions' => 'subscriptions',
         ],
     ])
 @endsection
@@ -43,7 +43,6 @@
                                     <td>{{ $client->subscriptions->count() }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="" class="btn btn-sm btn-info">Add Subscription</a>
                                             <a href="{{ route('subscriptions.list', $client->id) }}"
                                                 class="btn btn-sm btn-success">Details</a>
                                         </div>

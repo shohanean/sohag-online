@@ -32,6 +32,7 @@ Route::get('/active/clients', [HomeController::class, 'active_clients'])->name('
 Route::post('/change/client/info/{user}', [HomeController::class, 'change_client_info'])->name('change.client.info');
 Route::get('/subscriptions', [HomeController::class, 'subscriptions'])->name('subscriptions');
 Route::get('/subscriptions/list/{user}', [HomeController::class, 'subscriptions_list'])->name('subscriptions.list');
+Route::put('/subscription/{subscription}', [HomeController::class, 'subscription_update'])->name('subscription.update');
 
 //Email Verification Routes
 Route::get('/email/verify', function () {

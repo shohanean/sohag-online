@@ -33,6 +33,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Server::create([
+        //     'name' => 'Cloud Server 03'
+        // ]);
         // Permission::create([
         //   'name' => 'can restore user'
         // ]);
@@ -100,6 +103,15 @@ class HomeController extends Controller
     }
     public function subscriptions_list(User $user)
     {
-        return view('backend.misc.subscriptions_list', compact('user'));
+        $servers = Server::all();
+        $packages = Package::all();
+        return view('backend.misc.subscriptions_list', compact('user', 'servers', 'packages'));
+    }
+    public function subscription_update(Subscription $subscription, Request $request)
+    {
+        $subscription->server_id = $request->server_id;
+        $subscription->domain_name = $request->domain_name;
+        $subscription->save();
+        return back();
     }
 }

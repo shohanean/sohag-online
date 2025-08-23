@@ -139,6 +139,7 @@
                         </div>
                         <!--end::Info-->
                     </div>
+                    <a href="{{ route('user.index') }}" class="btn btn-sm bg-warning">View</a>
                     <!--end::Card body-->
                 </div>
                 <!--end::Card widget 3-->
@@ -243,6 +244,7 @@
                         </div>
                         <!--end::Info-->
                     </div>
+                    <a href="{{ route('campaign.index') }}" class="btn btn-sm bg-warning">View</a>
                     <!--end::Card body-->
                 </div>
                 <!--end::Card widget 3-->
