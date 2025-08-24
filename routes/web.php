@@ -31,8 +31,10 @@ Route::post('/dollar/rate/insert', [HomeController::class, 'dollar_rate_insert']
 Route::get('/active/clients', [HomeController::class, 'active_clients'])->name('active.clients');
 Route::post('/change/client/info/{user}', [HomeController::class, 'change_client_info'])->name('change.client.info');
 Route::get('/subscriptions', [HomeController::class, 'subscriptions'])->name('subscriptions');
+Route::post('/subscription', [HomeController::class, 'subscription_store'])->name('subscription.store');
 Route::get('/subscriptions/list/{user}', [HomeController::class, 'subscriptions_list'])->name('subscriptions.list');
 Route::put('/subscription/{subscription}', [HomeController::class, 'subscription_update'])->name('subscription.update');
+Route::post('/add/server', [HomeController::class, 'add_server'])->name('add.server');
 
 //Email Verification Routes
 Route::get('/email/verify', function () {

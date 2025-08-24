@@ -259,27 +259,27 @@
                     <!--begin::Header-->
                     <div class="card-header border-0">
                         <h3 class="card-title fw-bolder text-dark">
-                            Add Records
+                            Add Server
                         </h3>
                     </div>
                     <!--end::Header-->
                     <!--begin::Body-->
                     <div class="card-body pt-2">
                         <!--begin::Form-->
-                        <form method="POST" action="{{ route('import') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('add.server') }}" enctype="multipart/form-data">
                             @csrf
                             <!--begin::Input group-->
                             <div class="input-group mb-5">
                                 <span class="input-group-text" id="basic-addon3">
-                                    <i class="las la-file-excel fs-1"></i>
+                                    <i class="fa fa-server"></i>
                                 </span>
-                                <input type="file" class="form-control" name="import" />
+                                <input type="text" class="form-control" name="name" />
                             </div>
                             <!--end::Input group-->
 
                             <!--begin::Input group-->
                             <div class="input-group mb-5">
-                                <button disabled type="submit" class="btn btn-success btn-sm">Upload</button>
+                                <button type="submit" class="btn btn-success btn-sm">Add New Server</button>
                             </div>
                             <!--end::Input group-->
                         </form>
@@ -298,7 +298,7 @@
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
                             <span class="card-label fw-bolder fs-3 mb-1">Subscription Statistics</span>
-                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $subscriptions->count() }}
+                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $servers->count() }}
                                 subscriptions</span>
                         </h3>
                     </div>
@@ -319,26 +319,23 @@
                                             </div>
                                         </th>
                                         <th class="min-w-200px">Package Name</th>
-                                        <th class="min-w-150px">Package Price</th>
                                         <th class="min-w-100px text-end">Created At</th>
                                     </tr>
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-                                    @foreach ($subscriptions as $key => $subscription)
+                                    @foreach ($servers as $key => $server)
                                         <tr>
-                                            <td>{{ $subscriptions->firstItem() + $key }}</td>
-                                            <td>{{ $subscription->package_name }}</td>
-                                            <td>{{ $subscription->package_price }}</td>
-                                            <td>{{ $subscription->created_at }}</td>
+                                            <td>{{ $loop->index+1 }}</td>
+                                            <td>{{ $server->name }}</td>
+                                            <td>{{ $server->created_at }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
                                 <!--end::Table body-->
                             </table>
                             <!--end::Table-->
-                            {{ $subscriptions->links() }}
                         </div>
                         <!--end::Table container-->
                     </div>

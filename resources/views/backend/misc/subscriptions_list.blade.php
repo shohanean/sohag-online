@@ -32,6 +32,10 @@
                                 <i class="fa fa-arrow-left"></i> Back
                             </a>
                         </div>
+                        @session('success')
+                            <div class="alert alert-success">{{ session('success') }}</div>
+                        @endsession
+                        <input type="hidden" name="user_id" value="{{ $user->id }}">
                         <div class="row mb-5">
                             <div class="col-md-4 fv-row">
                                 <label class="fs-5 fw-bold mb-2 required">Package Name</label>
@@ -45,6 +49,7 @@
                             <div class="col-md-4 fv-row">
                                 <label class="fs-5 fw-bold mb-2 required">Server Name</label>
                                 <select class="form-select " name="server_id">
+                                    <option value="">-Select One Server-</option>
                                     @foreach ($servers as $server)
                                         <option value="{{ $server->id }}">{{ $server->name }}</option>
                                     @endforeach

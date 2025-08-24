@@ -48,7 +48,8 @@ class HomeController extends Controller
         $pages = Page::all();
         $subscriptions = Subscription::paginate(10);
         $user_subscriptions = Subscription::where('user_id', auth()->id())->latest()->get();
-        return view('home', compact('subscriptions', 'user_subscriptions', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
+        $servers = Server::latest()->get();
+        return view('home', compact('servers', 'subscriptions', 'user_subscriptions', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
     }
     public function import(Request $request)
     {
@@ -107,11 +108,34 @@ class HomeController extends Controller
         $packages = Package::all();
         return view('backend.misc.subscriptions_list', compact('user', 'servers', 'packages'));
     }
+    public function subscription_store(Request $request)
+    {
+        $package = Package::findOrFail($request->package_id);
+        Subscription::create([
+            'user_id' => $request->user_id,
+            'package_id' => $request->package_id,
+            'package_name' => $package->name,
+            'package_price' => $package->price,
+            'server_id' => $request->server_id,
+            'domain_name' => $request->domain_name
+        ]);
+        return back()->with('success', 'Subscription Added Successfully!');
+    }
     public function subscription_update(Subscription $subscription, Request $request)
     {
         $subscription->server_id = $request->server_id;
         $subscription->domain_name = $request->domain_name;
         $subscription->save();
+        return back();
+    }
+    public function add_server(Request $request)
+    {
+        $request->validate([
+            'name' => 'required'
+        ]);
+        Server::create([
+            'name' => $request->name
+        ]);
         return back();
     }
 }
