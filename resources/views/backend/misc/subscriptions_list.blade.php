@@ -78,6 +78,9 @@
                     Subscriptions List
                 </h1>
                 <div class="table-responsive">
+                    @session('update_success')
+                        <div class="alert alert-info">{{ session('update_success') }}</div>
+                    @endsession
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -86,17 +89,24 @@
                                 <th>Package Price</th>
                                 <th>Server Name</th>
                                 <th>Domain Name</th>
+                                <th>Updated At</th>
+                                <th>Created At</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($user->subscriptions as $subscription)
+                            @forelse ($user->subscriptions->sortByDesc('created_at') as $subscription)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $subscription->package_name }}</td>
                                     <td>{{ $subscription->package_price }}</td>
                                     <td>{{ $subscription->server?->name }}</td>
-                                    <td>{{ $subscription->domain_name }}</td>
+                                    <td>
+                                        <a href="{{ $subscription->domain_name }}"
+                                            target="_blank">{{ $subscription->domain_name }}</a>
+                                    </td>
+                                    <td>{{ $subscription->updated_at->diffForHumans() }}</td>
+                                    <td>{{ $subscription->created_at->diffForHumans() }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
                                             <!-- Button trigger modal -->

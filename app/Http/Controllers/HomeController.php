@@ -126,7 +126,7 @@ class HomeController extends Controller
         $subscription->server_id = $request->server_id;
         $subscription->domain_name = $request->domain_name;
         $subscription->save();
-        return back();
+        return back()->with('update_success', 'Subscription Information Updated Successfully!');
     }
     public function add_server(Request $request)
     {

@@ -95,6 +95,11 @@
                     <div class="col-sm-3 ps-lg-10">
                         <!--begin::Address-->
                         <div class="text-center bg-light card-rounded d-flex flex-column justify-content-center p-10 h-100">
+                            @if ($package->id == 1)
+                                <h5>
+                                    <span class="badge bg-success rounded-pill">Default Package</span>
+                                </h5>
+                            @endif
                             <!--begin::Icon-->
                             <!--begin::Svg Icon | path: icons/duotune/general/gen018.svg-->
                             <span class="svg-icon svg-icon-3tx svg-icon-primary">

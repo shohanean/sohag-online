@@ -35,7 +35,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($clients as $client)
+                            @foreach ($clients->sortByDesc('created_at') as $client)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $client->name }}</td>

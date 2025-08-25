@@ -297,9 +297,8 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Subscription Statistics</span>
-                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $servers->count() }}
-                                subscriptions</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Server List</span>
+                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $servers->count() }} servers</span>
                         </h3>
                     </div>
                     <!--end::Header-->
@@ -318,8 +317,9 @@
                                                     data-kt-check="true" data-kt-check-target=".widget-9-check">
                                             </div>
                                         </th>
-                                        <th class="min-w-200px">Package Name</th>
-                                        <th class="min-w-100px text-end">Created At</th>
+                                        <th class="min-w-200px">Server Name</th>
+                                        <th class="min-w-200px">Total Domain</th>
+                                        <th class="min-w-100px">Created At</th>
                                     </tr>
                                 </thead>
                                 <!--end::Table head-->
@@ -327,9 +327,11 @@
                                 <tbody>
                                     @foreach ($servers as $key => $server)
                                         <tr>
-                                            <td>{{ $loop->index+1 }}</td>
+                                            <td>{{ $loop->index + 1 }}</td>
                                             <td>{{ $server->name }}</td>
-                                            <td>{{ $server->created_at }}</td>
+                                            <td>{{ App\Models\Subscription::where('server_id', $server->id)->count() }}
+                                            </td>
+                                            <td>{{ $server->created_at->diffForHumans() }}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
