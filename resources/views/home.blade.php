@@ -251,7 +251,7 @@
             </div>
             <!--end::Col-->
         </div>
-        <div class="row gy-5 g-xl-8">
+        <div class="row gy-5 g-xl-8 d-none">
             <!--begin::Col-->
             <div class="col-xl-4">
                 <!--begin::List Widget 3-->

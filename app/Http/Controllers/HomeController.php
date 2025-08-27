@@ -37,7 +37,7 @@ class HomeController extends Controller
         //     'name' => 'Cloud Server 03'
         // ]);
         // Permission::create([
-        //   'name' => 'can restore user'
+        //   'name' => 'can manage server'
         // ]);
         // User::find(1)->assignRole('Super Admin');
         $active_clients = Role::where('name', 'Client')->first()->users()->get();
@@ -128,14 +128,33 @@ class HomeController extends Controller
         $subscription->save();
         return back()->with('update_success', 'Subscription Information Updated Successfully!');
     }
+    public function server ()
+    {
+        return view('backend.misc.server',[
+            'servers' => Server::latest()->get()
+        ]);
+    }
+    public function server_update(Request $request, Server $server)
+    {
+        $request->validate([
+            'name' => 'required|unique:servers,name,' . $server->id,
+        ]);
+        $server->update($request->only('name'));
+        return back()->with('update_success', 'Server Name Changed Successfully!');
+    }
+    public function server_destroy (Server $server)
+    {
+        $server->delete();
+        return back()->with('delete_success', 'Server Deleted Successfully!');
+    }
     public function add_server(Request $request)
     {
         $request->validate([
-            'name' => 'required'
+            'name' => 'required|unique:servers,name',
         ]);
         Server::create([
             'name' => $request->name
         ]);
-        return back();
+        return back()->with('success', 'Server Added Successfully!');
     }
 }

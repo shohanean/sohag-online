@@ -12,4 +12,8 @@ class Server extends Model
     use SoftDeletes;
 
     protected $guarded = [];
+    public function subscription()
+    {
+        return $this->hasMany(Subscription::class);
+    }
 }

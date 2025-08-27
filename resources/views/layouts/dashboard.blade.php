@@ -136,6 +136,16 @@
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">User Settings</span>
                                 </div>
                             </div>
+                            @canany(['can manage server'])
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('server.index')" href="{{ route('server.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-server"></i>
+                                        </span>
+                                        <span class="menu-title">Server</span>
+                                    </a>
+                                </div>
+                            @endcanany
                             @canany(['can manage package'])
                                 <div class="menu-item">
                                     <a class="menu-link @yield('package.index')" href="{{ route('package.index') }}">
