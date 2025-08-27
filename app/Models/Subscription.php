@@ -11,6 +11,9 @@ class Subscription extends Model
     use HasFactory;
     use SoftDeletes;
     protected $guarded = [];
+    protected $casts = [
+        'billing_date' => 'date',
+    ];
     public function package()
     {
         return $this->belongsTo(Package::class)->withTrashed();

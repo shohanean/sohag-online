@@ -22,6 +22,7 @@
                 <div class="d-flex justify-content-between align-items-center mb-9">
                     <h1 class="fw-bolder text-dark mb-0">
                         Clients List
+                        <input type="text" id="searchInput" placeholder="Search Here..." style="margin-left:10px;">
                     </h1>
                     <a href="{{ route('campaign.create') }}" class="btn btn-primary">
                         Add Campaign
@@ -32,7 +33,7 @@
                     @session('delete_success')
                         <div class="alert alert-danger">{{ session('delete_success') }}</div>
                     @endsession
-                    <table class="table table-bordered table-striped align-middle">
+                    <table id="myTable" class="table table-bordered table-striped align-middle">
                         <thead class="fw-bold">
                             <tr>
                                 <th>SL. No.</th>
@@ -105,4 +106,18 @@
         </div>
         <!--end::Body-->
     </div>
+@endsection
+
+@section('footer_scripts')
+    <script>
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase();
+            let rows = document.querySelectorAll('#myTable tbody tr');
+
+            rows.forEach(row => {
+                let text = row.textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            });
+        });
+    </script>
 @endsection

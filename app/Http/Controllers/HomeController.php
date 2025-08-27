@@ -33,6 +33,11 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // foreach (Subscription::all() as $key => $subscription) {
+        //     Subscription::where('id', $subscription->id)->update([
+        //         'billing_date' => $subscription->created_at
+        //     ]);
+        // }
         // Server::create([
         //     'name' => 'Cloud Server 03'
         // ]);
@@ -117,7 +122,8 @@ class HomeController extends Controller
             'package_name' => $package->name,
             'package_price' => $package->price,
             'server_id' => $request->server_id,
-            'domain_name' => $request->domain_name
+            'domain_name' => $request->domain_name,
+            'billing_date' => Carbon::today()
         ]);
         return back()->with('success', 'Subscription Added Successfully!');
     }
@@ -129,6 +135,7 @@ class HomeController extends Controller
         $subscription->package_price = $package->price;
         $subscription->server_id = $request->server_id;
         $subscription->domain_name = $request->domain_name;
+        $subscription->billing_date = $request->billing_date;
         $subscription->save();
         return back()->with('update_success', 'Subscription Information Updated Successfully!');
     }
