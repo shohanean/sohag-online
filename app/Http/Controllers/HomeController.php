@@ -123,6 +123,10 @@ class HomeController extends Controller
     }
     public function subscription_update(Subscription $subscription, Request $request)
     {
+        $package = Package::findOrFail($request->package_id);
+        $subscription->package_id = $package->id;
+        $subscription->package_name = $package->name;
+        $subscription->package_price = $package->price;
         $subscription->server_id = $request->server_id;
         $subscription->domain_name = $request->domain_name;
         $subscription->save();

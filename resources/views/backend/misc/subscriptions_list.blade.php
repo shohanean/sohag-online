@@ -132,6 +132,19 @@
                                                                 @csrf
                                                                 @method('PUT')
                                                                 <div class="mb-3">
+                                                                    <label class="form-label">Package Name</label>
+                                                                    <select class="form-select" name="package_id">
+                                                                        @foreach ($packages as $package)
+                                                                            <option
+                                                                                @if ($subscription->package_id == $package->id) selected @endif
+                                                                                value="{{ $package->id }}">
+                                                                                {{ $package->name }}
+                                                                                (৳{{ $package->price }})
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                <div class="mb-3">
                                                                     <label class="form-label">Server Name</label>
                                                                     <select class="form-select" name="server_id">
                                                                         <option value="">-Select One Server Name-
