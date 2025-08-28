@@ -66,33 +66,42 @@
                             </tr>
                         </thead>
                         <tbody class="border">
-                            @forelse ($subscription->subscription_fees as $subscription_fee)
+                            @forelse ($subscription->subscription_fees->sortByDesc('created_at') as $subscription_fee)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $subscription_fee->generated_date }}</td>
                                     <td>
                                         {{ $subscription_fee->due_date }}
-                                        <br>
-                                        <span class="badge bg-{{ $subscription_fee->due_date_status['class'] }}">
-                                            {{ $subscription_fee->due_date_status['text'] }}
-                                        </span>
+                                        @if ($subscription_fee->status == 'unpaid')
+                                            <br>
+                                            <span class="badge bg-{{ $subscription_fee->due_date_status['class'] }}">
+                                                {{ $subscription_fee->due_date_status['text'] }}
+                                            </span>
+                                        @endif
                                     </td>
                                     <td>{{ $subscription_fee->paid_date ?? 'Not Yet' }}</td>
                                     <td>
-                                        <span class="badge bg-secondary text-dark">{{ $subscription_fee->status }}</span>
+                                        @if ($subscription_fee->status == 'unpaid')
+                                            <span
+                                                class="badge bg-secondary text-dark">{{ $subscription_fee->status }}</span>
+                                        @else
+                                            <span class="badge bg-success">{{ $subscription_fee->status }}</span>
+                                        @endif
                                     </td>
                                     <td>{{ $subscription_fee->user->name }}</td>
                                     <td>৳{{ $subscription_fee->package_price }}</td>
                                     <td>
-                                        <form action="{{ route('pay', $subscription_fee->id) }}" method="POST">
-                                            @csrf
-                                            <button type="submit"
-                                                style="align-items:center;padding:5px 10px;border:none;border-radius:5px;">
-                                                <img src="https://cdn.worldvectorlogo.com/logos/bkash.svg" alt="bKash"
-                                                    style="height:20px;margin-right:8px;">
-                                                Pay with bKash
-                                            </button>
-                                        </form>
+                                        @if ($subscription_fee->status == 'unpaid')
+                                            <form action="{{ route('pay', $subscription_fee->id) }}" method="POST">
+                                                @csrf
+                                                <button type="submit"
+                                                    style="align-items:center;padding:5px 10px;border:none;border-radius:5px;">
+                                                    <img src="https://cdn.worldvectorlogo.com/logos/bkash.svg"
+                                                        alt="bKash" style="height:20px;margin-right:8px;">
+                                                    Pay with bKash
+                                                </button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @empty

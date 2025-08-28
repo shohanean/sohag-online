@@ -170,7 +170,7 @@
                                                                     <label class="form-label">Billing Date</label>
                                                                     <input type="date" class="form-control"
                                                                         name="billing_date"
-                                                                        value="{{ $subscription->billing_date->format('Y-m-d') }}">
+                                                                        value="">
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary">Save
                                                                     Changes</button>

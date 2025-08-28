@@ -33,6 +33,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // foreach (Subscription_fee::all() as $key => $subscription_fee) {
+        //     $subscription_fee->paid_date = $subscription_fee->generated_date;
+        //     $subscription_fee->status = 'paid';
+        //     $subscription_fee->save();
+        // }
+
         // foreach (Subscription::all() as $key => $subscription) {
         //     Subscription::where('id', $subscription->id)->update([
         //         'billing_date' => $subscription->created_at
@@ -139,9 +145,9 @@ class HomeController extends Controller
         $subscription->save();
         return back()->with('update_success', 'Subscription Information Updated Successfully!');
     }
-    public function server ()
+    public function server()
     {
-        return view('backend.misc.server',[
+        return view('backend.misc.server', [
             'servers' => Server::latest()->get()
         ]);
     }
@@ -153,7 +159,7 @@ class HomeController extends Controller
         $server->update($request->only('name'));
         return back()->with('update_success', 'Server Name Changed Successfully!');
     }
-    public function server_destroy (Server $server)
+    public function server_destroy(Server $server)
     {
         $server->delete();
         return back()->with('delete_success', 'Server Deleted Successfully!');
