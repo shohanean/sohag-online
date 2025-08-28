@@ -251,9 +251,9 @@
             </div>
             <!--end::Col-->
         </div>
-        <div class="row gy-5 g-xl-8 d-none">
+        <div class="row gy-5 g-xl-8">
             <!--begin::Col-->
-            <div class="col-xl-4">
+            <div class="col-xl-4 d-none">
                 <!--begin::List Widget 3-->
                 <div class="card card-xl-stretch mb-xl-8">
                     <!--begin::Header-->
@@ -297,8 +297,9 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Server List</span>
-                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $servers->count() }} servers</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Payment Notifications</span>
+                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $payment_notifications->count() }} Payment
+                                Notifications</span>
                         </h3>
                     </div>
                     <!--end::Header-->
@@ -317,21 +318,26 @@
                                                     data-kt-check="true" data-kt-check-target=".widget-9-check">
                                             </div>
                                         </th>
-                                        <th class="min-w-200px">Server Name</th>
-                                        <th class="min-w-200px">Total Domain</th>
-                                        <th class="min-w-100px">Created At</th>
+                                        <th class="min-w-200px">Name</th>
+                                        <th class="min-w-200px">Time</th>
+                                        <th class="min-w-100px">Action</th>
                                     </tr>
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-                                    @foreach ($servers as $key => $server)
+                                    @foreach ($payment_notifications as $key => $payment_notification)
                                         <tr>
                                             <td>{{ $loop->index + 1 }}</td>
-                                            <td>{{ $server->name }}</td>
-                                            <td>{{ App\Models\Subscription::where('server_id', $server->id)->count() }}
+                                            <td>
+                                                <b>{{ App\Models\User::find($payment_notification->user_id)->name }}</b>
+                                                send you a payment
                                             </td>
-                                            <td>{{ $server->created_at->diffForHumans() }}</td>
+                                            <td>{{ $payment_notification->created_at->diffForHumans() }}</td>
+                                            <td>
+                                                <a class="btn btn-sm btn-warning" target="_blank"
+                                                    href="{{ route('payment.index', $payment_notification->user_id) }}">View</a>
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

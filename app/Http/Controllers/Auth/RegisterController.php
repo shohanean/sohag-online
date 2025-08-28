@@ -111,4 +111,13 @@ class RegisterController extends Controller
         ]);
         return $user;
     }
+    protected function registered(\Illuminate\Http\Request $request, $user)
+    {
+        // logout so they aren’t auto logged-in
+        auth()->logout();
+
+        // redirect back to register page with success flash message
+        return redirect()->route('register')
+            ->with('success', 'Registration successful! Please login.');
+    }
 }

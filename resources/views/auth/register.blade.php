@@ -29,6 +29,12 @@
         <div class="border-bottom border-gray-300 mw-50 w-100"></div>
     </div>
     <!--end::Separator--> --}}
+
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
         <!--begin::Input group-->
         <div class="fv-row mb-7">
             <label class="form-label fw-bolder text-dark fs-6">নাম লিখুনঃ</label>

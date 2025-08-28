@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Client_wallet;
 use App\Models\Payment;
+use App\Models\Payment_notification;
 
 class PaymentController extends Controller
 {
@@ -18,6 +19,7 @@ class PaymentController extends Controller
     public function store(Request $request, $client_wallet_id)
     {
         if ($request->source) {
+            //when client submit for payment update
             $status = 'pending';
         } else {
             $status = 'approved';
@@ -26,7 +28,7 @@ class PaymentController extends Controller
             'payment_amount' => 'required'
         ]);
         $user_id = Client_wallet::find($client_wallet_id)->user_id;
-        Payment::create($request->except('_token', 'source') + [
+        $payment = Payment::create($request->except('_token', 'source') + [
             'user_id' => $user_id,
             'client_wallet_id' => $client_wallet_id,
             'status' => $status,
@@ -36,6 +38,12 @@ class PaymentController extends Controller
             //now impact on client wallet
             Client_wallet::where('user_id', $user_id)->increment('paid', $request->payment_amount);
             Client_wallet::where('user_id', $user_id)->decrement('due', $request->payment_amount);
+        }
+        if ($request->source) {
+            // As the client send a payment add request so admin needed to know about this
+            Payment_notification::create([
+                'user_id' => $payment->added_by
+            ]);
         }
         return back()->with('success', 'Payment added successfully!');
     }
