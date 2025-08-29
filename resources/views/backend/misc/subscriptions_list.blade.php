@@ -110,7 +110,7 @@
                                     <td>{{ \Carbon\Carbon::now()->diffInDays($subscription->billing_date, false) }} days
                                         left
                                         <br>
-                                        {{ $subscription->billing_date->format('d M, Y') }}
+                                        {{ $subscription->billing_date?->format('d M, Y') }}
                                     </td>
                                     <td>{{ $subscription->updated_at->diffForHumans() }}</td>
                                     <td>{{ $subscription->created_at->diffForHumans() }}</td>
@@ -174,7 +174,8 @@
                                                                 <div class="mb-3">
                                                                     <label class="form-label">Billing Date</label>
                                                                     <input type="date" class="form-control"
-                                                                        name="billing_date" value=""
+                                                                        name="billing_date"
+                                                                        value="{{ $subscription->billing_date?->format('Y-m-d') }}"
                                                                         min="{{ \Carbon\Carbon::now()->format('Y-m-d') }}">
                                                                 </div>
                                                                 <button type="submit" class="btn btn-primary">Save
