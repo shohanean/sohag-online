@@ -131,7 +131,7 @@ class HomeController extends Controller
             'package_price' => $package->price,
             'server_id' => $request->server_id,
             'domain_name' => $request->domain_name,
-            'billing_date' => Carbon::today()
+            'billing_date' => Carbon::now()->addMonthNoOverflow()->toDateString()
         ]);
         return back()->with('success', 'Subscription Added Successfully!');
     }
@@ -175,5 +175,10 @@ class HomeController extends Controller
             'name' => $request->name
         ]);
         return back()->with('success', 'Server Added Successfully!');
+    }
+    public function payment_notification_destroy (Payment_notification $payment_notification)
+    {
+        $payment_notification->delete();
+        return back();
     }
 }

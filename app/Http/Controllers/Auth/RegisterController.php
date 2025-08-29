@@ -93,8 +93,8 @@ class RegisterController extends Controller
             'package_id' => $package->id,
             'package_name' => $package->name,
             'package_price' => $package->price,
-            'billing_date' => Carbon::now()->toDateString(),
-            'domain_name' => Str::lower(Str::remove(' ', $data['page_name'])) . ".shop"
+            'billing_date' => Carbon::now()->addMonthNoOverflow()->toDateString(),
+            'domain_name' => Str::lower(Str::remove(' ', $data['page_name']))
         ]);
         Subscription_fee::create([
             'subscription_id' => $subscription->id,

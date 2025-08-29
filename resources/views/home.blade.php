@@ -333,10 +333,23 @@
                                                 <b>{{ App\Models\User::find($payment_notification->user_id)->name }}</b>
                                                 send you a payment
                                             </td>
-                                            <td>{{ $payment_notification->created_at->diffForHumans() }}</td>
                                             <td>
-                                                <a class="btn btn-sm btn-warning" target="_blank"
-                                                    href="{{ route('payment.index', $payment_notification->user_id) }}">View</a>
+                                                {{ $payment_notification->created_at->diffForHumans() }}
+                                                <br>
+                                                {{ $payment_notification->created_at->format('d/m/Y h:i:s A') }}
+                                            </td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <form
+                                                        action="{{ route('payment.notification.destroy', $payment_notification->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-sm btn-success" type="submit"><i
+                                                                class="fa fa-check"></i></button>
+                                                    </form>
+                                                    <a class="btn btn-sm btn-warning" target="_blank"
+                                                        href="{{ route('payment.index', $payment_notification->user_id) }}">View</a>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach

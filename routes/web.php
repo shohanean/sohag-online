@@ -38,6 +38,7 @@ Route::get('/server', [HomeController::class, 'server'])->name('server.index');
 Route::put('/server/{server}', [HomeController::class, 'server_update'])->name('server.update');
 Route::delete('/server/{server}', [HomeController::class, 'server_destroy'])->name('server.destroy');
 Route::post('/add/server', [HomeController::class, 'add_server'])->name('add.server');
+Route::delete('/payment/notification/destroy/{payment_notification}', [HomeController::class, 'payment_notification_destroy'])->name('payment.notification.destroy');
 
 //Email Verification Routes
 Route::get('/email/verify', function () {
