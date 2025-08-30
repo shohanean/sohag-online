@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Campaign;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -81,7 +82,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        User::find($id)->delete();
+        Campaign::where('user_id', $id)->delete();
         return back()->with('delete_success', 'Client removed successfully!');
     }
 }
