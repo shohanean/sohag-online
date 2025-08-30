@@ -45,7 +45,8 @@
                                 <label class="fs-5 fw-bold mb-2 required">Page Name</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <select class="form-select @error('page_id') is-invalid @enderror" name="page_id">
+                                <select class="page-name-dropdown form-select @error('page_id') is-invalid @enderror"
+                                    name="page_id">
                                     @foreach ($pages as $page)
                                         @if (empty($page->first()->user->deleted_at))
                                             <optgroup label="{{ $page->first()->user->name }}">
@@ -104,4 +105,12 @@
         </div>
         <!--end::Body-->
     </div>
+@endsection
+
+@section('footer_scripts')
+    <script>
+        $(document).ready(function() {
+            $('.page-name-dropdown').select2();
+        });
+    </script>
 @endsection

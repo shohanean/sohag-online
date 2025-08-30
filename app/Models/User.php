@@ -23,6 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'phone',
+        'page_name',
         'avatar',
         'email_verified_at',
         'password_changed_at',
