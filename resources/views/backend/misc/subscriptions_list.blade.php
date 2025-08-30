@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('home')
+@section('subscriptions')
     active
 @endsection
 
@@ -81,6 +81,9 @@
                     @session('update_success')
                         <div class="alert alert-info">{{ session('update_success') }}</div>
                     @endsession
+                    @session('delete_success')
+                        <div class="alert alert-danger">{{ session('delete_success') }}</div>
+                    @endsession
                     <table class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -116,6 +119,14 @@
                                     <td>{{ $subscription->created_at->diffForHumans() }}</td>
                                     <td>
                                         <div class="d-flex gap-2">
+                                            <form action="{{ route('subscription.destroy', $subscription->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button
+                                                    onclick="return confirm('Are you sure you want to delete this item?')"
+                                                    class="btn btn-sm btn-danger" type="submit">Delete</button>
+                                            </form>
                                             <!-- Button trigger modal -->
                                             <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal"
                                                 data-bs-target="#exampleModal_{{ $subscription->id }}">

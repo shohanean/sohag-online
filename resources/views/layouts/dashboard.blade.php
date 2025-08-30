@@ -167,6 +167,26 @@
                                     </a>
                                 </div>
                             @endcanany
+                            @canany(['can manage subscription'])
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('subscriptions')" href="{{ route('subscriptions') }}">
+                                        <span class="menu-icon">
+                                            <i class="fas fa-calendar"></i>
+                                        </span>
+                                        <span class="menu-title">Subscription</span>
+                                    </a>
+                                </div>
+                            @endcanany
+                            @canany(['can see user list'])
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('active.clients')" href="{{ route('active.clients') }}">
+                                        <span class="menu-icon">
+                                            <i class="fas fa-user-check"></i>
+                                        </span>
+                                        <span class="menu-title">Active Client List</span>
+                                    </a>
+                                </div>
+                            @endcanany
                             @canany(['can manage dollar rate'])
                                 <div class="menu-item">
                                     <a class="menu-link @yield('dollar.rate')" href="{{ route('dollar.rate') }}">

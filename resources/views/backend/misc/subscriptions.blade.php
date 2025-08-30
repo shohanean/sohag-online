@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('home')
+@section('subscriptions')
     active
 @endsection
 

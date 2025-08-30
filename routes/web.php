@@ -34,6 +34,7 @@ Route::get('/subscriptions', [HomeController::class, 'subscriptions'])->name('su
 Route::post('/subscription', [HomeController::class, 'subscription_store'])->name('subscription.store');
 Route::get('/subscriptions/list/{user}', [HomeController::class, 'subscriptions_list'])->name('subscriptions.list');
 Route::put('/subscription/{subscription}', [HomeController::class, 'subscription_update'])->name('subscription.update');
+Route::delete('/subscription/{subscription}', [HomeController::class, 'subscription_destroy'])->name('subscription.destroy');
 Route::get('/server', [HomeController::class, 'server'])->name('server.index');
 Route::put('/server/{server}', [HomeController::class, 'server_update'])->name('server.update');
 Route::delete('/server/{server}', [HomeController::class, 'server_destroy'])->name('server.destroy');

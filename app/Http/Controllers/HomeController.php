@@ -49,7 +49,7 @@ class HomeController extends Controller
         //     'name' => 'Cloud Server 03'
         // ]);
         // Permission::create([
-        //   'name' => 'can manage server'
+        //   'name' => 'can manage subscription'
         // ]);
         // User::find(1)->assignRole('Super Admin');
         $payment_notifications = Payment_notification::latest()->get();
@@ -146,6 +146,11 @@ class HomeController extends Controller
         $subscription->billing_date = $request->billing_date;
         $subscription->save();
         return back()->with('update_success', 'Subscription Information Updated Successfully!');
+    }
+    public function subscription_destroy (Subscription $subscription)
+    {
+        $subscription->delete();
+        return back()->with('delete_success', 'Subscription Deleted Successfully!');
     }
     public function server()
     {
