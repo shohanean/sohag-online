@@ -43,11 +43,11 @@
                 <div class="card card-flush w-md-650px py-5">
                     <div class="card-body py-15 py-lg-20">
                         <!--begin::Logo-->
-                        <div class="mb-7">
-                            <a href="../../demo1/dist/index.html" class="">
+                        {{-- <div class="mb-7">
+                            <a href="{{ route('index') }}" class="">
                                 <img alt="Logo" src="{{ env('PROJECT_LOGO') }}" class="h-40px" />
                             </a>
-                        </div>
+                        </div> --}}
                         <!--end::Logo-->
                         <!--begin::Title-->
                         <h1 class="fw-bolder text-gray-900 mb-5">Welcome to {{ env('APP_NAME') }}</h1>
@@ -59,8 +59,8 @@
                         <!--end::Text-->
                         <!--begin::Illustration-->
                         <div class="mb-0">
-                            <img src="{{ asset('dashboard_assets') }}/media/auth/welcome.png"
-                                class="mw-100 mh-300px theme-light-show" alt="" />
+                            <img src="{{ env('PROJECT_LOGO') }}" class="mw-100 mh-300px theme-light-show"
+                                alt="" />
                         </div>
                         <!--end::Illustration-->
                         <!--begin::Link-->
@@ -79,6 +79,27 @@
                         @endif
                         <!--end::Link-->
                     </div>
+                    <!--begin::Footer-->
+                    <div class="footer py-4 d-flex flex-lg-column" id="kt_footer">
+                        <!--begin::Container-->
+                        <div
+                            class="container-fluid d-flex flex-column flex-md-row align-items-center justify-content-between">
+                            <!--begin::Copyright-->
+                            <div class="text-dark order-2 order-md-1">
+                                <span class="text-muted fw-bold me-1">{{ \Carbon\Carbon::today()->format('Y') }}
+                                    ©</span>
+                                <a href="#" target="_blank"
+                                    class="text-gray-800 text-hover-primary">{{ env('APP_NAME') }}</a>
+                                | Developed by
+                                <a href="https://wa.me/8801834833973" target="_blank" class="text-success">
+                                    <i class="fab fa-whatsapp"></i> Shohan Hossain Ean
+                                </a>
+                            </div>
+                            <!--end::Copyright-->
+                        </div>
+                        <!--end::Container-->
+                    </div>
+                    <!--end::Footer-->
                 </div>
                 <!--end::Wrapper-->
             </div>

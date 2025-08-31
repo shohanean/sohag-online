@@ -708,6 +708,10 @@
                             <!--begin::Toolbar wrapper-->
                             <div class="d-flex align-items-stretch flex-shrink-0">
                                 @if (auth()->user()->roles()->first()->name == 'Super Admin')
+                                    @php
+                                        // main code for notification
+                                        $payment_notifications = App\Models\Payment_notification::latest()->get();
+                                    @endphp
                                     <!--begin::Quick links-->
                                     <div class="d-flex align-items-center ms-1 ms-lg-3">
                                         <!--begin::Menu wrapper-->
@@ -721,7 +725,7 @@
                                                 <!-- Notification badge -->
                                                 <span
                                                     class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                                    5
+                                                    {{ $payment_notifications->count() }}
                                                     <span class="visually-hidden">unread notifications</span>
                                                 </span>
                                             </span>
@@ -733,10 +737,53 @@
                                             <div class="row g-0">
                                                 <!--begin:Item-->
                                                 <div class="col-12">
-                                                    <span class="fs-5 fw-bold text-gray-800 mb-0">DDSD send you a
-                                                        payment</span>
-                                                    <span class="fs-7 text-gray-400">10 minutes ago
-                                                        30/08/2025 05:38:54 PM</span>
+                                                    <div class="list-group">
+                                                        @forelse ($payment_notifications as $payment_notification)
+                                                            <div
+                                                                class="list-group-item d-flex justify-content-between align-items-start">
+                                                                <div class="ms-2 me-auto">
+                                                                    <div class="fw-bold">
+                                                                        <b>{{ App\Models\User::find($payment_notification->user_id)->name }}</b>
+                                                                        send you a payment
+                                                                    </div>
+                                                                    <small class="text-muted">
+                                                                        {{ $payment_notification->created_at->diffForHumans() }}
+                                                                        <br>
+                                                                        {{ $payment_notification->created_at->format('d/m/Y h:i:s A') }}
+                                                                    </small>
+                                                                </div>
+                                                                <div class="btn-group">
+                                                                    <form
+                                                                        action="{{ route('payment.notification.destroy', $payment_notification->id) }}"
+                                                                        method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button class="btn btn-sm btn-success"
+                                                                            type="submit"><i
+                                                                                class="fa fa-check"></i></button>
+                                                                    </form>
+                                                                    <a href="{{ route('payment.index', $payment_notification->user_id) }}"
+                                                                        target="_blank"
+                                                                        class="btn btn-sm btn-primary">
+                                                                        <i class="fa fa-eye"></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        @empty
+                                                            <div
+                                                                class="list-group-item d-flex justify-content-between align-items-start">
+                                                                <div class="ms-2 me-auto">
+                                                                    <div class="fw-bold">
+                                                                        <i class="fa fa-exclamation-circle"></i>
+                                                                        No pending payment notification
+                                                                    </div>
+                                                                    <small class="text-muted">
+                                                                        Thank you!
+                                                                    </small>
+                                                                </div>
+                                                            </div>
+                                                        @endforelse
+                                                    </div>
                                                 </div>
                                                 <!--end:Item-->
                                             </div>

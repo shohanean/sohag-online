@@ -251,9 +251,9 @@
             </div>
             <!--end::Col-->
         </div>
-        <div class="row gy-5 g-xl-8">
+        <div class="row gy-5 g-xl-8 d-none">
             <!--begin::Col-->
-            <div class="col-xl-4 d-none">
+            <div class="col-xl-4">
                 <!--begin::List Widget 3-->
                 <div class="card card-xl-stretch mb-xl-8">
                     <!--begin::Header-->
@@ -326,33 +326,12 @@
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-                                    @foreach ($payment_notifications as $key => $payment_notification)
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            <td>
-                                                <b>{{ App\Models\User::find($payment_notification->user_id)->name }}</b>
-                                                send you a payment
-                                            </td>
-                                            <td>
-                                                {{ $payment_notification->created_at->diffForHumans() }}
-                                                <br>
-                                                {{ $payment_notification->created_at->format('d/m/Y h:i:s A') }}
-                                            </td>
-                                            <td>
-                                                <div class="d-flex gap-2">
-                                                    <form
-                                                        action="{{ route('payment.notification.destroy', $payment_notification->id) }}" method="POST">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button class="btn btn-sm btn-success" type="submit"><i
-                                                                class="fa fa-check"></i></button>
-                                                    </form>
-                                                    <a class="btn btn-sm btn-warning" target="_blank"
-                                                        href="{{ route('payment.index', $payment_notification->user_id) }}">View</a>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    @endforeach
+                                    <tr>
+                                        <td>asdasdasd</td>
+                                        <td>asdasdasd</td>
+                                        <td>asdasdasd</td>
+                                        <td>asdasdasd</td>
+                                    </tr>
                                 </tbody>
                                 <!--end::Table body-->
                             </table>

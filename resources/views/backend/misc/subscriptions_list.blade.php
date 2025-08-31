@@ -109,9 +109,24 @@
                                         <a href="{{ $subscription->domain_name }}"
                                             target="_blank">{{ $subscription->domain_name }}</a>
                                     </td>
-                                    {{-- <td>{{ $subscription->billing_date?->format('jS') }} of the month</td> --}}
-                                    <td>{{ \Carbon\Carbon::now()->diffInDays($subscription->billing_date, false) }} days
-                                        left
+                                    <td>
+                                        @php
+                                            $today = \Carbon\Carbon::today();
+                                            $billingDate = \Carbon\Carbon::parse($subscription->billing_date);
+                                            $diff = $today->diffInDays($billingDate, false);
+                                        @endphp
+
+                                        @if ($billingDate->isToday())
+                                            <span class="badge bg-warning">Due Today</span>
+                                        @elseif ($billingDate->isTomorrow())
+                                            <span class="badge bg-info">Due Tomorrow</span>
+                                        @elseif ($billingDate->isYesterday())
+                                            <span class="badge bg-danger">Expired Yesterday</span>
+                                        @elseif ($diff > 0)
+                                            <span class="badge bg-success">{{ $diff }} days left</span>
+                                        @else
+                                            <span class="badge bg-danger">Expired {{ abs($diff) }} days ago</span>
+                                        @endif
                                         <br>
                                         {{ $subscription->billing_date?->format('d M, Y') }}
                                     </td>
