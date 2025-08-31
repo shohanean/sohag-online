@@ -251,9 +251,9 @@
             </div>
             <!--end::Col-->
         </div>
-        <div class="row gy-5 g-xl-8 d-none">
+        <div class="row gy-5 g-xl-8">
             <!--begin::Col-->
-            <div class="col-xl-4">
+            <div class="col-xl-4 d-none">
                 <!--begin::List Widget 3-->
                 <div class="card card-xl-stretch mb-xl-8">
                     <!--begin::Header-->
@@ -291,15 +291,13 @@
             </div>
             <!--end::Col-->
             <!--begin::Col-->
-            <div class="col-xl-8">
+            <div class="col-xl-12">
                 <!--begin::Tables Widget 9-->
                 <div class="card card-xl-stretch mb-5 mb-xl-8">
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Payment Notifications</span>
-                            <span class="text-muted mt-1 fw-bold fs-7">Over {{ $payment_notifications->count() }} Payment
-                                Notifications</span>
+                            <span class="card-label fw-bolder fs-3 mb-1"><i class="fa fa-exclamation-circle text-danger"></i> Restricted for payments</span>
                         </h3>
                     </div>
                     <!--end::Header-->
@@ -311,27 +309,67 @@
                             <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                 <!--begin::Table head-->
                                 <thead>
-                                    <tr class="fw-bolder text-muted">
-                                        <th class="w-25px">
-                                            <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input" type="checkbox" value="1"
-                                                    data-kt-check="true" data-kt-check-target=".widget-9-check">
-                                            </div>
-                                        </th>
-                                        <th class="min-w-200px">Name</th>
-                                        <th class="min-w-200px">Time</th>
-                                        <th class="min-w-100px">Action</th>
+                                    <tr>
+                                        <th>Page Name</th>
+                                        <th>Owner Name</th>
+                                        <th>Campaign</th>
+                                        <th>Total</th>
+                                        <th>Paid</th>
+                                        <th>Due</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <!--end::Table head-->
                                 <!--begin::Table body-->
                                 <tbody>
-                                    <tr>
-                                        <td>asdasdasd</td>
-                                        <td>asdasdasd</td>
-                                        <td>asdasdasd</td>
-                                        <td>asdasdasd</td>
-                                    </tr>
+                                    @forelse ($restricted_for_payments as $userId => $userCampaigns)
+                                        @if (empty($userCampaigns->first()->user->deleted_at))
+                                            @if ($userCampaigns->first()->user->client_wallet->due >= 0)
+                                                <tr>
+                                                    <td>
+                                                        @foreach ($userCampaigns->unique('page_id') as $pageinfo)
+                                                            {{ $pageinfo->page->page_name }}
+                                                            <br>
+                                                        @endforeach
+                                                    </td>
+                                                    <td>
+                                                        {{ $userCampaigns->first()->user->name }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $userCampaigns->count() }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $userCampaigns->first()->user->client_wallet->total }}
+                                                    </td>
+                                                    <td>
+                                                        {{ $userCampaigns->first()->user->client_wallet->paid }}
+                                                    </td>
+                                                    <td>
+                                                        @if ($userCampaigns->first()->user->client_wallet->due < 0)
+                                                            <span class="text-success">
+                                                                {{ $userCampaigns->first()->user->client_wallet->due }}
+                                                            </span>
+                                                        @else
+                                                            <span class="text-danger">
+                                                                {{ $userCampaigns->first()->user->client_wallet->due }}
+                                                            </span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex gap-2">
+                                                            <a target="_blank"
+                                                                href="{{ route('campaign.show', $userId) }}"
+                                                                class="btn btn-sm btn-success">Details</a>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @endif
+                                        @endif
+                                    @empty
+                                        <tr class="text-center">
+                                            <td colspan="50" class="text-danger">Nothing to show here</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                                 <!--end::Table body-->
                             </table>

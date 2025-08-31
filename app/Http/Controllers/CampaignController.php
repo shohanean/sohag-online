@@ -129,8 +129,8 @@ class CampaignController extends Controller
         $campaign = Campaign::findOrFail($transection->campaign_id);
         $campaign->decrement('total', $transection->amount);
         Client_wallet::where('user_id', $campaign->user_id)->decrementEach([
-            'total'=> $transection->amount,
-            'due'=> $transection->amount,
+            'total' => $transection->amount,
+            'due' => $transection->amount,
         ]);
         Transection::findOrFail($transection_id)->forceDelete();
         return redirect()->back()->with('delete_success', 'Payment details permanently deleted.');
@@ -173,8 +173,8 @@ class CampaignController extends Controller
         $campaign->increment('total', $dollar_rate * $spent_amount);
         // update to client wallet
         Client_wallet::where('user_id', $campaign->user_id)->incrementEach([
-            'total'=> $dollar_rate * $spent_amount,
-            'due'=> $dollar_rate * $spent_amount,
+            'total' => $dollar_rate * $spent_amount,
+            'due' => $dollar_rate * $spent_amount,
         ]);
         return back()->with('success', 'Expense added successfully!');
     }
@@ -202,7 +202,8 @@ class CampaignController extends Controller
         $campaign->decrement('due', $request->pamount);
         return back()->with('psuccess', 'Payment added successfully!');
     }
-    public function change_running_status (Campaign $campaign){
+    public function change_running_status(Campaign $campaign)
+    {
         $campaign->running_status = !$campaign->running_status;
         $campaign->save();
         return back();

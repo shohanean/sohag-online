@@ -62,7 +62,9 @@ class HomeController extends Controller
         $subscriptions = Subscription::paginate(10);
         $user_subscriptions = Subscription::where('user_id', auth()->id())->latest()->get();
         $servers = Server::latest()->get();
-        return view('home', compact('payment_notifications', 'servers', 'subscriptions', 'user_subscriptions', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
+        $restricted_for_payments = Campaign::with('user')->latest()->get()->groupBy('user_id');
+
+        return view('home', compact('restricted_for_payments', 'payment_notifications', 'servers', 'subscriptions', 'user_subscriptions', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
     }
     public function import(Request $request)
     {
@@ -147,7 +149,7 @@ class HomeController extends Controller
         $subscription->save();
         return back()->with('update_success', 'Subscription Information Updated Successfully!');
     }
-    public function subscription_destroy (Subscription $subscription)
+    public function subscription_destroy(Subscription $subscription)
     {
         $subscription->delete();
         return back()->with('delete_success', 'Subscription Deleted Successfully!');
@@ -181,7 +183,7 @@ class HomeController extends Controller
         ]);
         return back()->with('success', 'Server Added Successfully!');
     }
-    public function payment_notification_destroy (Payment_notification $payment_notification)
+    public function payment_notification_destroy(Payment_notification $payment_notification)
     {
         $payment_notification->delete();
         return back();

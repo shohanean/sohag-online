@@ -233,9 +233,13 @@
                                     <td>{{ $campaign->total }}</td>
                                     <td>
                                         @if ($campaign->running_status)
-                                            <span class="badge badge-info">Yes</span>
+                                            @if ($client_wallet->due >= 0)
+                                                <span class="badge badge-danger">Restricted for payment</span>
+                                            @else
+                                                <span class="badge badge-info">Yes</span>
+                                            @endif
                                         @else
-                                            <span class="badge badge-danger">No</span>
+                                            <span class="badge badge-dark">No</span>
                                         @endif
                                     </td>
                                     <td>

@@ -76,14 +76,11 @@
                                                 <span class="text-success">
                                                     {{ $userCampaigns->first()->user->client_wallet->due }}
                                                 </span>
-                                            @elseif ($userCampaigns->first()->user->client_wallet->due == 0)
-                                                {{ $userCampaigns->first()->user->client_wallet->due }}
                                             @else
                                                 <span class="text-danger">
                                                     {{ $userCampaigns->first()->user->client_wallet->due }}
                                                 </span>
                                             @endif
-
                                         </td>
                                         <td>
                                             <div class="d-flex gap-2">
