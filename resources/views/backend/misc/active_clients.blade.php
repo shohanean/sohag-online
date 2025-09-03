@@ -52,11 +52,11 @@
                                     <tr>
                                         <td>{{ $loop->index + 1 }}</td>
                                         <td>
-                                            <span class="d-none">{{ $client->page->first()->page_name }}</span>
+                                            <span class="d-none">{{ $client->page?->first()?->page_name }}</span>
                                             <input hidden class="form-control" type="text" name="page_id"
-                                                value="{{ $client->page->first()->id }}">
+                                                value="{{ $client->page?->first()?->id }}">
                                             <input class="form-control" type="text" name="new_page_name"
-                                                value="{{ $client->page->first()->page_name }}">
+                                                value="{{ $client->page?->first()?->page_name }}">
                                         </td>
                                         <td>
                                             <span class="d-none">{{ $client->name }}</span>
