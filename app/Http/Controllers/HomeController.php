@@ -123,6 +123,10 @@ class HomeController extends Controller
         $packages = Package::all();
         return view('backend.misc.subscriptions_list', compact('user', 'servers', 'packages'));
     }
+    public function subscriptions_list_details(Subscription $subscription)
+    {
+        return $subscription->subscription_fees;
+    }
     public function subscription_store(Request $request)
     {
         $package = Package::findOrFail($request->package_id);

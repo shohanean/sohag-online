@@ -94,12 +94,13 @@
                         <div class="card-body text-center">
                             <h4 class="card-title">{{ $user_subscription->package_name }}</h4>
                             <p class="card-text">৳ {{ $user_subscription->package_price }} / month</p>
-                            @if ($user_subscription->package->description)
+                            <p class="mb-2">Billing Date: {{ $user_subscription->billing_date->format('d/m/Y') }}</p>
+                            {{-- @if ($user_subscription->package->description)
                                 <p class="mb-2">Description:</p>
                                 <p class="mb-2">
                                     {{ $user_subscription->package->description }}
                                 </p>
-                            @endif
+                            @endif --}}
                             <a href="{{ route('subscription.details', $user_subscription->id) }}"
                                 class="btn btn-light btn-sm text-dark">Details</a>
                         </div>
@@ -297,7 +298,8 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1"><i class="fa fa-exclamation-circle text-danger"></i> Restricted for payments</span>
+                            <span class="card-label fw-bolder fs-3 mb-1"><i
+                                    class="fa fa-exclamation-circle text-danger"></i> Restricted for payments</span>
                         </h3>
                     </div>
                     <!--end::Header-->

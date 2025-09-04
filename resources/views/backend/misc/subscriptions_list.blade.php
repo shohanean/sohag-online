@@ -211,6 +211,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <a class="btn btn-sm bg-success text-white"
+                                                href="{{ route('subscription.list.details', $subscription->id) }}">Details</a>
                                         </div>
                                     </td>
                                 </tr>
