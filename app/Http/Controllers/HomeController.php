@@ -158,10 +158,18 @@ class HomeController extends Controller
         $subscription->delete();
         return back()->with('delete_success', 'Subscription Deleted Successfully!');
     }
-    public function upcoming_subscriptions()
+    public function upcoming_subscriptions(Request $request)
     {
+        if($request->date_range){
+            [$start, $end] = explode(' - ', $request->date_range);
+            $startDate = Carbon::parse($start)->toDateString();
+            $endDate = Carbon::parse($end)->toDateString();
+            $subscriptions = Subscription::whereBetween('billing_date', [$startDate, $endDate])->orderBy('billing_date', 'asc')->get();
+        }else{
+            $subscriptions = Subscription::orderBy('billing_date', 'asc')->get();
+        }
         return view('backend.misc.upcoming_subscriptions', [
-            'subscriptions' => Subscription::orderBy('billing_date', 'asc')->get()
+            'subscriptions' => $subscriptions
         ]);
     }
     public function server()

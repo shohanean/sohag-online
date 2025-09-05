@@ -14,6 +14,10 @@ class Subscription extends Model
     protected $casts = [
         'billing_date' => 'date',
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class)->withTrashed();
+    }
     public function package()
     {
         return $this->belongsTo(Package::class)->withTrashed();
