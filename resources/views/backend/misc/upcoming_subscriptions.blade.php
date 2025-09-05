@@ -53,7 +53,7 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>
-                                        {{ $subscription->user->page->first()->page_name }}
+                                        {{ $subscription->user?->page?->first()?->page_name }}
                                         {{-- <br>
                                         <i class="fa fa-user"> {{ $subscription->user->name }}</i> --}}
                                     </td>
