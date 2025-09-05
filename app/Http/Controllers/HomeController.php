@@ -130,7 +130,7 @@ class HomeController extends Controller
     public function subscription_store(Request $request)
     {
         $package = Package::findOrFail($request->package_id);
-        Subscription::create([
+        $subscription = Subscription::create([
             'user_id' => $request->user_id,
             'package_id' => $request->package_id,
             'package_name' => $package->name,
@@ -138,6 +138,18 @@ class HomeController extends Controller
             'server_id' => $request->server_id,
             'domain_name' => $request->domain_name,
             'billing_date' => Carbon::now()->addMonthNoOverflow()->toDateString()
+        ]);
+        Subscription_fee::create([
+            'subscription_id' => $subscription->id,
+            'user_id' => $request->user_id,
+            'package_id' => $package->id,
+            'package_name' => $package->name,
+            'package_price' => $package->price,
+            'generated_date' => Carbon::now()->toDateString(),
+            'due_date' => Carbon::now()->toDateString(),
+            'paid_date' => Carbon::now()->toDateString(),
+            'status' => 'paid',
+            'generated_by' => auth()->id(),
         ]);
         return back()->with('success', 'Subscription Added Successfully!');
     }
@@ -164,13 +176,32 @@ class HomeController extends Controller
             [$start, $end] = explode(' - ', $request->date_range);
             $startDate = Carbon::parse($start)->toDateString();
             $endDate = Carbon::parse($end)->toDateString();
-            $subscriptions = Subscription::whereBetween('billing_date', [$startDate, $endDate])->orderBy('billing_date', 'asc')->get();
+            $subscriptions = Subscription::with('user','subscription_fees')->whereBetween('billing_date', [$startDate, $endDate])->orderBy('billing_date', 'asc')->get();
         }else{
-            $subscriptions = Subscription::orderBy('billing_date', 'asc')->get();
+            $subscriptions = Subscription::with('user','subscription_fees')->orderBy('billing_date', 'asc')->get();
         }
         return view('backend.misc.upcoming_subscriptions', [
             'subscriptions' => $subscriptions
         ]);
+    }
+    public function subscription_payment(Subscription $subscription)
+    {
+        // return "1 Month Subscription added for ".$subscription->user->page->first()->page_name;
+        Subscription_fee::create([
+            'subscription_id' => $subscription->id,
+            'user_id' => $subscription->user_id,
+            'package_id' => $subscription->package_id,
+            'package_name' => $subscription->package_name,
+            'package_price' => $subscription->package_price,
+            'generated_date' => Carbon::now()->toDateString(),
+            'due_date' => $subscription->billing_date->toDateString(),
+            'paid_date' => Carbon::now()->toDateString(),
+            'status' => 'paid',
+            'generated_by' => auth()->id(),
+        ]);
+        $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
+        $subscription->save();
+        return back()->with('update', "1 Month Subscription added for ".$subscription->user->page->first()->page_name);
     }
     public function server()
     {

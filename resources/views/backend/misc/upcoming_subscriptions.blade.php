@@ -30,11 +30,14 @@
                     </div>
                 </h1>
                 <div class="table-responsive">
+                    @session('update')
+                        <div class="alert alert-info">{{ session('update') }}</div>
+                    @endsession
                     <table id="myTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>SL. No.</th>
-                                <th>Client Name</th>
+                                <th>Page Name</th>
                                 <th>Package Name</th>
                                 <th>Package Price</th>
                                 <th>Billing Date</th>
@@ -42,10 +45,18 @@
                             </tr>
                         </thead>
                         <tbody>
+                            @php
+                                $tt = 1;
+                            @endphp
                             @foreach ($subscriptions as $subscription)
+                                {{-- <tr class="@if ($subscription->subscription_fees->count() != 0) d-none @endif"> --}}
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $subscription->user->name }}</td>
+                                    <td>
+                                        {{ $subscription->user->page->first()->page_name }}
+                                        {{-- <br>
+                                        <i class="fa fa-user"> {{ $subscription->user->name }}</i> --}}
+                                    </td>
                                     <td>{{ $subscription->package_name }}</td>
                                     <td>{{ $subscription->package_price }}</td>
                                     <td>
@@ -69,15 +80,24 @@
                                         <br>
                                         {{ $subscription->billing_date?->format('d M, Y') }}
                                     </td>
-                                    {{-- <td>{{ $subscription->subscription_fees }}</td>
+                                    {{-- <td>
+                                        count#{{ $subscription->subscription_fees->count() }}
+                                        <br>
+                                        {{ $subscription->subscription_fees }}
+                                    </td>
                                     <td>
                                         @if ($subscription->subscription_fees->count() == 0)
-                                            <div class="alert alert-danger"></div>
+                                            <div class="alert alert-danger">{{ $tt++ }}</div>
                                         @endif
                                     </td> --}}
                                     <td>
                                         <div class="d-flex gap-2">
-                                            <a href="" class="btn btn-sm btn-success">Details</a>
+                                            <form action="{{ route('subscription.payment', $subscription->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-sm btn-info">Make Payment</button>
+                                            </form>
+                                            {{-- <a href="" class="btn btn-sm btn-success">Details</a> --}}
                                         </div>
                                     </td>
                                 </tr>
