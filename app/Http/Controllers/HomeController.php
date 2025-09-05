@@ -158,6 +158,12 @@ class HomeController extends Controller
         $subscription->delete();
         return back()->with('delete_success', 'Subscription Deleted Successfully!');
     }
+    public function upcoming_subscriptions()
+    {
+        return view('backend.misc.upcoming_subscriptions', [
+            'subscriptions' => Subscription::orderBy('billing_date', 'asc')->get()
+        ]);
+    }
     public function server()
     {
         return view('backend.misc.server', [

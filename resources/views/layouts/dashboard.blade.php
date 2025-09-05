@@ -176,6 +176,14 @@
                                         <span class="menu-title">Subscription</span>
                                     </a>
                                 </div>
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('upcoming.subscriptions')" href="{{ route('upcoming.subscriptions') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-hourglass-half"></i>
+                                        </span>
+                                        <span class="menu-title">Upcoming Subscription</span>
+                                    </a>
+                                </div>
                             @endcanany
                             @canany(['can see user list'])
                                 <div class="menu-item">

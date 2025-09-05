@@ -36,6 +36,7 @@ Route::get('/subscriptions/list/{user}', [HomeController::class, 'subscriptions_
 Route::get('/subscriptions/list/{subscription}/details', [HomeController::class, 'subscriptions_list_details'])->name('subscription.list.details');
 Route::put('/subscription/{subscription}', [HomeController::class, 'subscription_update'])->name('subscription.update');
 Route::delete('/subscription/{subscription}', [HomeController::class, 'subscription_destroy'])->name('subscription.destroy');
+Route::get('/upcoming/subscriptions', [HomeController::class, 'upcoming_subscriptions'])->name('upcoming.subscriptions');
 Route::get('/server', [HomeController::class, 'server'])->name('server.index');
 Route::put('/server/{server}', [HomeController::class, 'server_update'])->name('server.update');
 Route::delete('/server/{server}', [HomeController::class, 'server_destroy'])->name('server.destroy');
