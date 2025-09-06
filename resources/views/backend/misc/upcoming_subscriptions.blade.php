@@ -29,6 +29,8 @@
                         </form>
                     </div>
                 </h1>
+                <a href="{{ route('upcoming.subscriptions') }}?date_range=1900-01-01+-+{{ \Carbon\Carbon::yesterday()->format('Y-m-d') }}"
+                    class="btn btn-sm bg-warning">Show Expired Only</a>
                 <div class="table-responsive">
                     @session('update')
                         <div class="alert alert-info">{{ session('update') }}</div>
@@ -48,12 +50,16 @@
                                 $tt = 1;
                             @endphp
                             @foreach ($subscriptions as $userId => $userSubscriptions)
+                                <tr>
+                                    <td colspan="50">
+                                        <i class="fa fa-user-circle text-dark"></i>
+                                        {{ App\Models\User::find($userId)?->name }}
+                                    </td>
+                                </tr>
                                 @foreach ($userSubscriptions as $subscription)
                                     <tr>
                                         <td>
-                                            {{ $subscription->user?->page?->first()?->page_name }}
-                                            <br>
-                                            <i class="fa fa-user"> {{ $subscription->user->name }}</i>
+                                            {{ $subscription->domain_name }}
                                         </td>
                                         <td>{{ $subscription->package_name }}</td>
                                         <td>{{ $subscription->package_price }}</td>
