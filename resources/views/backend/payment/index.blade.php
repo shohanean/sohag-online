@@ -40,6 +40,7 @@
                         <thead class="border fw-bold">
                             <tr>
                                 <th>Client Name</th>
+                                <th>Page Name</th>
                                 <th>Total</th>
                                 <th>Paid</th>
                                 <th>Due</th>
@@ -48,6 +49,7 @@
                         <tbody class="border">
                             <tr>
                                 <td>{{ $client_wallet->user->name }}</td>
+                                <td>{{ $client_wallet->user->page->first()->page_name }}</td>
                                 <td>{{ $client_wallet->total }}</td>
                                 <td>{{ $client_wallet->paid }}</td>
                                 <td>{{ $client_wallet->due }}</td>
@@ -236,7 +238,9 @@
                                             <form action="{{ route('payment.destroy', $payment->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button onclick="return confirm('Are you sure you want to delete this item?')" type="submit" class="btn btn-sm btn-danger">
+                                                <button
+                                                    onclick="return confirm('Are you sure you want to delete this item?')"
+                                                    type="submit" class="btn btn-sm btn-danger">
                                                     <i class="fa fa-trash"></i>
                                                 </button>
                                             </form>

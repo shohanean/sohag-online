@@ -53,13 +53,18 @@
                                 <tr>
                                     <td colspan="50">
                                         <i class="fa fa-user-circle text-dark"></i>
-                                        {{ App\Models\User::find($userId)?->name }}
+                                        {{ App\Models\User::withTrashed()->where('id', $userId)->first()->name }}
+                                        @if (App\Models\User::withTrashed()->where('id', $userId)->first()->deleted_at)
+                                            <span class="badge badge-secondary">Deleted Client</span>
+                                        @endif
                                     </td>
                                 </tr>
                                 @foreach ($userSubscriptions as $subscription)
                                     <tr>
                                         <td>
-                                            {{ $subscription->domain_name }}
+                                            <i class="fa fa-globe"></i> {{ $subscription->domain_name }}
+                                            <br>
+                                            <i class="fa fa-envelope"></i> {{ $subscription->user->email }}
                                         </td>
                                         <td>{{ $subscription->package_name }}</td>
                                         <td>{{ $subscription->package_price }}</td>
