@@ -176,9 +176,12 @@ class HomeController extends Controller
             [$start, $end] = explode(' - ', $request->date_range);
             $startDate = Carbon::parse($start)->toDateString();
             $endDate = Carbon::parse($end)->toDateString();
-            $subscriptions = Subscription::with('user','subscription_fees')->whereBetween('billing_date', [$startDate, $endDate])->orderBy('billing_date', 'asc')->get();
+            $subscriptions = Subscription::with('user','subscription_fees')->whereBetween('billing_date', [$startDate, $endDate])->orderBy('billing_date', 'asc')->get()->groupBy('user_id');
         }else{
-            $subscriptions = Subscription::with('user','subscription_fees')->orderBy('billing_date', 'asc')->get();
+            $subscriptions = Subscription::with('user','subscription_fees')
+                                            ->orderBy('billing_date', 'asc')
+                                            ->get()
+                                            ->groupBy('user_id');
         }
         return view('backend.misc.upcoming_subscriptions', [
             'subscriptions' => $subscriptions

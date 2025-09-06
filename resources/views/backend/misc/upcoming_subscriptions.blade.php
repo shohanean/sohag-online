@@ -36,7 +36,6 @@
                     <table id="myTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>SL. No.</th>
                                 <th>Page Name</th>
                                 <th>Package Name</th>
                                 <th>Package Price</th>
@@ -48,59 +47,58 @@
                             @php
                                 $tt = 1;
                             @endphp
-                            @foreach ($subscriptions as $subscription)
-                                {{-- <tr class="@if ($subscription->subscription_fees->count() != 0) d-none @endif"> --}}
-                                <tr>
-                                    <td>{{ $loop->index + 1 }}</td>
-                                    <td>
-                                        {{ $subscription->user?->page?->first()?->page_name }}
-                                        {{-- <br>
-                                        <i class="fa fa-user"> {{ $subscription->user->name }}</i> --}}
-                                    </td>
-                                    <td>{{ $subscription->package_name }}</td>
-                                    <td>{{ $subscription->package_price }}</td>
-                                    <td>
-                                        @php
-                                            $today = \Carbon\Carbon::today();
-                                            $billingDate = \Carbon\Carbon::parse($subscription->billing_date);
-                                            $diff = $today->diffInDays($billingDate, false);
-                                        @endphp
+                            @foreach ($subscriptions as $userId => $userSubscriptions)
+                                @foreach ($userSubscriptions as $subscription)
+                                    <tr>
+                                        <td>
+                                            {{ $subscription->user?->page?->first()?->page_name }}
+                                            <br>
+                                            <i class="fa fa-user"> {{ $subscription->user->name }}</i>
+                                        </td>
+                                        <td>{{ $subscription->package_name }}</td>
+                                        <td>{{ $subscription->package_price }}</td>
+                                        <td>
+                                            @php
+                                                $today = \Carbon\Carbon::today();
+                                                $billingDate = \Carbon\Carbon::parse($subscription->billing_date);
+                                                $diff = $today->diffInDays($billingDate, false);
+                                            @endphp
 
-                                        @if ($billingDate->isToday())
-                                            <span class="badge bg-warning">Due Today</span>
-                                        @elseif ($billingDate->isTomorrow())
-                                            <span class="badge bg-info">Due Tomorrow</span>
-                                        @elseif ($billingDate->isYesterday())
-                                            <span class="badge bg-danger">Expired Yesterday</span>
-                                        @elseif ($diff > 0)
-                                            <span class="badge bg-success">{{ $diff }} days left</span>
-                                        @else
-                                            <span class="badge bg-danger">Expired {{ abs($diff) }} days ago</span>
-                                        @endif
-                                        <br>
-                                        {{ $subscription->billing_date?->format('d M, Y') }}
-                                    </td>
-                                    {{-- <td>
-                                        count#{{ $subscription->subscription_fees->count() }}
-                                        <br>
-                                        {{ $subscription->subscription_fees }}
-                                    </td>
-                                    <td>
-                                        @if ($subscription->subscription_fees->count() == 0)
-                                            <div class="alert alert-danger">{{ $tt++ }}</div>
-                                        @endif
-                                    </td> --}}
-                                    <td>
-                                        <div class="d-flex gap-2">
-                                            <form action="{{ route('subscription.payment', $subscription->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                <button type="submit" class="btn btn-sm btn-info">Make Payment</button>
-                                            </form>
-                                            {{-- <a href="" class="btn btn-sm btn-success">Details</a> --}}
-                                        </div>
-                                    </td>
-                                </tr>
+                                            @if ($billingDate->isToday())
+                                                <span class="badge bg-warning">Due Today</span>
+                                            @elseif ($billingDate->isTomorrow())
+                                                <span class="badge bg-info">Due Tomorrow</span>
+                                            @elseif ($billingDate->isYesterday())
+                                                <span class="badge bg-danger">Expired Yesterday</span>
+                                            @elseif ($diff > 0)
+                                                <span class="badge bg-success">{{ $diff }} days left</span>
+                                            @else
+                                                <span class="badge bg-danger">Expired {{ abs($diff) }} days ago</span>
+                                            @endif
+                                            <br>
+                                            {{ $subscription->billing_date?->format('d M, Y') }}
+                                        </td>
+                                        {{-- <td>
+                                            count#{{ $subscription->subscription_fees->count() }}
+                                            <br>
+                                            {{ $subscription->subscription_fees }}
+                                        </td>
+                                        <td>
+                                            @if ($subscription->subscription_fees->count() == 0)
+                                                <div class="alert alert-danger">{{ $tt++ }}</div>
+                                            @endif
+                                        </td> --}}
+                                        <td>
+                                            <div class="d-flex gap-2">
+                                                <form action="{{ route('subscription.payment', $subscription->id) }}"
+                                                    method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-sm btn-info">Make Payment</button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @endforeach
                         </tbody>
                     </table>
