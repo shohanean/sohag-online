@@ -37,6 +37,7 @@ Route::get('/subscriptions/list/{subscription}/details', [HomeController::class,
 Route::put('/subscription/{subscription}', [HomeController::class, 'subscription_update'])->name('subscription.update');
 Route::delete('/subscription/{subscription}', [HomeController::class, 'subscription_destroy'])->name('subscription.destroy');
 Route::get('/upcoming/subscriptions', [HomeController::class, 'upcoming_subscriptions'])->name('upcoming.subscriptions');
+Route::get('/upcoming/subscriptions/details/{subscription}', [HomeController::class, 'upcoming_subscriptions_details'])->name('upcoming.subscriptions.details');
 Route::post('/subscription/payment/{subscription}', [HomeController::class, 'subscription_payment'])->name('subscription.payment');
 Route::get('/server', [HomeController::class, 'server'])->name('server.index');
 Route::put('/server/{server}', [HomeController::class, 'server_update'])->name('server.update');
@@ -98,6 +99,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('subscription/details/{subscription_id}', [ClientController::class, 'subscription_details'])->name('subscription.details');
 
     //bKash Payment Routes
-    Route::post('/bkash/pay/{subscription_fee_id}', [BkashController::class, 'pay'])->name('pay');
+    Route::post('/bkash/pay/{subscription}', [BkashController::class, 'pay'])->name('pay');
 });
 Route::get('/bkash/callback', [BkashController::class, 'callback'])->name('callback');

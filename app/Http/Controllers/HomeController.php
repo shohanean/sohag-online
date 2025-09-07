@@ -172,39 +172,46 @@ class HomeController extends Controller
     }
     public function upcoming_subscriptions(Request $request)
     {
-        if($request->date_range){
+        if ($request->date_range) {
             [$start, $end] = explode(' - ', $request->date_range);
             $startDate = Carbon::parse($start)->toDateString();
             $endDate = Carbon::parse($end)->toDateString();
-            $subscriptions = Subscription::with('user','subscription_fees')->whereBetween('billing_date', [$startDate, $endDate])->orderBy('billing_date', 'asc')->get()->groupBy('user_id');
-        }else{
-            $subscriptions = Subscription::with('user','subscription_fees')
-                                            ->orderBy('billing_date', 'asc')
-                                            ->get()
-                                            ->groupBy('user_id');
+            $subscriptions = Subscription::with('user', 'subscription_fees')->whereBetween('billing_date', [$startDate, $endDate])->orderBy('billing_date', 'asc')->get()->groupBy('user_id');
+        } else {
+            $subscriptions = Subscription::with('user', 'subscription_fees')
+                ->orderBy('billing_date', 'asc')
+                ->get()
+                ->groupBy('user_id');
         }
         return view('backend.misc.upcoming_subscriptions', [
             'subscriptions' => $subscriptions
         ]);
     }
-    public function subscription_payment(Subscription $subscription)
+    public function upcoming_subscriptions_details(Subscription $subscription)
     {
-        // return "1 Month Subscription added for ".$subscription->user->page->first()->page_name;
-        Subscription_fee::create([
-            'subscription_id' => $subscription->id,
-            'user_id' => $subscription->user_id,
-            'package_id' => $subscription->package_id,
-            'package_name' => $subscription->package_name,
-            'package_price' => $subscription->package_price,
-            'generated_date' => Carbon::now()->toDateString(),
-            'due_date' => $subscription->billing_date->toDateString(),
-            'paid_date' => Carbon::now()->toDateString(),
-            'status' => 'paid',
-            'generated_by' => auth()->id(),
+        return view('backend.misc.upcoming_subscriptions_details', [
+            'subscription' => $subscription
         ]);
-        $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
-        $subscription->save();
-        return back()->with('update', "1 Month Subscription added for ".$subscription->user->page->first()->page_name);
+    }
+    public function subscription_payment(Subscription $subscription, Request $request)
+    {
+        for ($i = 0; $i < $request->no_of_month; $i++) {
+            Subscription_fee::create([
+                'subscription_id' => $subscription->id,
+                'user_id' => $subscription->user_id,
+                'package_id' => $subscription->package_id,
+                'package_name' => $subscription->package_name,
+                'package_price' => $subscription->package_price,
+                'generated_date' => Carbon::now()->toDateString(),
+                'due_date' => $subscription->billing_date->toDateString(),
+                'paid_date' => Carbon::now()->toDateString(),
+                'status' => 'paid',
+                'generated_by' => auth()->id(),
+            ]);
+            $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
+            $subscription->save();
+        }
+        return back()->with('update', 'Subscription added successfully!');
     }
     public function server()
     {

@@ -32,9 +32,6 @@
                 <a href="{{ route('upcoming.subscriptions') }}?date_range=1900-01-01+-+{{ \Carbon\Carbon::yesterday()->format('Y-m-d') }}"
                     class="btn btn-sm bg-warning">Show Expired Only</a>
                 <div class="table-responsive">
-                    @session('update')
-                        <div class="alert alert-info">{{ session('update') }}</div>
-                    @endsession
                     <table id="myTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -46,70 +43,57 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $tt = 1;
-                            @endphp
                             @foreach ($subscriptions as $userId => $userSubscriptions)
-                                <tr>
-                                    <td colspan="50">
-                                        <i class="fa fa-user-circle text-dark"></i>
-                                        {{ App\Models\User::withTrashed()->where('id', $userId)->first()->name }}
-                                        @if (App\Models\User::withTrashed()->where('id', $userId)->first()->deleted_at)
-                                            <span class="badge badge-secondary">Deleted Client</span>
-                                        @endif
-                                    </td>
-                                </tr>
-                                @foreach ($userSubscriptions as $subscription)
+                                @if (empty(App\Models\User::withTrashed()->where('id', $userId)->first()->deleted_at))
                                     <tr>
-                                        <td>
-                                            <i class="fa fa-globe"></i> {{ $subscription->domain_name }}
-                                            <br>
-                                            <i class="fa fa-envelope"></i> {{ $subscription->user->email }}
-                                        </td>
-                                        <td>{{ $subscription->package_name }}</td>
-                                        <td>{{ $subscription->package_price }}</td>
-                                        <td>
-                                            @php
-                                                $today = \Carbon\Carbon::today();
-                                                $billingDate = \Carbon\Carbon::parse($subscription->billing_date);
-                                                $diff = $today->diffInDays($billingDate, false);
-                                            @endphp
-
-                                            @if ($billingDate->isToday())
-                                                <span class="badge bg-warning">Due Today</span>
-                                            @elseif ($billingDate->isTomorrow())
-                                                <span class="badge bg-info">Due Tomorrow</span>
-                                            @elseif ($billingDate->isYesterday())
-                                                <span class="badge bg-danger">Expired Yesterday</span>
-                                            @elseif ($diff > 0)
-                                                <span class="badge bg-success">{{ $diff }} days left</span>
-                                            @else
-                                                <span class="badge bg-danger">Expired {{ abs($diff) }} days ago</span>
-                                            @endif
-                                            <br>
-                                            {{ $subscription->billing_date?->format('d M, Y') }}
-                                        </td>
-                                        {{-- <td>
-                                            count#{{ $subscription->subscription_fees->count() }}
-                                            <br>
-                                            {{ $subscription->subscription_fees }}
-                                        </td>
-                                        <td>
-                                            @if ($subscription->subscription_fees->count() == 0)
-                                                <div class="alert alert-danger">{{ $tt++ }}</div>
-                                            @endif
-                                        </td> --}}
-                                        <td>
-                                            <div class="d-flex gap-2">
-                                                <form action="{{ route('subscription.payment', $subscription->id) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    <button type="submit" class="btn btn-sm btn-info">Make Payment</button>
-                                                </form>
-                                            </div>
+                                        <td colspan="50">
+                                            <i class="fa fa-user-circle text-dark"></i>
+                                            {{ App\Models\User::withTrashed()->where('id', $userId)->first()->name }}
                                         </td>
                                     </tr>
-                                @endforeach
+                                    @foreach ($userSubscriptions as $subscription)
+                                        <tr>
+                                            <td>
+                                                <div class="mx-5">
+                                                    <i class="fa fa-globe"></i> {{ $subscription->domain_name }}
+                                                    <br>
+                                                    <i class="fa fa-envelope"></i> {{ $subscription->user->email }}
+                                                </div>
+                                            </td>
+                                            <td>{{ $subscription->package_name }}</td>
+                                            <td>{{ $subscription->package_price }}</td>
+                                            <td>
+                                                @php
+                                                    $today = \Carbon\Carbon::today();
+                                                    $billingDate = \Carbon\Carbon::parse($subscription->billing_date);
+                                                    $diff = $today->diffInDays($billingDate, false);
+                                                @endphp
+
+                                                @if ($billingDate->isToday())
+                                                    <span class="badge bg-warning">Due Today</span>
+                                                @elseif ($billingDate->isTomorrow())
+                                                    <span class="badge bg-info">Due Tomorrow</span>
+                                                @elseif ($billingDate->isYesterday())
+                                                    <span class="badge bg-danger">Expired Yesterday</span>
+                                                @elseif ($diff > 0)
+                                                    <span class="badge bg-success">{{ $diff }} days left</span>
+                                                @else
+                                                    <span class="badge bg-danger">Expired {{ abs($diff) }} days
+                                                        ago</span>
+                                                @endif
+                                                <br>
+                                                {{ $subscription->billing_date?->format('d M, Y') }}
+                                            </td>
+                                            <td>
+                                                <div class="d-flex gap-2">
+                                                    <a target="_blank"
+                                                        href="{{ route('upcoming.subscriptions.details', $subscription->id) }}"
+                                                        class="btn btn-sm bg-success text-white">Details</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             @endforeach
                         </tbody>
                     </table>

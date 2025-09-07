@@ -93,14 +93,9 @@
                     <div style="background: rgb(147, 235, 255)" class="card shadow rounded-3">
                         <div class="card-body text-center">
                             <h4 class="card-title">{{ $user_subscription->package_name }}</h4>
+                            <span class="badge bg-secondary text-dark mb-2">{{ $user_subscription->domain_name }}</span>
                             <p class="card-text">৳ {{ $user_subscription->package_price }} / month</p>
-                            <p class="mb-2">Billing Date: {{ $user_subscription->billing_date->format('d/m/Y') }}</p>
-                            {{-- @if ($user_subscription->package->description)
-                                <p class="mb-2">Description:</p>
-                                <p class="mb-2">
-                                    {{ $user_subscription->package->description }}
-                                </p>
-                            @endif --}}
+                            <p class="mb-2">Billing Date: {{ $user_subscription->billing_date->format('d M, Y') }}</p>
                             <a href="{{ route('subscription.details', $user_subscription->id) }}"
                                 class="btn btn-light btn-sm text-dark">Details</a>
                         </div>

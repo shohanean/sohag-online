@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\BkashPaymentService;
 use Illuminate\Http\Request;
+use App\Models\Subscription;
 use App\Models\Subscription_fee;
 
 class BkashController extends Controller
@@ -12,10 +13,10 @@ class BkashController extends Controller
     {
         return "asd";
     }
-    public function pay(BkashPaymentService $bkash, $subscription_fee_id)
+    public function pay(BkashPaymentService $bkash, Subscription $subscription)
     {
         $invoice = 'SHOHAN-' . time();
-        $payment = $bkash->createPayment(Subscription_fee::findOrFail($subscription_fee_id)->package_price, $invoice);
+        $payment = $bkash->createPayment($subscription->package_price, $invoice);
         // $payment = $bkash->createPayment(Subscription_fee::findOrFail($subscription_fee_id)->package_price, $invoice, [
         //     'merchantInvoiceNumber' => $invoice, // Pass your invoice
         // ]);
