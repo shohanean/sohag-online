@@ -7,6 +7,7 @@ use App\Http\Controllers\{FrontendController, HomeController, SocialController, 
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BkashController;
+use App\Http\Controllers\UddoktaPayController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -102,3 +103,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bkash/pay/{subscription}', [BkashController::class, 'pay'])->name('pay');
 });
 Route::get('/bkash/callback', [BkashController::class, 'callback'])->name('callback');
+
+Route::get('pay', [UddoktapayController::class, 'show'])->name('uddoktapay.payment-form');
+Route::post('pay', [UddoktapayController::class, 'pay'])->name('uddoktapay.pay');
+Route::get('success', [UddoktapayController::class, 'success'])->name('uddoktapay.success');
+Route::get('cancel', [UddoktapayController::class, 'cancel'])->name('uddoktapay.cancel');

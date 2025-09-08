@@ -15,7 +15,7 @@ class BkashController extends Controller
     }
     public function pay(BkashPaymentService $bkash, Subscription $subscription)
     {
-        $invoice = 'SHOHAN-' . time();
+        $invoice = 'idno556';
         $payment = $bkash->createPayment($subscription->package_price, $invoice);
         // $payment = $bkash->createPayment(Subscription_fee::findOrFail($subscription_fee_id)->package_price, $invoice, [
         //     'merchantInvoiceNumber' => $invoice, // Pass your invoice
@@ -32,7 +32,7 @@ class BkashController extends Controller
 
     public function callback(Request $request, BkashPaymentService $bkash)
     {
-        // return $invoice = $request->input('merchantInvoiceNumber'); // your original invoice
+        $invoice = $request->input('merchantInvoiceNumber'); // your original invoice
         $status = $request->input('status');      // works for GET & POST
         $paymentID = $request->input('paymentID'); // works for GET & POST
 
@@ -43,7 +43,7 @@ class BkashController extends Controller
                 // return $request;
                 // return $invoice = $request->input('merchantInvoiceNumber');
                 // return $response = $bkash->searchPayment($execute['trxID']);
-                return "Payment Successful! Transaction ID: " . $execute['trxID'];
+                return $invoice . "Payment Successful! Transaction ID: " . $execute['trxID'];
             }
             return "Payment execution failed. " . ($execute['statusMessage'] ?? 'Unknown error');
         }
