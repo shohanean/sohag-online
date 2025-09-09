@@ -104,7 +104,8 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::get('/bkash/callback', [BkashController::class, 'callback'])->name('callback');
 
-Route::get('pay', [UddoktapayController::class, 'show'])->name('uddoktapay.payment-form');
-Route::post('pay', [UddoktapayController::class, 'pay'])->name('uddoktapay.pay');
-Route::get('success', [UddoktapayController::class, 'success'])->name('uddoktapay.success');
-Route::get('cancel', [UddoktapayController::class, 'cancel'])->name('uddoktapay.cancel');
+Route::post('/checkout/{subscription}', [UddoktaPayController::class, 'checkout'])->name('uddoktapay.checkout');
+Route::get('/verify', [UddoktaPayController::class, 'verify'])->name('uddoktapay.verify');
+Route::get('/cancel', [UddoktaPayController::class, 'cancel'])->name('uddoktapay.cancel');
+Route::post('/ipn', [UddoktaPayController::class, 'ipn'])->name('uddoktapay.ipn');
+Route::post('/refund', [UddoktaPayController::class, 'refund'])->name('uddoktapay.refund');

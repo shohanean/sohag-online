@@ -32,6 +32,11 @@
             <!--end::Row-->
             <div class="row">
                 <div class="table-responsive">
+                    @if (session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
                     <table class="table table-bordered text-center">
                         <thead class="border fw-bold">
                             <tr>
@@ -71,13 +76,23 @@
                                 </td>
                                 <td>{{ $subscription->created_at->diffForHumans() }}</td>
                                 <td>
-                                    <form action="{{ route('pay', $subscription->id) }}" method="POST">
+                                    {{-- <form action="{{ route('pay', $subscription->id) }}" method="POST">
                                         @csrf
                                         <button type="submit"
                                             style="align-items:center;padding:5px 10px;border:none;border-radius:5px;">
                                             <img src="https://cdn.worldvectorlogo.com/logos/bkash.svg" alt="bKash"
                                                 style="height:20px;margin-right:8px;">
                                             Pay with bKash
+                                        </button>
+                                    </form>
+                                    <br> --}}
+                                    <form action="{{ route('uddoktapay.checkout', $subscription->id) }}" method="POST">
+                                        @csrf
+                                        <button disabled type="submit"
+                                            style="align-items:center;padding:5px 10px;border:none;border-radius:5px;">
+                                            <img src="https://uddoktapay.com/assets/images/logo.png" alt="uddoktapay"
+                                                style="height:20px;margin-right:8px;">
+                                            Pay with uddoktapay
                                         </button>
                                     </form>
                                 </td>

@@ -32,6 +32,9 @@
                 <a href="{{ route('upcoming.subscriptions') }}?date_range=1900-01-01+-+{{ \Carbon\Carbon::yesterday()->format('Y-m-d') }}"
                     class="btn btn-sm bg-warning">Show Expired Only</a>
                 <div class="table-responsive">
+                    @session('update')
+                        <div class="alert alert-info">{{ session('update') }}</div>
+                    @endsession
                     <table id="myTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -86,6 +89,13 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-2">
+                                                    <form action="{{ route('subscription.payment', $subscription->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        <input hidden type="text" name="no_of_month" value="1">
+                                                        <button class="btn btn-sm bg-info text-white" type="submit">Make
+                                                            Payment</button>
+                                                    </form>
                                                     <a target="_blank"
                                                         href="{{ route('upcoming.subscriptions.details', $subscription->id) }}"
                                                         class="btn btn-sm bg-success text-white">Details</a>

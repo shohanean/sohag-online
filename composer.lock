@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d92400461ed156e1417c81f65a28e8c7",
+    "content-hash": "802593a579be5f2126851621a63409a5",
     "packages": [
         {
             "name": "anhskohbo/no-captcha",
@@ -1789,16 +1789,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v10.48.29",
+            "version": "v10.49.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "8f7f9247cb8aad1a769d6b9815a6623d89b46b47"
+                "reference": "b6848517f93445e7f243aaa4f3c32cc70f6739e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/8f7f9247cb8aad1a769d6b9815a6623d89b46b47",
-                "reference": "8f7f9247cb8aad1a769d6b9815a6623d89b46b47",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/b6848517f93445e7f243aaa4f3c32cc70f6739e2",
+                "reference": "b6848517f93445e7f243aaa4f3c32cc70f6739e2",
                 "shasum": ""
             },
             "require": {
@@ -1957,6 +1957,7 @@
             },
             "autoload": {
                 "files": [
+                    "src/Illuminate/Collections/functions.php",
                     "src/Illuminate/Collections/helpers.php",
                     "src/Illuminate/Events/functions.php",
                     "src/Illuminate/Filesystem/functions.php",
@@ -1992,7 +1993,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2025-03-12T14:42:01+00:00"
+            "time": "2025-09-08T22:02:05+00:00"
         },
         {
             "name": "laravel/prompts",
@@ -7647,6 +7648,49 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.3.0"
             },
             "time": "2024-12-21T16:25:41+00:00"
+        },
+        {
+            "name": "uddoktapay/laravel-sdk",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/UddoktaPay/LaravelSDK.git",
+                "reference": "7697a0f261c6e423968fe8839267edc3d1eb9ccc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/UddoktaPay/LaravelSDK/zipball/7697a0f261c6e423968fe8839267edc3d1eb9ccc",
+                "reference": "7697a0f261c6e423968fe8839267edc3d1eb9ccc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.3.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.18"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "UddoktaPay\\LaravelSDK\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "UddoktaPay Team",
+                    "email": "info@uddoktapay.com"
+                }
+            ],
+            "description": "UddoktaPay offers a range of payment automation solutions for small entrepreneurs in Bangladesh.",
+            "support": {
+                "issues": "https://github.com/UddoktaPay/LaravelSDK/issues",
+                "source": "https://github.com/UddoktaPay/LaravelSDK/tree/2.1.0"
+            },
+            "time": "2025-01-31T13:21:55+00:00"
         },
         {
             "name": "vlucas/phpdotenv",

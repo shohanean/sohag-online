@@ -2,122 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Library\UddoktaPay;
-use App\Models\Order;
-use Exception;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use UddoktaPay\LaravelSDK\UddoktaPay;
+use UddoktaPay\LaravelSDK\Requests\CheckoutRequest;
+use App\Models\{Subscription, Subscription_fee, User};
 
-class UddoktapayController extends Controller
+class UddoktaPayController extends Controller
 {
-
-    /**
-     * Show the payment view
-     *
-     * @return void
-     */
-    public function show()
+    public function checkout(Subscription $subscription)
     {
-        return view('uddoktapay.payment-form');
-    }
-
-    /**
-     * Initializes the payment
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function pay(Request $request)
-    {
-        $validatedData = $request->validate([
-            'full_name' => ['required', 'string'],
-            'email'     => ['required', 'email'],
-            'amount'    => ['required', 'integer'],
-        ]);
-
-        // $order = Order::create([
-        //     'full_name' => $validatedData['full_name'],
-        //     'email'     => $validatedData['email'],
-        //     'amount'    => $validatedData['amount'],
-        // ]);
-
-        $requestData = [
-            'full_name'    => $validatedData['full_name'],
-            'email'        => $validatedData['email'],
-            'amount'       => $validatedData['amount'],
-            'metadata'     => [
-                // 'order_id'   => $order->id,
-                'order_id'   => 1,
-                'metadata_1' => 'foo',
-                'metadata_2' => 'bar',
-            ],
-            'redirect_url'  => route('uddoktapay.success'),
-            'return_type'   => 'GET',
-            'cancel_url'    => route('uddoktapay.cancel'),
-            'webhook_url'   => route('uddoktapay.webhook'),
-        ];
-
+        $user = User::find($subscription->user_id);
+        $uddoktapay = UddoktaPay::make(env('UDDOKTAPAY_API_KEY'), env('UDDOKTAPAY_API_URL'));
         try {
-            $paymentUrl = UddoktaPay::init_payment($requestData);
-            return redirect($paymentUrl);
-        } catch (Exception $e) {
-            dd($e->getMessage());
+            $checkoutRequest = CheckoutRequest::make()
+                ->setFullName($user->name)
+                ->setEmail($user->email)
+                // ->setAmount($subscription->package_price)
+                ->setAmount(1)
+                ->addMetadata('subscription_id', $subscription->id)
+                ->setRedirectUrl(env('UDDOKTAPAY_CALLBACK_URL'))
+                ->setCancelUrl(route('uddoktapay.cancel'))
+                ->setWebhookUrl(route('uddoktapay.ipn'));
+
+            $response = $uddoktapay->checkout($checkoutRequest);
+
+            if ($response->failed()) {
+                dd($response->message());
+            }
+
+            return redirect($response->paymentURL());
+        } catch (\UddoktaPay\LaravelSDK\Exceptions\UddoktaPayException $e) {
+            dd("Initialization Error: " . $e->getMessage());
         }
     }
-
-    /**
-     * Reponse from sever
-     *
-     * @param Request $request
-     * @return void
-     */
-    public function webhook(Request $request)
+    public function verify(Request $request)
     {
+        $uddoktapay = UddoktaPay::make(env('UDDOKTAPAY_API_KEY'), env('UDDOKTAPAY_API_URL'));
+        try {
+            $response = $uddoktapay->verify($request);
 
-        $headerAPI = isset($_SERVER['HTTP_RT_UDDOKTAPAY_API_KEY']) ? $_SERVER['HTTP_RT_UDDOKTAPAY_API_KEY'] : NULL;
+            if ($response->success()) {
+                // Handle successful status
+                $success_response = json_decode(json_encode($response->toArray()));
+                $subscription = Subscription::find($success_response->metadata->subscription_id);
+                Subscription_fee::create([
+                    'subscription_id' => $subscription->id,
+                    'user_id' => $subscription->user_id,
+                    'package_id' => $subscription->package_id,
+                    'package_name' => $subscription->package_name,
+                    'package_price' => $subscription->package_price,
+                    'generated_date' => Carbon::now()->toDateString(),
+                    'due_date' => $subscription->billing_date->toDateString(),
+                    'paid_date' => Carbon::now()->toDateString(),
+                    'status' => 'paid',
+                    'generated_by' => $subscription->user_id,
+                ]);
+                $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
+                $subscription->save();
 
-        if (empty($headerAPI)) {
-            return response("Api key not found", 403);
+                return "very good";
+                // return redirect()
+                //     ->route('subscription.details', ['subscription_id' => $subscription->id])
+                //     ->with('success', 'Subscription payment successfully done!');
+            } elseif ($response->pending()) {
+                // Handle pending status
+                return "payment pending";
+            } elseif ($response->failed()) {
+                // Handle failure
+                return "payment failed";
+            }
+        } catch (\UddoktaPay\LaravelSDK\Exceptions\UddoktaPayException $e) {
+            dd("Verification Error: " . $e->getMessage());
         }
-
-        if ($headerAPI != env("UDDOKTAPAY_API_KEY")) {
-            return response("Unauthorized Action", 403);
-        }
-
-        $bodyContent = trim($request->getContent());
-        $bodyData = json_decode($bodyContent);
-        $data = UddoktaPay::verify_payment($bodyData->invoice_id);
-        if (isset($data['status']) && $data['status'] == 'COMPLETED') {
-            // Do action with $data
-        }
-    }
-
-    /**
-     * Success URL
-     *
-     * @return void
-     */
-    public function success(Request $request)
-    {
-        if (empty($request->invoice_id)) {
-            die('Invalid Request');
-        }
-        $data = UddoktaPay::verify_payment($request->invoice_id);
-        if (isset($data['status']) && $data['status'] == 'COMPLETED') {
-            // do action with $data
-            dd($data);
-        } else {
-            // pending payment
-            dd($data);
-        }
-    }
-
-    /**
-     * Cancel URL
-     *
-     * @return void
-     */
-    public function cancel(Request $request)
-    {
-        return 'Payment is cancelled';
     }
 }
