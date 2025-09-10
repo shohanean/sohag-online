@@ -101,11 +101,13 @@ Route::middleware(['auth'])->group(function () {
 
     //bKash Payment Routes
     Route::post('/bkash/pay/{subscription}', [BkashController::class, 'pay'])->name('pay');
-});
-Route::get('/bkash/callback', [BkashController::class, 'callback'])->name('callback');
 
-Route::post('/checkout/{subscription}', [UddoktaPayController::class, 'checkout'])->name('uddoktapay.checkout');
-Route::get('/verify', [UddoktaPayController::class, 'verify'])->name('uddoktapay.verify');
-Route::get('/cancel', [UddoktaPayController::class, 'cancel'])->name('uddoktapay.cancel');
-Route::post('/ipn', [UddoktaPayController::class, 'ipn'])->name('uddoktapay.ipn');
-Route::post('/refund', [UddoktaPayController::class, 'refund'])->name('uddoktapay.refund');
+    //UddoktaPay Payment Routes
+    Route::post('/checkout/{subscription}', [UddoktaPayController::class, 'checkout'])->name('uddoktapay.checkout');
+    Route::get('/verify', [UddoktaPayController::class, 'verify'])->name('uddoktapay.verify');
+    Route::get('/cancel', [UddoktaPayController::class, 'cancel'])->name('uddoktapay.cancel');
+    Route::post('/ipn', [UddoktaPayController::class, 'ipn'])->name('uddoktapay.ipn');
+    Route::post('/refund', [UddoktaPayController::class, 'refund'])->name('uddoktapay.refund');
+});
+
+Route::get('/bkash/callback', [BkashController::class, 'callback'])->name('callback');

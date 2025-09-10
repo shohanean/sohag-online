@@ -19,8 +19,7 @@ class UddoktaPayController extends Controller
             $checkoutRequest = CheckoutRequest::make()
                 ->setFullName($user->name)
                 ->setEmail($user->email)
-                // ->setAmount($subscription->package_price)
-                ->setAmount(1)
+                ->setAmount($subscription->package_price)
                 ->addMetadata('subscription_id', $subscription->id)
                 ->setRedirectUrl(env('UDDOKTAPAY_CALLBACK_URL'))
                 ->setCancelUrl(route('uddoktapay.cancel'))
@@ -46,6 +45,7 @@ class UddoktaPayController extends Controller
             if ($response->success()) {
                 // Handle successful status
                 $success_response = json_decode(json_encode($response->toArray()));
+                $remarks = "Transaction ID: ".$success_response->transaction_id."<br>Payment Method: ".$success_response->payment_method;
                 $subscription = Subscription::find($success_response->metadata->subscription_id);
                 Subscription_fee::create([
                     'subscription_id' => $subscription->id,
@@ -58,23 +58,54 @@ class UddoktaPayController extends Controller
                     'paid_date' => Carbon::now()->toDateString(),
                     'status' => 'paid',
                     'generated_by' => $subscription->user_id,
+                    'remarks' => $remarks,
                 ]);
                 $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
                 $subscription->save();
-
-                return "very good";
-                // return redirect()
-                //     ->route('subscription.details', ['subscription_id' => $subscription->id])
-                //     ->with('success', 'Subscription payment successfully done!');
+                return redirect()
+                    ->route('subscription.details', ['subscription_id' => $subscription->id])
+                    ->with('success', 'Subscription payment successfully done!');
             } elseif ($response->pending()) {
                 // Handle pending status
-                return "payment pending";
+                $success_response = json_decode(json_encode($response->toArray()));
+                $remarks = "Transaction ID: ".$success_response->transaction_id."<br>Payment Method: ".$success_response->payment_method;
+                $subscription = Subscription::find($success_response->metadata->subscription_id);
+                Subscription_fee::create([
+                    'subscription_id' => $subscription->id,
+                    'user_id' => $subscription->user_id,
+                    'package_id' => $subscription->package_id,
+                    'package_name' => $subscription->package_name,
+                    'package_price' => $subscription->package_price,
+                    'generated_date' => Carbon::now()->toDateString(),
+                    'due_date' => $subscription->billing_date->toDateString(),
+                    'paid_date' => Carbon::now()->toDateString(),
+                    'status' => 'pending',
+                    'generated_by' => $subscription->user_id,
+                    'remarks' => $remarks,
+                ]);
+                $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
+                $subscription->save();
+                return redirect()
+                    ->route('subscription.details', ['subscription_id' => $subscription->id])
+                    ->with('success', 'Subscription payment sent successfully but pending now!');
             } elseif ($response->failed()) {
                 // Handle failure
-                return "payment failed";
+                return "Payment Failed";
             }
         } catch (\UddoktaPay\LaravelSDK\Exceptions\UddoktaPayException $e) {
             dd("Verification Error: " . $e->getMessage());
         }
+    }
+    public function cancel()
+    {
+        abort(404);
+    }
+    public function ipn()
+    {
+        abort(404);
+    }
+    public function refund()
+    {
+        abort(404);
     }
 }
