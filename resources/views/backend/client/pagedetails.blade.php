@@ -121,53 +121,55 @@
                         <div id="kt_accordion_1_body_2" class="accordion-collapse collapse"
                             aria-labelledby="kt_accordion_1_header_2" data-bs-parent="#kt_accordion_1">
                             <div class="accordion-body">
-                                <table class="table table-bordered table-striped align-middle text-center">
-                                    <thead class="fw-bold">
-                                        <tr>
-                                            <th>SL. No.</th>
-                                            <th>Payment Method</th>
-                                            <th>Payment Amount</th>
-                                            <th>Transaction ID</th>
-                                            <th>Account Info</th>
-                                            <th>Remarks</th>
-                                            <th>Status</th>
-                                            <th>Added By</th>
-                                            <th>Created At</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @forelse ($payments as $payment)
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped align-middle text-center">
+                                        <thead class="fw-bold">
                                             <tr>
-                                                <td>{{ $loop->index + 1 }}</td>
-                                                <td>{{ $payment->payment_method }}</td>
-                                                <td>{{ $payment->payment_amount }}</td>
-                                                <td>{{ $payment->transaction_id }}</td>
-                                                <td>{{ $payment->account_info }}</td>
-                                                <td>{{ $payment->remarks }}</td>
-                                                <td>
-                                                    @if ($payment->status == 'approved')
-                                                        <span class="badge badge-success">{{ $payment->status }}</span>
-                                                    @else
-                                                        <span class="badge badge-danger">{{ $payment->status }}</span>
-                                                    @endif
-                                                </td>
-                                                <td><i class="fa fa-user"></i>
-                                                    {{ \App\Models\User::find($payment->added_by)->name }}</td>
-                                                <td>
-                                                    {{ $payment->created_at->format('jS F, Y') }}
-                                                    <br>
-                                                    <div class="badge bg-secondary text-dark">
-                                                        {{ $payment->created_at->diffForHumans() }}
-                                                    </div>
-                                                </td>
+                                                <th>SL. No.</th>
+                                                <th>Payment Method</th>
+                                                <th>Payment Amount</th>
+                                                <th>Transaction ID</th>
+                                                <th>Account Info</th>
+                                                <th>Remarks</th>
+                                                <th>Status</th>
+                                                <th>Added By</th>
+                                                <th>Created At</th>
                                             </tr>
-                                        @empty
-                                            <tr class="text-center">
-                                                <td colspan="50" class="text-danger">Nothing to show here</td>
-                                            </tr>
-                                        @endforelse
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($payments as $payment)
+                                                <tr>
+                                                    <td>{{ $loop->index + 1 }}</td>
+                                                    <td>{{ $payment->payment_method }}</td>
+                                                    <td>{{ $payment->payment_amount }}</td>
+                                                    <td>{{ $payment->transaction_id }}</td>
+                                                    <td>{{ $payment->account_info }}</td>
+                                                    <td>{{ $payment->remarks }}</td>
+                                                    <td>
+                                                        @if ($payment->status == 'approved')
+                                                            <span class="badge badge-success">{{ $payment->status }}</span>
+                                                        @else
+                                                            <span class="badge badge-danger">{{ $payment->status }}</span>
+                                                        @endif
+                                                    </td>
+                                                    <td><i class="fa fa-user"></i>
+                                                        {{ \App\Models\User::find($payment->added_by)->name }}</td>
+                                                    <td>
+                                                        {{ $payment->created_at->format('jS F, Y') }}
+                                                        <br>
+                                                        <div class="badge bg-secondary text-dark">
+                                                            {{ $payment->created_at->diffForHumans() }}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr class="text-center">
+                                                    <td colspan="50" class="text-danger">Nothing to show here</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

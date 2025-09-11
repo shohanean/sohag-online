@@ -43,9 +43,6 @@
                                 <th>Package Name</th>
                                 <th>Package Price</th>
                                 <th>Domain Name</th>
-                                <th>Next Billing Date</th>
-                                <th>Created At</th>
-                                <th>Pay Your Bill</th>
                             </tr>
                         </thead>
                         <tbody class="border">
@@ -53,6 +50,19 @@
                                 <td>{{ $subscription->package_name }}</td>
                                 <td>{{ $subscription->package_price }}</td>
                                 <td>{{ $subscription->domain_name ?? 'Not Set Yet' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-bordered text-center">
+                        <thead class="border fw-bold">
+                            <tr>
+                                <th>Next Billing Date</th>
+                                <th>Created At</th>
+                                <th>Pay Your Bill</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border">
+                            <tr>
                                 <td>
                                     @php
                                         $today = \Carbon\Carbon::today();

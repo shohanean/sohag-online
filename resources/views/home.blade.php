@@ -14,8 +14,8 @@
 
 @section('content')
     @if (auth()->user()->getRoleNames()->first() == 'Client')
-        <div class="row mb-xl-10">
-            <div class="col-xl-12 text-center">
+        <div class="row">
+            <div class="col-12 text-center">
                 <div class="alert alert-info">
                     <a href="https://adifyiq.com/sohag-online" target="_blank">
                         <h4 class="mt-3">See your ad result</h4>
@@ -24,7 +24,7 @@
             </div>
             <div class="row g-4">
                 <!-- Total Campaigns -->
-                <div class="col-12 col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="card text-center shadow-sm border-0 bg-primary text-white">
                         <div class="card-body">
                             <i class="fa fa-bullhorn fa-2x mb-2 text-dark"></i>
@@ -35,7 +35,7 @@
                 </div>
 
                 <!-- Total Amount -->
-                <div class="col-12 col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="card text-center shadow-sm border-0 bg-success text-white">
                         <div class="card-body">
                             <i class="fa fa-dollar-sign fa-2x mb-2 text-dark"></i>
@@ -46,7 +46,7 @@
                 </div>
 
                 <!-- Total Paid -->
-                <div class="col-12 col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="card text-center shadow-sm border-0 bg-info text-white">
                         <div class="card-body">
                             <i class="fa fa-money-bill-wave fa-2x mb-2 text-dark"></i>
@@ -57,7 +57,7 @@
                 </div>
 
                 <!-- Total Due -->
-                <div class="col-12 col-md-3">
+                <div class="col-6 col-md-3">
                     <div class="card text-center shadow-sm border-0 bg-danger text-white">
                         <div class="card-body">
                             <i class="fa fa-exclamation-circle fa-2x mb-2 text-dark"></i>
@@ -68,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
+        <div class="row my-5">
             @foreach (auth()->user()->page as $p)
                 <div class="col-12">
                     <div class="card shadow-sm border-0 rounded-3">
@@ -89,11 +89,12 @@
         </div>
         <div class="row g-5 g-xl-10 mb-5 mb-xl-10">
             @foreach ($user_subscriptions as $user_subscription)
-                <div class="col-4">
+                <div class="col-6 col-md-4">
                     <div style="background: rgb(147, 235, 255)" class="card shadow rounded-3">
                         <div class="card-body text-center">
                             <h4 class="card-title">{{ $user_subscription->package_name }}</h4>
-                            <span class="badge bg-secondary text-dark mb-2">{{ $user_subscription->domain_name }}</span>
+                            <span
+                                class="badge bg-secondary text-dark mb-2">{{ $user_subscription->domain_name ?? '-' }}</span>
                             <p class="card-text">৳ {{ $user_subscription->package_price }} / month</p>
                             <p class="mb-2">Billing Date: {{ $user_subscription->billing_date->format('d M, Y') }}</p>
                             <a href="{{ route('subscription.details', $user_subscription->id) }}"
