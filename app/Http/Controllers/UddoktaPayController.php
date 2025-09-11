@@ -45,7 +45,7 @@ class UddoktaPayController extends Controller
             if ($response->success()) {
                 // Handle successful status
                 $success_response = json_decode(json_encode($response->toArray()));
-                $remarks = "Transaction ID: ".$success_response->transaction_id."<br>Payment Method: ".$success_response->payment_method;
+                $remarks = "Transaction ID: " . $success_response->transaction_id . "<br>Payment Method: " . $success_response->payment_method;
                 $subscription = Subscription::find($success_response->metadata->subscription_id);
                 Subscription_fee::create([
                     'subscription_id' => $subscription->id,
@@ -68,7 +68,7 @@ class UddoktaPayController extends Controller
             } elseif ($response->pending()) {
                 // Handle pending status
                 $success_response = json_decode(json_encode($response->toArray()));
-                $remarks = "Transaction ID: ".$success_response->transaction_id."<br>Payment Method: ".$success_response->payment_method;
+                $remarks = "Transaction ID: " . $success_response->transaction_id . "<br>Payment Method: " . $success_response->payment_method;
                 $subscription = Subscription::find($success_response->metadata->subscription_id);
                 Subscription_fee::create([
                     'subscription_id' => $subscription->id,
@@ -83,8 +83,6 @@ class UddoktaPayController extends Controller
                     'generated_by' => $subscription->user_id,
                     'remarks' => $remarks,
                 ]);
-                $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
-                $subscription->save();
                 return redirect()
                     ->route('subscription.details', ['subscription_id' => $subscription->id])
                     ->with('success', 'Subscription payment sent successfully but pending now!');
