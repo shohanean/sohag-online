@@ -142,6 +142,7 @@
                                 <th>Package Name</th>
                                 <th>Package Price</th>
                                 <th>Paid Date</th>
+                                <th>Remarks</th>
                                 <th>Added By</th>
                                 <th>Status</th>
                             </tr>
@@ -153,6 +154,7 @@
                                     <td>{{ $subscription_fee->package_name }}</td>
                                     <td>{{ $subscription_fee->package_price }}</td>
                                     <td>{{ $subscription_fee->paid_date }}</td>
+                                    <td>{!! $subscription_fee->remarks !!}</td>
                                     <td>
                                         <i class="fa fa-user-tie"></i>
                                         {{ App\Models\User::find($subscription_fee->generated_by)->name }}
