@@ -204,6 +204,19 @@
                                         <span class="menu-title">Dollar Rate</span>
                                     </a>
                                 </div>
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('pending.payment')" href="{{ route('pending.payment') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-clock"></i>
+                                        </span>
+                                        <span class="menu-title">Pending Payment</span>
+
+                                        {{-- Badge at the right side --}}
+                                        <span class="badge bg-white text-dark ms-auto">
+                                            {{ App\Models\Subscription_fee::where('status', 'pending')->count() }}
+                                        </span>
+                                    </a>
+                                </div>
                             @endcanany
                             <div class="menu-item">
                                 <a class="menu-link @yield('profile.index')" href="{{ route('profile.index') }}">

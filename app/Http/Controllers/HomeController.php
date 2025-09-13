@@ -213,6 +213,13 @@ class HomeController extends Controller
         }
         return back()->with('update', 'Subscription added successfully!');
     }
+    public function pending_payment()
+    {
+        $pending_subscription_fees = Subscription_fee::where('status', 'pending')->get();
+        return view('backend.misc.pending_payment', [
+            'pending_subscription_fees' => $pending_subscription_fees
+        ]);
+    }
     public function server()
     {
         return view('backend.misc.server', [

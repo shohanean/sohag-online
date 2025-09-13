@@ -40,6 +40,7 @@ Route::delete('/subscription/{subscription}', [HomeController::class, 'subscript
 Route::get('/upcoming/subscriptions', [HomeController::class, 'upcoming_subscriptions'])->name('upcoming.subscriptions');
 Route::get('/upcoming/subscriptions/details/{subscription}', [HomeController::class, 'upcoming_subscriptions_details'])->name('upcoming.subscriptions.details');
 Route::post('/subscription/payment/{subscription}', [HomeController::class, 'subscription_payment'])->name('subscription.payment');
+Route::get('/pending/payment', [HomeController::class, 'pending_payment'])->name('pending.payment');
 Route::get('/server', [HomeController::class, 'server'])->name('server.index');
 Route::put('/server/{server}', [HomeController::class, 'server_update'])->name('server.update');
 Route::delete('/server/{server}', [HomeController::class, 'server_destroy'])->name('server.destroy');
