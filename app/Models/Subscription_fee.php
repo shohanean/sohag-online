@@ -16,6 +16,10 @@ class Subscription_fee extends Model
     {
         return $this->belongsTo(User::class, 'generated_by', 'id');
     }
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class, 'subscription_id', 'id');
+    }
     public function getDueDateStatusAttribute()
     {
         if (!$this->due_date) {

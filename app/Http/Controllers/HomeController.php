@@ -220,6 +220,20 @@ class HomeController extends Controller
             'pending_subscription_fees' => $pending_subscription_fees
         ]);
     }
+    public function pending_payment_accept(Subscription_fee $subscription_fee)
+    {
+        $subscription =  Subscription::find($subscription_fee->subscription_id);
+        $subscription_fee->status = 'paid';
+        $subscription_fee->save();
+        $subscription->billing_date = $subscription->billing_date->addMonthNoOverflow()->toDateString();
+        $subscription->save();
+        return back()->with('accept_update', 'Subscription fee added successfully!');
+    }
+    public function pending_payment_delete(Subscription_fee $subscription_fee)
+    {
+        $subscription_fee->delete();
+        return back()->with('delete_update', 'Subscription fee deleted successfully!');
+    }
     public function server()
     {
         return view('backend.misc.server', [
