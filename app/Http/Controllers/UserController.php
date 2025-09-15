@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Campaign;
+use App\Models\Client_wallet;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -46,10 +47,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
-
-    }
+    public function show($id) {}
 
     /**
      * Show the form for editing the specified resource.
@@ -83,6 +81,11 @@ class UserController extends Controller
     public function destroy($id)
     {
         Campaign::where('user_id', $id)->delete();
+        Client_wallet::where('user_id', $id)->update([
+            'total' => 0,
+            'paid' => 0,
+            'due' => 0,
+        ]);
         return back()->with('delete_success', 'Client removed successfully!');
     }
 }
