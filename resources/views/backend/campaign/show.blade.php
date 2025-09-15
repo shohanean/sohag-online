@@ -126,7 +126,7 @@
                             </tr>
                         </thead>
                         <tbody class="border">
-                            @foreach ($campaigns as $campaign)
+                            @foreach ($campaigns->sortByDesc('running_status') as $campaign)
                                 <tr>
                                     <td>{{ $campaign->page->user->name }}</td>
                                     <td>{{ $campaign->page->page_name }}</td>
