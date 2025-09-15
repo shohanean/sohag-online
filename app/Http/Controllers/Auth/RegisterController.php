@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Page;
+use App\Models\Server;
 use App\Models\Package;
 use App\Models\Subscription;
 use App\Models\Subscription_fee;
@@ -89,13 +90,20 @@ class RegisterController extends Controller
             'user_id' => $user->id
         ]);
         $package = Package::find(1);
+        $server = Server::where('name', 'like', '%Default Cloud Server%')->first();
+        if (empty($server)) {
+            $server_id = NULL;
+        } else {
+            $server_id = $server->id;
+        }
         $subscription = Subscription::create([
             'user_id' => $user->id,
             'package_id' => $package->id,
             'package_name' => $package->name,
             'package_price' => $package->price,
             'billing_date' => Carbon::now()->addMonthNoOverflow()->toDateString(),
-            'domain_name' => Str::lower(Str::remove(' ', $data['page_name']))
+            'domain_name' => Str::lower(Str::remove(' ', $data['page_name'])),
+            'server_id' => $server_id,
         ]);
         Subscription_fee::create([
             'subscription_id' => $subscription->id,

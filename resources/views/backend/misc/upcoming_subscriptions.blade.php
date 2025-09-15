@@ -56,12 +56,29 @@
                                     </tr>
                                     @foreach ($userSubscriptions as $subscription)
                                         <tr>
-                                            <td>
+                                            {{-- <td>
                                                 <div class="mx-5">
                                                     <i class="fa fa-globe"></i> {{ $subscription->domain_name }}
                                                     <br>
                                                     <i class="fa fa-envelope"></i> {{ $subscription->user->email }}
                                                 </div>
+                                            </td> --}}
+                                            <td>
+                                                <i class="fa fa-globe"></i>
+                                                {{ $subscription->domain_name }}
+                                                <a href="javascript:void(0)" class="copy-btn text-muted ms-2"
+                                                    data-copy="{{ $subscription->domain_name }}" title="Copy Domain">
+                                                    <i class="fa fa-copy"></i>
+                                                </a>
+                                                <br>
+
+                                                <i class="fa fa-envelope"></i>
+                                                {{ $subscription->user->email }}
+                                                <a href="javascript:void(0)" class="copy-btn text-muted ms-2"
+                                                    data-copy="{{ $subscription->user->email }}" title="Copy Email">
+                                                    <i class="fa fa-copy"></i>
+                                                </a>
+
                                             </td>
                                             <td>{{ $subscription->package_name }}</td>
                                             <td>{{ $subscription->package_price }}</td>
@@ -133,6 +150,22 @@
                 locale: {
                     format: 'YYYY-MM-DD'
                 }
+            });
+        });
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const text = this.getAttribute('data-copy');
+                    navigator.clipboard.writeText(text).then(() => {
+                        const icon = this.querySelector('i');
+                        icon.classList.remove('fa-copy');
+                        icon.classList.add('fa-check', 'text-success');
+                        setTimeout(() => {
+                            icon.classList.remove('fa-check', 'text-success');
+                            icon.classList.add('fa-copy');
+                        }, 1500);
+                    });
+                });
             });
         });
     </script>

@@ -11,4 +11,8 @@ class Package extends Model
     use HasFactory;
     use SoftDeletes;
     protected $guarded = [''];
+    public function subscription()
+    {
+        return $this->hasMany(Subscription::class);
+    }
 }

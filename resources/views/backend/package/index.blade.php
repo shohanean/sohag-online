@@ -108,7 +108,10 @@
                             <!--end::Svg Icon-->
                             <!--end::Icon-->
                             <!--begin::Subtitle-->
-                            <h1 class="text-dark fw-bolder my-5">{{ $package->name }}</h1>
+                            <h1 class="text-dark fw-bolder my-5">{{ $package->name }}
+                                [<a
+                                    href="{{ route('package.show', $package->id) }}">{{ $package->subscription->count() }}</a>]
+                            </h1>
                             <!--end::Subtitle-->
                             <!--begin::Description-->
                             <div class="text-gray-700 fs-3 fw-bold">৳{{ $package->price }}</div>
