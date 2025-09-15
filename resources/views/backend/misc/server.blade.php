@@ -8,7 +8,7 @@
     @includeIf('parts.toolbar', [
         'links' => [
             'home' => 'home',
-            'dollar rate' => 'dollar.rate',
+            'server' => 'server.index',
         ],
     ])
 @endsection
@@ -101,7 +101,9 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $server->name }}</td>
-                                    <td>{{ $server->subscription->count() }}</td>
+                                    <td><a
+                                            href="{{ route('server.show', $server->id) }}">{{ $server->subscription->count() }}</a>
+                                    </td>
                                     <td>{{ $server->updated_at->diffForHumans() }}</td>
                                     <td>{{ $server->created_at->diffForHumans() }}</td>
                                     <td>
@@ -147,6 +149,8 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <a href="{{ route('server.show', $server->id) }}"
+                                                class="btn btn-sm bg-success text-white">Details</a>
                                         </div>
                                     </td>
                                 </tr>

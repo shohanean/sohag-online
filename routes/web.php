@@ -44,6 +44,7 @@ Route::get('/pending/payment', [HomeController::class, 'pending_payment'])->name
 Route::delete('/pending/payment/delete/{subscription_fee}', [HomeController::class, 'pending_payment_delete'])->name('pending.payment.delete');
 Route::post('/pending/payment/accept/{subscription_fee}', [HomeController::class, 'pending_payment_accept'])->name('pending.payment.accept');
 Route::get('/server', [HomeController::class, 'server'])->name('server.index');
+Route::get('/server/{server}', [HomeController::class, 'server_show'])->name('server.show');
 Route::put('/server/{server}', [HomeController::class, 'server_update'])->name('server.update');
 Route::delete('/server/{server}', [HomeController::class, 'server_destroy'])->name('server.destroy');
 Route::post('/add/server', [HomeController::class, 'add_server'])->name('add.server');

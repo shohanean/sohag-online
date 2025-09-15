@@ -240,6 +240,13 @@ class HomeController extends Controller
             'servers' => Server::latest()->get()
         ]);
     }
+    public function server_show(Server $server)
+    {
+        return view('backend.misc.server_show', [
+            'server' => $server,
+            'subscriptions' => $server->subscription
+        ]);
+    }
     public function server_update(Request $request, Server $server)
     {
         $request->validate([
