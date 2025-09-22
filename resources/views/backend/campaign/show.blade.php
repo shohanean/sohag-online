@@ -115,6 +115,7 @@
                     <table class="table table-bordered">
                         <thead class="border fw-bold">
                             <tr>
+                                <th>Campaign Creation Date</th>
                                 <th>Page Owner</th>
                                 <th>Page Name</th>
                                 <th>Campaign Name</th>
@@ -128,13 +129,19 @@
                         <tbody class="border">
                             @foreach ($campaigns->sortByDesc('running_status') as $campaign)
                                 <tr>
+                                    <td>{{ $campaign->created_at->format('d/m/Y') }}</td>
                                     <td>{{ $campaign->page->user->name }}</td>
                                     <td>{{ $campaign->page->page_name }}</td>
                                     <td>{{ $campaign->name }}</td>
                                     <td>
                                         <span class="badge bg-secondary text-dark">{{ $campaign->ad_id }}</span>
                                     </td>
-                                    <td>{{ $campaign->total }}</td>
+                                    <td>
+                                        {{ $campaign->total }}
+                                        <br>
+                                        <span
+                                            class="badge bg-danger">${{ $campaign->total / App\Models\Dollar_rate::latest()->first()->rate }}</span>
+                                    </td>
                                     <td>
                                         {{ $campaign->transection()->latest()->first()?->updated_at?->format('jS F, Y') }}
                                         <br>
