@@ -40,6 +40,7 @@
                     <table class="table table-bordered text-center">
                         <thead class="border fw-bold">
                             <tr>
+                                <th>Campaign Creation Date</th>
                                 <th>Page Owner</th>
                                 <th>Page Name</th>
                                 <th>Campaign Name</th>
@@ -49,6 +50,7 @@
                         </thead>
                         <tbody class="border">
                             <tr>
+                                <td>{{ $campaign->created_at->format('d/m/Y') }}</td>
                                 <td>{{ $campaign->page->user->name }}</td>
                                 <td>{{ $campaign->page->page_name }}</td>
                                 <td>{{ $campaign->name }}</td>
