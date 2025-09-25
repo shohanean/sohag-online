@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Work;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class WorkController extends Controller
@@ -15,8 +16,9 @@ class WorkController extends Controller
      */
     public function index()
     {
-        $works = Work::all();
-        return view('backend.work.index', compact('works'));
+        $works = Work::latest()->get();
+        $workers = User::role('Worker')->get();
+        return view('backend.work.index', compact('works', 'workers'));
     }
     /**
      * Show the form for creating a new resource.
@@ -68,9 +70,16 @@ class WorkController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Work $work)
     {
-        //
+        $work->user_id = $request->user_id;
+        if ($request->user_id) {
+            $work->status = "running";
+        }else{
+            $work->status = "open";
+        }
+        $work->save();
+        return back()->with('update_success', 'Updated Successfully!');
     }
 
     /**

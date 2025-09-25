@@ -203,7 +203,7 @@
 
                                         {{-- Badge at the right side --}}
                                         <span class="badge bg-white text-dark ms-auto">
-                                            {{ App\Models\Work::count() }}
+                                            {{ App\Models\Work::where('status', 'open')->count() }}
                                         </span>
                                     </a>
                                 </div>
