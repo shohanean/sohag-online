@@ -22,7 +22,8 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Work</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Work you have taken/given
+                                ({{ $worker_works->whereNotNull('user_id')->count() }})</span>
                         </h3>
                     </div>
                     <!--end::Header-->
@@ -30,6 +31,9 @@
                     <div class="card-body py-3">
                         <!--begin::Table container-->
                         <div class="table-responsive">
+                            @session('update_success')
+                                <div class="alert alert-success">{{ session('update_success') }}</div>
+                            @endsession
                             <!--begin::Table-->
                             <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                 <!--begin::Table head-->
@@ -75,8 +79,21 @@
                                             <td>
                                                 <div class="d-flex gap-2">
                                                     @if ($worker_work->status != 'delivered')
-                                                        <button class="btn btn-sm bg-danger">danger</button>
-                                                        <button class="btn btn-sm bg-success">success</button>
+                                                        <form action="{{ route('work.update', $worker_work->id) }}"
+                                                            method="POST" style="display:inline-block;">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="hidden" value="" name="user_id">
+                                                            <button
+                                                                onclick="return confirm('Are you sure you want to leave this work?')"
+                                                                type="submit" class="btn btn-sm bg-warning">
+                                                                Leave The Work
+                                                            </button>
+                                                        </form>
+                                                        <button disabled class="btn btn-sm bg-success">Deliver The Work</button>
+                                                    @else
+                                                        <span class="badge bg-dark">You Already Delivered The
+                                                            Work</span>
                                                     @endif
                                                 </div>
                                             </td>
@@ -107,7 +124,8 @@
                     <!--begin::Header-->
                     <div class="card-header border-0 pt-5">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bolder fs-3 mb-1">Work</span>
+                            <span class="card-label fw-bolder fs-3 mb-1">Work Pool
+                                ({{ $worker_works->whereNull('user_id')->count() }})</span>
                         </h3>
                     </div>
                     <!--end::Header-->
@@ -159,7 +177,17 @@
                                             </td>
                                             <td>
                                                 <div class="d-flex gap-2">
-                                                    <button class="btn btn-sm bg-info">Take This</button>
+                                                    <form action="{{ route('work.update', $worker_work->id) }}"
+                                                        method="POST" style="display:inline-block;">
+                                                        @csrf
+                                                        @method('PUT')
+                                                        <input type="hidden" value="{{ auth()->id() }}" name="user_id">
+                                                        <button
+                                                            onclick="return confirm('Are you sure you want to take this work?')"
+                                                            type="submit" class="btn btn-sm bg-info text-white">
+                                                            Take This Work
+                                                        </button>
+                                                    </form>
                                                 </div>
                                             </td>
                                         </tr>

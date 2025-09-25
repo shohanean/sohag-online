@@ -75,7 +75,7 @@ class WorkController extends Controller
         $work->user_id = $request->user_id;
         if ($request->user_id) {
             $work->status = "running";
-        }else{
+        } else {
             $work->status = "open";
         }
         $work->save();

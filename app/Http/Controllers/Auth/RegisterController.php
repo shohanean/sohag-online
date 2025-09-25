@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Page;
+use App\Models\Work;
 use App\Models\Server;
 use App\Models\Package;
 use App\Models\Subscription;
@@ -117,6 +118,9 @@ class RegisterController extends Controller
             'paid_date' => Carbon::now()->toDateString(),
             'status' => 'paid',
             'generated_by' => $user->id,
+        ]);
+        Work::create([
+            'subscription_id' => $subscription->id
         ]);
         return $user;
     }

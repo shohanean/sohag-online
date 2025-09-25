@@ -36,6 +36,7 @@
                                 <th>Trx ID</th>
                                 <th>Screenshot</th>
                                 <th>Status</th>
+                                <th>History</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -61,6 +62,14 @@
                                             <span class="badge bg-info">{{ Str::title($work->status) }}</span>
                                         @else
                                             <span class="badge bg-success">{{ Str::title($work->status) }}</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        Created At: {{ $work->created_at->diffForHumans() }}
+                                        @if ($work->status == 'running')
+                                            <br>
+                                            <span class="badge bg-secondary text-dark">Assigned At:
+                                                {{ $work->updated_at->diffForHumans() }}</span>
                                         @endif
                                     </td>
                                     <td>
