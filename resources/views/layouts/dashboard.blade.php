@@ -194,6 +194,19 @@
                                         <span class="menu-title">Active Client List</span>
                                     </a>
                                 </div>
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('work.index')" href="{{ route('work.index') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-briefcase"></i>
+                                        </span>
+                                        <span class="menu-title">Work</span>
+
+                                        {{-- Badge at the right side --}}
+                                        <span class="badge bg-white text-dark ms-auto">
+                                            {{ App\Models\Work::count() }}
+                                        </span>
+                                    </a>
+                                </div>
                             @endcanany
                             @canany(['can manage dollar rate'])
                                 <div class="menu-item">

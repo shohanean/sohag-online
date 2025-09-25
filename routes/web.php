@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\{Route, Auth};
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\{FrontendController, HomeController, SocialController, ProfileController, BackupController, RoleController, UserController, PackageController, CampaignController};
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\WorkController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\BkashController;
 use App\Http\Controllers\UddoktaPayController;
@@ -84,6 +85,9 @@ Route::middleware(['auth'])->group(function () {
 
     //Package Routes
     Route::resource('package', PackageController::class);
+
+    //Work Routes
+    Route::resource('work', WorkController::class);
 
     //Campaign Routes
     Route::post('/add/expense/{campaign}', [CampaignController::class, 'add_expense'])->name('add.expense');

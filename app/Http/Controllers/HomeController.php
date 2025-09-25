@@ -9,6 +9,7 @@ use App\Models\Dollar_rate;
 use App\Models\Client_wallet;
 use App\Models\{Campaign, Page, Package, Subscription, Subscription_fee};
 use App\Models\Server;
+use App\Models\Work;
 use App\Models\Payment_notification;
 use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
@@ -34,6 +35,12 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // foreach (Subscription::all() as $key => $subs) {
+        //     Work::create([
+        //         'subscription_id' => $subs->id
+        //     ]);
+        // }
+
         // foreach (Subscription_fee::all() as $key => $subscription_fee) {
         //     $subscription_fee->paid_date = $subscription_fee->generated_date;
         //     $subscription_fee->status = 'paid';
@@ -150,6 +157,9 @@ class HomeController extends Controller
             'paid_date' => Carbon::now()->toDateString(),
             'status' => 'paid',
             'generated_by' => auth()->id(),
+        ]);
+        Work::create([
+            'subscription_id' => $subscription->id
         ]);
         return back()->with('success', 'Subscription Added Successfully!');
     }

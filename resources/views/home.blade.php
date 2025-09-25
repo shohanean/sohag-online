@@ -13,6 +13,9 @@
 @endsection
 
 @section('content')
+    @if (auth()->user()->getRoleNames()->first() == 'Worker')
+        <h1>You are a worker</h1>
+    @endif
     @if (auth()->user()->getRoleNames()->first() == 'Client')
         <div class="row">
             <div class="col-12 text-center">
