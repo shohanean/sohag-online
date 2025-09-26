@@ -111,4 +111,9 @@ class WorkController extends Controller
         );
         return back()->with('update_success', 'Updated successfully!');
     }
+    public function add_wallet_post (Request $request)
+    {
+        Worker_wage::where('user_id', $request->user_id)->increment('wallet', $request->wallet);
+        return back()->with('update_success', 'Updated successfully!');
+    }
 }

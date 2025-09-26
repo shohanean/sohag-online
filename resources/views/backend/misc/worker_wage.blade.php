@@ -33,7 +33,9 @@
                                 <th>Name</th>
                                 <th>Email</th>
                                 <th>Wage</th>
-                                <th>Actions</th>
+                                <th>Set Wage</th>
+                                <th>Wallet Balance</th>
+                                <th>Add Money To Wallet</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -45,12 +47,24 @@
                                     <td>{{ $worker->worker_wage?->wage ?? '-' }}</td>
                                     <td>
                                         <form action="{{ route('worker.wage.post') }}" method="POST">
-                                            @csrf
                                             <div class="d-flex gap-2">
+                                                @csrf
                                                 <input class="form-control" type="hidden" name="user_id"
                                                     value="{{ $worker->id }}">
                                                 <input class="form-control" type="number" name="wage">
-                                                <button class="btn btn-sm bg-success">Set Wage</button>
+                                                <button class="btn btn-sm bg-primary">Set Wage</button>
+                                            </div>
+                                        </form>
+                                    </td>
+                                    <td>{{ $worker->worker_wage?->wallet ?? '-' }}</td>
+                                    <td>
+                                        <form action="{{ route('add.wallet.post') }}" method="POST">
+                                            <div class="d-flex gap-2">
+                                                @csrf
+                                                <input class="form-control" type="hidden" name="user_id"
+                                                    value="{{ $worker->id }}">
+                                                <input class="form-control" type="number" name="wallet">
+                                                <button class="btn btn-sm bg-dark text-white">Add Money To Wallet</button>
                                             </div>
                                         </form>
                                     </td>

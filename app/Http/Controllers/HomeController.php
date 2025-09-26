@@ -70,7 +70,7 @@ class HomeController extends Controller
         $user_subscriptions = Subscription::where('user_id', auth()->id())->latest()->get();
         $servers = Server::latest()->get();
         $restricted_for_payments = Campaign::with('user')->latest()->get()->groupBy('user_id');
-        $worker_works = Work::where('status', 'open')->orWhere('user_id', auth()->user()->id)->get();
+        $worker_works = Work::with('subscription')->where('status', 'open')->orWhere('user_id', auth()->user()->id)->get();
 
         return view('home', compact('worker_works', 'restricted_for_payments', 'payment_notifications', 'servers', 'subscriptions', 'user_subscriptions', 'active_clients', 'users', 'campaigns', 'total_campaigns', 'client_wallet', 'pages'));
     }
