@@ -131,6 +131,14 @@
                                         @endcanany
                                     </div>
                                 </div>
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('worker.wage')" href="{{ route('worker.wage') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-money-bill"></i>
+                                        </span>
+                                        <span class="menu-title">Worker Wage</span>
+                                    </a>
+                                </div>
                             @endcanany
                             <div class="menu-item">
                                 <div class="menu-content pt-8 pb-2">

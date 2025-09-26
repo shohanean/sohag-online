@@ -87,6 +87,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('package', PackageController::class);
 
     //Work Routes
+    Route::get('/worker/wage', [WorkController::class, 'worker_wage'])->name('worker.wage');
+    Route::post('/worker/wage', [WorkController::class, 'worker_wage_post'])->name('worker.wage.post');
     Route::resource('work', WorkController::class);
 
     //Campaign Routes

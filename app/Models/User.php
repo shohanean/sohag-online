@@ -56,6 +56,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Client_wallet::class);
     }
+    public function worker_wage()
+    {
+        return $this->hasOne(Worker_wage::class);
+    }
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class);

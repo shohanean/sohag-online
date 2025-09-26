@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Work;
 use App\Models\User;
+use App\Models\Worker_wage;
 use Illuminate\Http\Request;
 
 class WorkController extends Controller
@@ -16,7 +17,7 @@ class WorkController extends Controller
      */
     public function index()
     {
-        $works = Work::latest()->get();
+        $works = Work::with('subscription')->latest()->get();
         $workers = User::role('Worker')->get();
         return view('backend.work.index', compact('works', 'workers'));
     }
@@ -91,5 +92,23 @@ class WorkController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    //custom routes
+    public function worker_wage()
+    {
+        $workers = User::with('worker_wage')->role('Worker')->get();
+        return view('backend.misc.worker_wage', compact('workers'));
+    }
+    public function worker_wage_post (Request $request)
+    {
+        $request->validate([
+            'wage' => 'required'
+        ]);
+        Worker_wage::updateOrCreate(
+            ['user_id' => $request->user_id],
+            ['wage' => $request->wage]
+        );
+        return back()->with('update_success', 'Updated successfully!');
     }
 }

@@ -45,11 +45,11 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>
-                                        Package Name: {{ $work->subscription->package_name }}
+                                        Package Name: {{ $work->subscription->package_name ?? '' }}
                                         <br>
-                                        Package Price: {{ $work->subscription->package_price }}
+                                        Package Price: {{ $work->subscription->package_price ?? '' }}
                                         <br>
-                                        Domain Name: {{ $work->subscription->domain_name }}
+                                        Domain Name: {{ $work->subscription->domain_name ?? '' }}
                                     </td>
                                     <td>{{ $work->charge }}</td>
                                     <td>{{ $work->user->name ?? '-' }}</td>
