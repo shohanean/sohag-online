@@ -131,14 +131,6 @@
                                         @endcanany
                                     </div>
                                 </div>
-                                <div class="menu-item">
-                                    <a class="menu-link @yield('worker.wage')" href="{{ route('worker.wage') }}">
-                                        <span class="menu-icon">
-                                            <i class="fa fa-money-bill"></i>
-                                        </span>
-                                        <span class="menu-title">Worker Wage</span>
-                                    </a>
-                                </div>
                             @endcanany
                             <div class="menu-item">
                                 <div class="menu-content pt-8 pb-2">
@@ -203,6 +195,14 @@
                                     </a>
                                 </div>
                                 <div class="menu-item">
+                                    <a class="menu-link @yield('worker.wage')" href="{{ route('worker.wage') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-money-bill"></i>
+                                        </span>
+                                        <span class="menu-title">Worker Wage</span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
                                     <a class="menu-link @yield('work.index')" href="{{ route('work.index') }}">
                                         <span class="menu-icon">
                                             <i class="fa fa-briefcase"></i>
@@ -213,6 +213,14 @@
                                         <span class="badge bg-white text-dark ms-auto">
                                             {{ App\Models\Work::where('status', 'open')->count() }}
                                         </span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('delivered.work')" href="{{ route('delivered.work') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-truck"></i>
+                                        </span>
+                                        <span class="menu-title">Delivered Work</span>
                                     </a>
                                 </div>
                             @endcanany

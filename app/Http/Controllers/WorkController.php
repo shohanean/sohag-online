@@ -17,7 +17,7 @@ class WorkController extends Controller
      */
     public function index()
     {
-        $works = Work::with('subscription')->latest()->get();
+        $works = Work::with('subscription')->where('status', 'open')->orWhere('status', 'running')->latest()->get();
         $workers = User::role('Worker')->get();
         return view('backend.work.index', compact('works', 'workers'));
     }
@@ -73,17 +73,29 @@ class WorkController extends Controller
      */
     public function update(Request $request, Work $work)
     {
-        if($work->user_id){
+        //only for super admin
+        if(auth()->id() == 1){
+            $work->user_id = $request->user_id;
+            if ($request->user_id) {
+                $work->status = "running";
+            } else {
+                $work->status = "open";
+            }
+            $work->save();
+            return back()->with('update_success', 'Updated Successfully!');
+        }
+        if($work->user_id && $work->user_id != auth()->id()){
             abort(404);
+        }else{
+            $work->user_id = $request->user_id;
+            if ($request->user_id) {
+                $work->status = "running";
+            } else {
+                $work->status = "open";
+            }
+            $work->save();
+            return back()->with('update_success', 'Updated Successfully!');
         }
-        $work->user_id = $request->user_id;
-        if ($request->user_id) {
-            $work->status = "running";
-        } else {
-            $work->status = "open";
-        }
-        $work->save();
-        return back()->with('update_success', 'Updated Successfully!');
     }
 
     /**
@@ -118,5 +130,17 @@ class WorkController extends Controller
     {
         Worker_wage::where('user_id', $request->user_id)->increment('wallet', $request->wallet);
         return back()->with('update_success', 'Updated successfully!');
+    }
+    public function delivered_work ()
+    {
+        $works = Work::where('status', 'delivered')->get();
+        return view('backend.misc.delivered_work', compact('works'));
+    }
+    public function work_mark_as_done (Work $work, Request $request)
+    {
+        Worker_wage::where('user_id', $work->user_id)->decrement('wallet', $request->worker_wage);
+        $work->status = 'done';
+        $work->save();
+        return back();
     }
 }

@@ -59,6 +59,9 @@
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bolder fs-3 mb-1">Work you have taken/given
                                     ({{ $worker_works->whereNotNull('user_id')->count() }})</span>
+                                <br>
+                                <div class="badge bg-secondary text-dark">Work Process: Open > Running > Delivered > Done
+                                </div>
                             </h3>
                         </div>
                         <!--end::Header-->
@@ -90,22 +93,25 @@
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
-                                                    Package Name: {{ $worker_work->subscription->package_name }}
+                                                    Package Name: {{ $worker_work->subscription->package_name ?? '-' }}
                                                     <br>
-                                                    Package Price: {{ $worker_work->subscription->package_price }}
+                                                    Package Price: {{ $worker_work->subscription->package_price ?? '-' }}
                                                     <br>
-                                                    Domain Name: {{ $worker_work->subscription->domain_name }}
+                                                    Domain Name: {{ $worker_work->subscription->domain_name ?? '-' }}
                                                 </td>
                                                 <td>{{ $worker_work->charge }}</td>
                                                 <td>{{ $worker_work->trx_id ?? '-' }}</td>
                                                 <td>{{ $worker_work->screenshot ?? '-' }}</td>
                                                 <td>
-                                                    @if ($worker_work->status == 'running')
-                                                        <span
-                                                            class="badge bg-primary">{{ Str::title($worker_work->status) }}</span>
-                                                    @elseif ($worker_work->status == 'open')
+                                                    @if ($worker_work->status == 'open')
                                                         <span
                                                             class="badge bg-info">{{ Str::title($worker_work->status) }}</span>
+                                                    @elseif ($worker_work->status == 'running')
+                                                        <span
+                                                            class="badge bg-primary">{{ Str::title($worker_work->status) }}</span>
+                                                    @elseif ($worker_work->status == 'delivered')
+                                                        <span
+                                                            class="badge bg-warning">{{ Str::title($worker_work->status) }}</span>
                                                     @else
                                                         <span
                                                             class="badge bg-success">{{ Str::title($worker_work->status) }}</span>
@@ -113,7 +119,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="d-flex gap-2">
-                                                        @if ($worker_work->status != 'delivered')
+                                                        @if ($worker_work->status == 'running')
                                                             <form action="{{ route('work.update', $worker_work->id) }}"
                                                                 method="POST" style="display:inline-block;">
                                                                 @csrf
@@ -201,12 +207,12 @@
                                                 <td>{{ $worker_work->trx_id ?? '-' }}</td>
                                                 <td>{{ $worker_work->screenshot ?? '-' }}</td>
                                                 <td>
-                                                    @if ($worker_work->status == 'running')
-                                                        <span
-                                                            class="badge bg-primary">{{ Str::title($worker_work->status) }}</span>
-                                                    @elseif ($worker_work->status == 'open')
+                                                    @if ($worker_work->status == 'open')
                                                         <span
                                                             class="badge bg-info">{{ Str::title($worker_work->status) }}</span>
+                                                    @elseif ($worker_work->status == 'running')
+                                                        <span
+                                                            class="badge bg-primary">{{ Str::title($worker_work->status) }}</span>
                                                     @else
                                                         <span
                                                             class="badge bg-success">{{ Str::title($worker_work->status) }}</span>

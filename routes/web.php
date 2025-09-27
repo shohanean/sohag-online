@@ -92,6 +92,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/worker/wage', [WorkController::class, 'worker_wage'])->name('worker.wage');
     Route::post('/worker/wage', [WorkController::class, 'worker_wage_post'])->name('worker.wage.post');
     Route::post('/add/wallet/post', [WorkController::class, 'add_wallet_post'])->name('add.wallet.post');
+    Route::get('/delivered/work', [WorkController::class, 'delivered_work'])->name('delivered.work');
+    Route::post('/work/mark/as/done/{work}', [WorkController::class, 'work_mark_as_done'])->name('work.mark.as.done');
     Route::resource('work', WorkController::class);
 
     //Campaign Routes

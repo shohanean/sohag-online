@@ -295,6 +295,16 @@ class HomeController extends Controller
     }
     public function deliver_the_work_post (Work $work, Request $request)
     {
+        // return $work;
+        $request->validate([
+            'charge' => 'required',
+            'trx_id' => 'required'
+        ]);
+        $work->charge = $request->charge;
+        $work->trx_id = $request->trx_id;
+        $work->status = 'delivered';
+        $work->save();
+        return redirect('home');
         return $request;
         return $work;
     }

@@ -14,7 +14,7 @@
 @endsection
 
 @section('content')
-    <div class="card">
+    <div class="card @if ($work->status != 'running') d-none @endif">
         <!--begin::Body-->
         <div class="card-body p-lg-17">
             <!--begin::Row-->
@@ -25,8 +25,9 @@
                     <form action="{{ route('deliver.the.work.post', $work->id) }}" class="form mb-15" method="post"
                         id="kt_contact_form" enctype="multipart/form-data">
                         @csrf
-                        <h1 class="fw-bolder text-dark mb-9">Deliver The Work - {{ $work->subscription->package_name }} -
-                            {{ $work->subscription->domain_name }}</h1>
+                        <h1 class="fw-bolder text-dark mb-9">Deliver The Work -
+                            {{ $work->subscription->package_name ?? '-' }} -
+                            {{ $work->subscription->domain_name ?? '-' }}</h1>
                         @session('success')
                             <div class="alert alert-success" role="alert">
                                 {{ session('success') }}

@@ -9,6 +9,7 @@
         "anhskohbo/no-captcha": "^3.4",
         "doctrine/dbal": "^3.0",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "^2.7",
         "kwn/number-to-words": "^2.4",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",

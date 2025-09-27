@@ -20,7 +20,9 @@
             <!--begin::Row-->
             <div class="row g-5 mb-5 mb-lg-15">
                 <h1 class="fw-bolder text-dark mb-9">
-                    Work List
+                    Work List <span class="badge bg-info">Open: {{ $works->where('status', 'open')->count() }}</span> <span
+                        class="badge bg-primary">Running:
+                        {{ $works->where('status', 'running')->count() }}</span>
                     <br>
                     <div class="badge bg-secondary text-dark">Work Process: Open > Running > Delivered > Done</div>
                 </h1>
@@ -33,10 +35,7 @@
                             <tr>
                                 <th>SL. No.</th>
                                 <th>Subscription Details</th>
-                                <th>Charge</th>
                                 <th>Taken By</th>
-                                <th>Trx ID</th>
-                                <th>Screenshot</th>
                                 <th>Status</th>
                                 <th>History</th>
                                 <th>Actions</th>
@@ -53,15 +52,14 @@
                                         <br>
                                         Domain Name: {{ $work->subscription->domain_name ?? '' }}
                                     </td>
-                                    <td>{{ $work->charge }}</td>
                                     <td>{{ $work->user->name ?? '-' }}</td>
-                                    <td>{{ $work->trx_id ?? '-' }}</td>
-                                    <td>{{ $work->screenshot ?? '-' }}</td>
                                     <td>
-                                        @if ($work->status == 'running')
-                                            <span class="badge bg-primary">{{ Str::title($work->status) }}</span>
-                                        @elseif ($work->status == 'open')
+                                        @if ($work->status == 'open')
                                             <span class="badge bg-info">{{ Str::title($work->status) }}</span>
+                                        @elseif ($work->status == 'running')
+                                            <span class="badge bg-primary">{{ Str::title($work->status) }}</span>
+                                        @elseif ($work->status == 'delivered')
+                                            <span class="badge bg-warning">{{ Str::title($work->status) }}</span>
                                         @else
                                             <span class="badge bg-success">{{ Str::title($work->status) }}</span>
                                         @endif
