@@ -125,8 +125,9 @@
                                                                     Leave The Work
                                                                 </button>
                                                             </form>
-                                                            <button disabled class="btn btn-sm bg-success">Deliver The
-                                                                Work</button>
+                                                            <a class="btn btn-sm bg-success"
+                                                                href="{{ route('deliver.the.work', $worker_work->id) }}">Deliver
+                                                                The Work</a>
                                                         @else
                                                             <span class="badge bg-dark">You Already Delivered The
                                                                 Work</span>
@@ -186,7 +187,7 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @forelse ($worker_works->whereNull('user_id') as $worker_work)
+                                        @forelse ($worker_works->whereNull('user_id')->sortByDesc('created_at') as $worker_work)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>

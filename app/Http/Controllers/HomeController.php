@@ -286,4 +286,16 @@ class HomeController extends Controller
         $payment_notification->delete();
         return back();
     }
+    public function deliver_the_work(Work $work)
+    {
+        if ($work->user_id != auth()->id()) {
+            abort(404);
+        }
+        return view('backend.misc.deliver_the_work', compact('work'));
+    }
+    public function deliver_the_work_post (Work $work, Request $request)
+    {
+        return $request;
+        return $work;
+    }
 }

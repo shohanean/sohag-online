@@ -57,7 +57,6 @@
                         <thead class="border fw-bold">
                             <tr>
                                 <th>Next Billing Date</th>
-                                <th>Created At</th>
                                 <th>Pay Your Bill</th>
                             </tr>
                         </thead>
@@ -84,7 +83,6 @@
                                     <br>
                                     {{ $subscription->billing_date?->format('d M, Y') }}
                                 </td>
-                                <td>{{ $subscription->created_at->diffForHumans() }}</td>
                                 <td>
                                     {{-- <form action="{{ route('pay', $subscription->id) }}" method="POST">
                                         @csrf
@@ -115,7 +113,6 @@
                         <thead class="border fw-bold">
                             <tr>
                                 <th>SL. No.</th>
-                                <td>Generated Date</td>
                                 <td>Due Date</td>
                                 <td>Paid Date</td>
                                 <th>Status</th>
@@ -128,7 +125,6 @@
                             @forelse ($subscription->subscription_fees->sortByDesc('created_at') as $subscription_fee)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
-                                    <td>{{ $subscription_fee->generated_date }}</td>
                                     <td>
                                         {{ $subscription_fee->due_date }}
                                         @if ($subscription_fee->status == 'unpaid')

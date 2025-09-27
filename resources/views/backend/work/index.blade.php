@@ -21,6 +21,8 @@
             <div class="row g-5 mb-5 mb-lg-15">
                 <h1 class="fw-bolder text-dark mb-9">
                     Work List
+                    <br>
+                    <div class="badge bg-secondary text-dark">Work Process: Open > Running > Delivered > Done</div>
                 </h1>
                 <div class="table-responsive">
                     @session('update_success')

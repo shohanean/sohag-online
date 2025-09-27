@@ -73,6 +73,9 @@ class WorkController extends Controller
      */
     public function update(Request $request, Work $work)
     {
+        if($work->user_id){
+            abort(404);
+        }
         $work->user_id = $request->user_id;
         if ($request->user_id) {
             $work->status = "running";
