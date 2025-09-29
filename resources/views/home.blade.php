@@ -57,8 +57,8 @@
                         <!--begin::Header-->
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bolder fs-3 mb-1">Work you have taken/given
-                                    ({{ $worker_works->whereNotNull('user_id')->count() }})</span>
+                                <span class="card-label fw-bolder fs-3 mb-1">Your running work
+                                    ({{ $worker_works->whereNotNull('user_id')->where('status', 'running')->count() }})</span>
                                 <br>
                                 <div class="badge bg-secondary text-dark">Work Process: Open > Running > Delivered > Done
                                 </div>
@@ -82,9 +82,6 @@
                                         <tr>
                                             <th>SL. No.</th>
                                             <th>Subscription Details</th>
-                                            <th>Charge</th>
-                                            <th>Trx ID</th>
-                                            <th>Screenshot</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -92,15 +89,7 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @php
-                                            $statusOrder = ['running', 'delivered', 'done'];
-                                            $sortedWorks = $worker_works
-                                                ->whereNotNull('user_id')
-                                                ->sortBy(function ($work) use ($statusOrder) {
-                                                    return array_search($work->status, $statusOrder);
-                                                });
-                                        @endphp
-                                        @forelse ($sortedWorks as $worker_work)
+                                        @forelse ($worker_works->whereNotNull('user_id')->where('status', 'running') as $worker_work)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
@@ -110,9 +99,6 @@
                                                     <br>
                                                     Domain Name: {{ $worker_work->subscription->domain_name ?? '-' }}
                                                 </td>
-                                                <td>{{ $worker_work->charge }}</td>
-                                                <td>{{ $worker_work->trx_id ?? '-' }}</td>
-                                                <td>{{ $worker_work->screenshot ?? '-' }}</td>
                                                 <td>
                                                     @if ($worker_work->status == 'open')
                                                         <span
@@ -178,8 +164,11 @@
                         <!--begin::Header-->
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bolder fs-3 mb-1">Work Pool
-                                    ({{ $worker_works->whereNull('user_id')->count() }})</span>
+                                <span class="card-label fw-bolder fs-3 mb-1">Your delivered/done work
+                                    ({{ $worker_works->whereNotNull('user_id')->whereIn('status', ['delivered', 'done'])->count() }})</span>
+                                <br>
+                                <div class="badge bg-secondary text-dark">Work Process: Open > Running > Delivered > Done
+                                </div>
                             </h3>
                         </div>
                         <!--end::Header-->
@@ -198,6 +187,83 @@
                                             <th>Trx ID</th>
                                             <th>Screenshot</th>
                                             <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <!--end::Table head-->
+                                    <!--begin::Table body-->
+                                    <tbody>
+                                        @forelse ($worker_works->whereNotNull('user_id')->whereIn('status', ['delivered', 'done'])->sortBy('status') as $worker_work)
+                                            <tr>
+                                                <td>{{ $loop->index + 1 }}</td>
+                                                <td>
+                                                    Package Name: {{ $worker_work->subscription->package_name ?? '-' }}
+                                                    <br>
+                                                    Package Price: {{ $worker_work->subscription->package_price ?? '-' }}
+                                                    <br>
+                                                    Domain Name: {{ $worker_work->subscription->domain_name ?? '-' }}
+                                                </td>
+                                                <td>{{ $worker_work->charge }}</td>
+                                                <td>{{ $worker_work->trx_id ?? '-' }}</td>
+                                                <td>{{ $worker_work->screenshot ?? '-' }}</td>
+                                                <td>
+                                                    @if ($worker_work->status == 'open')
+                                                        <span
+                                                            class="badge bg-info">{{ Str::title($worker_work->status) }}</span>
+                                                    @elseif ($worker_work->status == 'running')
+                                                        <span
+                                                            class="badge bg-primary">{{ Str::title($worker_work->status) }}</span>
+                                                    @elseif ($worker_work->status == 'delivered')
+                                                        <span
+                                                            class="badge bg-warning">{{ Str::title($worker_work->status) }}</span>
+                                                    @else
+                                                        <span
+                                                            class="badge bg-success">{{ Str::title($worker_work->status) }}</span>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <td colspan="50" class="text-center text-danger">Nothing to show here</td>
+                                            </tr>
+                                        @endforelse
+                                    <tbody>
+                                        <!--end::Table body-->
+                                </table>
+                                <!--end::Table-->
+                            </div>
+                            <!--end::Table container-->
+                        </div>
+                        <!--begin::Body-->
+                    </div>
+                    <!--end::Tables Widget 9-->
+                </div>
+                <!--end::Col-->
+            </div>
+            <div class="row gy-5 g-xl-8">
+                <!--begin::Col-->
+                <div class="col-xl-12">
+                    <!--begin::Tables Widget 9-->
+                    <div class="card card-xl-stretch mb-5 mb-xl-8">
+                        <!--begin::Header-->
+                        <div class="card-header border-0 pt-5">
+                            <h3 class="card-title align-items-start flex-column">
+                                <span class="card-label fw-bolder fs-3 mb-1">Work Pool
+                                    ({{ $worker_works->whereNull('user_id')->count() }})</span>
+                            </h3>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body py-3">
+                            <!--begin::Table container-->
+                            <div class="table-responsive">
+                                <!--begin::Table-->
+                                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                    <!--begin::Table head-->
+                                    <thead>
+                                        <tr>
+                                            <th>SL. No.</th>
+                                            <th>Subscription Details</th>
+                                            <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
@@ -214,9 +280,6 @@
                                                     <br>
                                                     Domain Name: {{ $worker_work->subscription->domain_name ?? '-' }}
                                                 </td>
-                                                <td>{{ $worker_work->charge }}</td>
-                                                <td>{{ $worker_work->trx_id ?? '-' }}</td>
-                                                <td>{{ $worker_work->screenshot ?? '-' }}</td>
                                                 <td>
                                                     @if ($worker_work->status == 'open')
                                                         <span
@@ -248,7 +311,8 @@
                                             </tr>
                                         @empty
                                             <tr>
-                                                <td colspan="50" class="text-center text-danger">Nothing to show here</td>
+                                                <td colspan="50" class="text-center text-danger">Nothing to show here
+                                                </td>
                                             </tr>
                                         @endforelse
                                     <tbody>
