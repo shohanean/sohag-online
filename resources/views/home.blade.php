@@ -73,7 +73,10 @@
                                     <div class="alert alert-success">{{ session('update_success') }}</div>
                                 @endsession
                                 <!--begin::Table-->
-                                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                <input type="text" id="mySearch" placeholder="Search...">
+
+                                <table id="worker_work_taken_table"
+                                    class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                     <!--begin::Table head-->
                                     <thead>
                                         <tr>
@@ -89,7 +92,15 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @forelse ($worker_works->whereNotNull('user_id') as $worker_work)
+                                        @php
+                                            $statusOrder = ['running', 'delivered', 'done'];
+                                            $sortedWorks = $worker_works
+                                                ->whereNotNull('user_id')
+                                                ->sortBy(function ($work) use ($statusOrder) {
+                                                    return array_search($work->status, $statusOrder);
+                                                });
+                                        @endphp
+                                        @forelse ($sortedWorks as $worker_work)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
@@ -624,4 +635,14 @@
             <!--end::Col-->
         </div>
     @endif
+@endsection
+@section('footer_scripts')
+    <script>
+        let table = new DataTable('#worker_work_taken_table', {
+            pageLength: 5,
+        });
+        document.querySelector('#mySearch').addEventListener('keyup', function() {
+            table.search(this.value).draw();
+        });
+    </script>
 @endsection
