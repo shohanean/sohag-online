@@ -46,9 +46,9 @@
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>
-                                        Package Name: {{ $work->subscription->package_name ?? '' }}
+                                        Name: {{ $work->subscription->user->name ?? '' }}
                                         <br>
-                                        Package Price: {{ $work->subscription->package_price ?? '' }}
+                                        Email: {{ $work->subscription->user->email ?? '' }}
                                         <br>
                                         Domain Name: {{ $work->subscription->domain_name ?? '' }}
                                     </td>
