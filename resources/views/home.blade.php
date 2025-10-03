@@ -52,6 +52,9 @@
             <div class="row gy-5 g-xl-8">
                 <!--begin::Col-->
                 <div class="col-xl-12">
+                    @session('update_status')
+                        <div class="alert alert-info">{{ session('update_status') }}</div>
+                    @endsession
                     <!--begin::Tables Widget 9-->
                     <div class="card card-xl-stretch mb-5 mb-xl-8">
                         <!--begin::Header-->
@@ -204,7 +207,15 @@
                                                 </td>
                                                 <td>{{ $worker_work->charge }}</td>
                                                 <td>{{ $worker_work->trx_id ?? '-' }}</td>
-                                                <td>{{ $worker_work->screenshot ?? '-' }}</td>
+                                                <td>
+                                                    @if ($worker_work->screenshot)
+                                                        <a target="_blank"
+                                                            href="{{ asset('uploads/work_screenshots') . '/' . $worker_work->screenshot }}"><i
+                                                                class="fa fa-2x fa-image"></i></a>
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
                                                 <td>
                                                     @if ($worker_work->status == 'open')
                                                         <span

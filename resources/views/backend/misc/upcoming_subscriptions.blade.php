@@ -8,7 +8,6 @@
     @includeIf('parts.toolbar', [
         'links' => [
             'home' => 'home',
-            'upcoming subscriptions' => 'upcoming.subscriptions',
         ],
     ])
 @endsection
@@ -21,7 +20,11 @@
             <div class="row g-5 mb-5 mb-lg-15">
                 <h1 class="fw-bolder text-dark mb-9">
                     <div class="d-flex gap-2 align-items-center">
-                        Upcoming Subscriptions
+                        @role('Worker')
+                            Client List
+                        @else
+                            Upcoming Subscriptions
+                        @endrole
                         <input type="text" id="searchInput" placeholder="Search Here..." style="margin-left:10px;">
                         <form action="" method="GET">
                             <input type="text" id="date_range" name="date_range" />
@@ -42,7 +45,9 @@
                                 <th>Package Name</th>
                                 <th>Package Price</th>
                                 <th>Billing Date</th>
-                                <th>Action</th>
+                                @role('Super Admin')
+                                    <th>Action</th>
+                                @endrole
                             </tr>
                         </thead>
                         <tbody>
@@ -104,20 +109,22 @@
                                                 <br>
                                                 {{ $subscription->billing_date?->format('d M, Y') }}
                                             </td>
-                                            <td>
-                                                <div class="d-flex gap-2">
-                                                    <form action="{{ route('subscription.payment', $subscription->id) }}"
-                                                        method="POST">
-                                                        @csrf
-                                                        <input hidden type="text" name="no_of_month" value="1">
-                                                        <button class="btn btn-sm bg-info text-white" type="submit">Make
-                                                            Payment</button>
-                                                    </form>
-                                                    <a target="_blank"
-                                                        href="{{ route('upcoming.subscriptions.details', $subscription->id) }}"
-                                                        class="btn btn-sm bg-success text-white">Details</a>
-                                                </div>
-                                            </td>
+                                            @role('Super Admin')
+                                                <td>
+                                                    <div class="d-flex gap-2">
+                                                        <form action="{{ route('subscription.payment', $subscription->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            <input hidden type="text" name="no_of_month" value="1">
+                                                            <button class="btn btn-sm bg-info text-white" type="submit">Make
+                                                                Payment</button>
+                                                        </form>
+                                                        <a target="_blank"
+                                                            href="{{ route('upcoming.subscriptions.details', $subscription->id) }}"
+                                                            class="btn btn-sm bg-success text-white">Details</a>
+                                                    </div>
+                                                </td>
+                                            @endrole
                                         </tr>
                                     @endforeach
                                 @endif

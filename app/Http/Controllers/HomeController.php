@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Maatwebsite\Excel\Facades\Excel;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class HomeController extends Controller
 {
@@ -295,17 +296,23 @@ class HomeController extends Controller
     }
     public function deliver_the_work_post (Work $work, Request $request)
     {
-        // return $work;
         $request->validate([
             'charge' => 'required',
             'trx_id' => 'required'
         ]);
+
         $work->charge = $request->charge;
         $work->trx_id = $request->trx_id;
         $work->status = 'delivered';
+
+        //if there is screenshot
+        if($request->hasFile('screenshot')){
+            $screenshot = $request->file('screenshot');
+            $filename = $work->id . '.' . $screenshot->getClientOriginalExtension();
+            Image::make($screenshot)->save( base_path('public/uploads/work_screenshots/' . $filename ),90 );
+            $work->screenshot = $filename;
+        }
         $work->save();
-        return redirect('home');
-        return $request;
-        return $work;
+        return redirect('home')->with('update_status', 'Updated Successfully!');
     }
 }

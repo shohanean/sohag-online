@@ -56,7 +56,15 @@
                                     </td>
                                     <td>{{ $work->charge }}</td>
                                     <td>{{ $work->trx_id }}</td>
-                                    <td>{{ $work->screenshot }}</td>
+                                    <td>
+                                        @if ($work->screenshot)
+                                            <a target="_blank"
+                                                href="{{ asset('uploads/work_screenshots') . '/' . $work->screenshot }}"><i
+                                                    class="fa fa-2x fa-image"></i></a>
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>
                                         <form action="{{ route('work.mark.as.done', $work->id) }}" method="POST">
                                             <div class="d-flex gap-2">

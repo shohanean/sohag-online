@@ -260,6 +260,16 @@
                                     <span class="menu-section text-muted text-uppercase fs-8 ls-1">System</span>
                                 </div>
                             </div>
+                            @role('Worker')
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('upcoming.subscriptions')" href="{{ route('upcoming.subscriptions') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-users"></i>
+                                        </span>
+                                        <span class="menu-title">Client List</span>
+                                    </a>
+                                </div>
+                            @endrole
                             @can('can take backup')
                                 <div class="menu-item">
                                     <a class="menu-link @yield('backup.index')" href="{{ route('backup.index') }}">
