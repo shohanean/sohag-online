@@ -14,8 +14,9 @@
     <!--begin::Page Vendor Stylesheets(used by this page)-->
     <link href="{{ asset('dashboard_assets') }}/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet"
         type="text/css" />
-    <link href="{{ asset('dashboard_assets') }}/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
-        type="text/css" />
+    {{-- <link href="{{ asset('dashboard_assets') }}/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet"
+        type="text/css" /> --}}
+    <link href="//cdn.datatables.net/2.3.4/css/dataTables.dataTables.min.css" rel="stylesheet" type="text/css" />
     <!--end::Page Vendor Stylesheets-->
     <!--begin::Global Stylesheets Bundle(used by all pages)-->
     <link href="{{ asset('dashboard_assets') }}/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
@@ -948,7 +949,8 @@
     <!--end::Global Javascript Bundle-->
     <!--begin::Page Vendors Javascript(used by this page)-->
     <script src="{{ asset('dashboard_assets') }}/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
-    <script src="{{ asset('dashboard_assets') }}/plugins/custom/datatables/datatables.bundle.js"></script>
+    {{-- <script src="{{ asset('dashboard_assets') }}/plugins/custom/datatables/datatables.bundle.js"></script> --}}
+    <script src="//cdn.datatables.net/2.3.4/js/dataTables.min.js"></script>
     <!--end::Page Vendors Javascript-->
     <!--begin::Page Custom Javascript(used by this page)-->
     <script src="{{ asset('dashboard_assets') }}/js/widgets.bundle.js"></script>

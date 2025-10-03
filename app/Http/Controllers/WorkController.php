@@ -133,14 +133,15 @@ class WorkController extends Controller
     }
     public function delivered_work ()
     {
-        $works = Work::where('status', 'delivered')->get();
-        return view('backend.misc.delivered_work', compact('works'));
+        $works = Work::with('user', 'subscription')->where('status', 'delivered')->get();
+        $done_works = Work::with('user', 'subscription')->where('status', 'done')->orderByDesc('updated_at')->get();
+        return view('backend.misc.delivered_work', compact('works', 'done_works'));
     }
     public function work_mark_as_done (Work $work, Request $request)
     {
         Worker_wage::where('user_id', $work->user_id)->decrement('wallet', $request->worker_wage);
         $work->status = 'done';
         $work->save();
-        return back();
+        return back()->with('update_success', 'Updated Successfully!');
     }
 }

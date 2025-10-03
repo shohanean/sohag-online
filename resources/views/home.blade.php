@@ -76,7 +76,6 @@
                                     <div class="alert alert-success">{{ session('update_success') }}</div>
                                 @endsession
                                 <!--begin::Table-->
-                                <input type="text" id="mySearch" placeholder="Search...">
 
                                 <table id="worker_work_taken_table"
                                     class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
@@ -714,10 +713,11 @@
 @section('footer_scripts')
     <script>
         let table = new DataTable('#worker_work_taken_table', {
-            pageLength: 5,
-        });
-        document.querySelector('#mySearch').addEventListener('keyup', function() {
-            table.search(this.value).draw();
+            pageLength: 5, // default rows per page
+            searching: true, // enables search box
+            ordering: true, // enables sorting
+            paging: true, // enables pagination
+            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
         });
     </script>
 @endsection

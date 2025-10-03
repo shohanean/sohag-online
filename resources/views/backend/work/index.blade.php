@@ -30,7 +30,7 @@
                     @session('update_success')
                         <div class="alert alert-success">{{ session('update_success') }}</div>
                     @endsession
-                    <table class="table table-bordered table-striped">
+                    <table id="work_list_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>SL. No.</th>
@@ -57,7 +57,11 @@
                                         @if ($work->status == 'open')
                                             <span class="badge bg-info">{{ Str::title($work->status) }}</span>
                                         @elseif ($work->status == 'running')
-                                            <span class="badge bg-primary">{{ Str::title($work->status) }}</span>
+                                            @if ($work->updated_at->diffInHours() > 48)
+                                                <span class="badge bg-danger">Expired</span>
+                                            @else
+                                                <span class="badge bg-primary">{{ Str::title($work->status) }}</span>
+                                            @endif
                                         @elseif ($work->status == 'delivered')
                                             <span class="badge bg-warning">{{ Str::title($work->status) }}</span>
                                         @else
@@ -144,4 +148,15 @@
         </div>
         <!--end::Body-->
     </div>
+@endsection
+@section('footer_scripts')
+    <script>
+        let table = new DataTable('#work_list_table', {
+            pageLength: 10, // default rows per page
+            searching: true, // enables search box
+            ordering: true, // enables sorting
+            paging: true, // enables pagination
+            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
+        });
+    </script>
 @endsection
