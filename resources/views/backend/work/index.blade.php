@@ -70,10 +70,16 @@
                                     </td>
                                     <td>
                                         Created At: {{ $work->created_at->format('d M, Y h:i:s A') }}
+                                        <br>
+                                        {{ $work->created_at->diffForHumans() }}
                                         @if ($work->status == 'running')
                                             <br>
-                                            <span class="badge bg-secondary text-dark">Assigned At:
-                                                {{ $work->updated_at->format('d M, Y h:i:s A') }}</span>
+                                            <span class="badge bg-secondary text-dark">
+                                                Assigned At:
+                                                {{ $work->updated_at->format('d M, Y h:i:s A') }}
+                                                <br>
+                                                {{ $work->updated_at->diffForHumans() }}
+                                            </span>
                                         @endif
                                     </td>
                                     <td>

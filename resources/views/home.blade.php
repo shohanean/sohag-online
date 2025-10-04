@@ -179,7 +179,8 @@
                             <!--begin::Table container-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
-                                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                <table id="worker_work_done_table"
+                                    class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                     <!--begin::Table head-->
                                     <thead>
                                         <tr>
@@ -260,7 +261,7 @@
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bolder fs-3 mb-1">Work Pool
-                                    ({{ $worker_works->whereNull('user_id')->count() }})</span>
+                                    ({{ $worker_works->whereNull('user_id')->whereNotNull('subscription')->count() }})</span>
                             </h3>
                         </div>
                         <!--end::Header-->
@@ -269,7 +270,8 @@
                             <!--begin::Table container-->
                             <div class="table-responsive">
                                 <!--begin::Table-->
-                                <table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+                                <table id="work_pool_table"
+                                    class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
                                     <!--begin::Table head-->
                                     <thead>
                                         <tr>
@@ -283,7 +285,7 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @forelse ($worker_works->whereNull('user_id')->sortByDesc('created_at') as $worker_work)
+                                        @forelse ($worker_works->whereNull('user_id')->whereNotNull('subscription')->sortByDesc('created_at') as $worker_work)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
@@ -295,6 +297,9 @@
                                                 </td>
                                                 <td>
                                                     {{ $worker_work->created_at->format('d M, Y h:i:s A') }}
+                                                    <br>
+                                                    <span
+                                                        class="badge bg-secondary text-dark">{{ $worker_work->created_at->diffForHumans() }}</span>
                                                 </td>
                                                 <td>
                                                     @if ($worker_work->status == 'open')
@@ -718,8 +723,22 @@
 @endsection
 @section('footer_scripts')
     <script>
-        let table = new DataTable('#worker_work_taken_table', {
+        let worker_work_taken_table = new DataTable('#worker_work_taken_table', {
             pageLength: 5, // default rows per page
+            searching: true, // enables search box
+            ordering: true, // enables sorting
+            paging: true, // enables pagination
+            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
+        });
+        let worker_work_done_table = new DataTable('#worker_work_done_table', {
+            pageLength: 10, // default rows per page
+            searching: true, // enables search box
+            ordering: true, // enables sorting
+            paging: true, // enables pagination
+            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
+        });
+        let work_pool_table = new DataTable('#work_pool_table', {
+            pageLength: 10, // default rows per page
             searching: true, // enables search box
             ordering: true, // enables sorting
             paging: true, // enables pagination

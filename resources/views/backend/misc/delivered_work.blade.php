@@ -158,14 +158,14 @@
 
 @section('footer_scripts')
     <script>
-        let table = new DataTable('#delivered_work_table', {
+        let delivered_work_table = new DataTable('#delivered_work_table', {
             pageLength: 10, // default rows per page
             searching: true, // enables search box
             ordering: true, // enables sorting
             paging: true, // enables pagination
             lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
         });
-        let table = new DataTable('#done_work_table', {
+        let done_work_table = new DataTable('#done_work_table', {
             pageLength: 10, // default rows per page
             searching: true, // enables search box
             ordering: true, // enables sorting
