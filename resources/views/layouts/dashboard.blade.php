@@ -209,7 +209,6 @@
                                             <i class="fa fa-briefcase"></i>
                                         </span>
                                         <span class="menu-title">Work</span>
-
                                         {{-- Badge at the right side --}}
                                         <span class="badge bg-white text-dark ms-auto">
                                             {{ App\Models\Work::where('status', 'open')->count() }}
@@ -222,18 +221,14 @@
                                             <i class="fa fa-truck"></i>
                                         </span>
                                         <span class="menu-title">Delivered Work</span>
+                                        {{-- Badge at the right side --}}
+                                        <span class="badge bg-white text-dark ms-auto">
+                                            {{ App\Models\Work::where('status', 'delivered')->count() }}
+                                        </span>
                                     </a>
                                 </div>
                             @endcanany
                             @canany(['can manage dollar rate'])
-                                <div class="menu-item">
-                                    <a class="menu-link @yield('dollar.rate')" href="{{ route('dollar.rate') }}">
-                                        <span class="menu-icon">
-                                            <i class="fa fa-dollar-sign"></i>
-                                        </span>
-                                        <span class="menu-title">Dollar Rate</span>
-                                    </a>
-                                </div>
                                 <div class="menu-item">
                                     <a class="menu-link @yield('pending.payment')" href="{{ route('pending.payment') }}">
                                         <span class="menu-icon">
@@ -245,6 +240,14 @@
                                         <span class="badge bg-white text-dark ms-auto">
                                             {{ App\Models\Subscription_fee::where('status', 'pending')->count() }}
                                         </span>
+                                    </a>
+                                </div>
+                                <div class="menu-item">
+                                    <a class="menu-link @yield('dollar.rate')" href="{{ route('dollar.rate') }}">
+                                        <span class="menu-icon">
+                                            <i class="fa fa-dollar-sign"></i>
+                                        </span>
+                                        <span class="menu-title">Dollar Rate</span>
                                     </a>
                                 </div>
                             @endcanany

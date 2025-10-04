@@ -302,6 +302,7 @@ class HomeController extends Controller
         ]);
 
         $work->charge = $request->charge;
+        $work->payment_method = $request->payment_method;
         $work->trx_id = $request->trx_id;
         $work->status = 'delivered';
 

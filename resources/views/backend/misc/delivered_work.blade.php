@@ -21,18 +21,18 @@
             <div class="row g-5 mb-5">
                 <h1 class="fw-bolder text-dark mb-9">
                     Delivered Work
-                    <input type="text" id="searchInput" placeholder="Search Here..." style="margin-left:10px;">
                 </h1>
                 <div class="table-responsive">
                     @session('update_success')
                         <div class="alert alert-success">{{ session('update_success') }}</div>
                     @endsession
-                    <table id="myTable" class="table table-bordered table-striped">
+                    <table id="delivered_work_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>SL. No.</th>
                                 <th>Subscription Details</th>
                                 <th>Taken By</th>
+                                <th>Payment Method</th>
                                 <th>Charge</th>
                                 <th>Trx ID</th>
                                 <th>Screenshot</th>
@@ -55,6 +55,7 @@
                                         <br>
                                         <i class="fa fa-wallet">৳{{ $work->user->worker_wage->wallet }}</i>
                                     </td>
+                                    <td>{{ $work->payment_method }}</td>
                                     <td>{{ $work->charge }}</td>
                                     <td>{{ $work->trx_id }}</td>
                                     <td>
@@ -97,15 +98,15 @@
             <div class="row g-5 mb-5">
                 <h1 class="fw-bolder text-dark mb-9">
                     Done Work
-                    <input type="text" id="searchInput1" placeholder="Search Here..." style="margin-left:10px;">
                 </h1>
                 <div class="table-responsive">
-                    <table id="myTable1" class="table table-bordered table-striped">
+                    <table id="done_work_table" class="table table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>SL. No.</th>
                                 <th>Subscription Details</th>
                                 <th>Taken By</th>
+                                <th>Payment Method</th>
                                 <th>Charge</th>
                                 <th>Trx ID</th>
                                 <th>Screenshot</th>
@@ -126,6 +127,7 @@
                                     <td>
                                         {{ $done_work->user->name }}
                                     </td>
+                                    <td>{{ $done_work->payment_method }}</td>
                                     <td>{{ $done_work->charge }}</td>
                                     <td>{{ $done_work->trx_id }}</td>
                                     <td>
@@ -156,23 +158,19 @@
 
 @section('footer_scripts')
     <script>
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#myTable tbody tr');
-
-            rows.forEach(row => {
-                let text = row.textContent.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
+        let table = new DataTable('#delivered_work_table', {
+            pageLength: 10, // default rows per page
+            searching: true, // enables search box
+            ordering: true, // enables sorting
+            paging: true, // enables pagination
+            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
         });
-        document.getElementById('searchInput1').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#myTable1 tbody tr');
-
-            rows.forEach(row => {
-                let text = row.textContent.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
+        let table = new DataTable('#done_work_table', {
+            pageLength: 10, // default rows per page
+            searching: true, // enables search box
+            ordering: true, // enables sorting
+            paging: true, // enables pagination
+            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
         });
     </script>
 @endsection

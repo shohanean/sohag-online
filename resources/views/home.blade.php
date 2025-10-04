@@ -185,6 +185,7 @@
                                         <tr>
                                             <th>SL. No.</th>
                                             <th>Subscription Details</th>
+                                            <th>Payment Method</th>
                                             <th>Charge</th>
                                             <th>Trx ID</th>
                                             <th>Screenshot</th>
@@ -204,6 +205,7 @@
                                                     <br>
                                                     Domain Name: {{ $worker_work->subscription->domain_name ?? '-' }}
                                                 </td>
+                                                <td>{{ $worker_work->payment_method }}</td>
                                                 <td>{{ $worker_work->charge }}</td>
                                                 <td>{{ $worker_work->trx_id ?? '-' }}</td>
                                                 <td>
@@ -273,6 +275,7 @@
                                         <tr>
                                             <th>SL. No.</th>
                                             <th>Subscription Details</th>
+                                            <th>Date & Time</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
@@ -284,11 +287,14 @@
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
-                                                    Package Name: {{ $worker_work->subscription->package_name ?? '-' }}
+                                                    Name: {{ $worker_work->subscription->user->name ?? '-' }}
                                                     <br>
-                                                    Package Price: {{ $worker_work->subscription->package_price ?? '-' }}
+                                                    Email: {{ $worker_work->subscription->user->email ?? '-' }}
                                                     <br>
                                                     Domain Name: {{ $worker_work->subscription->domain_name ?? '-' }}
+                                                </td>
+                                                <td>
+                                                    {{ $worker_work->created_at->format('d M, Y h:i:s A') }}
                                                 </td>
                                                 <td>
                                                     @if ($worker_work->status == 'open')

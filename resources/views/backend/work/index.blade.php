@@ -69,11 +69,11 @@
                                         @endif
                                     </td>
                                     <td>
-                                        Created At: {{ $work->created_at->diffForHumans() }}
+                                        Created At: {{ $work->created_at->format('d M, Y h:i:s A') }}
                                         @if ($work->status == 'running')
                                             <br>
                                             <span class="badge bg-secondary text-dark">Assigned At:
-                                                {{ $work->updated_at->diffForHumans() }}</span>
+                                                {{ $work->updated_at->format('d M, Y h:i:s A') }}</span>
                                         @endif
                                     </td>
                                     <td>

@@ -36,7 +36,23 @@
                         <!--begin::Input group-->
                         <div class="row mb-5">
                             <!--begin::Col-->
-                            <div class="col-md-4 fv-row">
+                            <div class="col-md-3 fv-row">
+                                <!--begin::Label-->
+                                <label class="fs-5 fw-bold mb-2 required">Payment Method</label>
+                                <!--end::Label-->
+                                <!--begin::Input-->
+                                <select class="form-select" name="payment_method">
+                                    <option value="Bank">Bank</option>
+                                    <option value="bKash">bKash</option>
+                                    <option value="Nagad">Nagad</option>
+                                    <option value="ROCKET">ROCKET</option>
+                                    <option value="CellFin">CellFin</option>
+                                </select>
+                                <!--end::Input-->
+                            </div>
+                            <!--end::Col-->
+                            <!--begin::Col-->
+                            <div class="col-md-3 fv-row">
                                 <!--begin::Label-->
                                 <label class="fs-5 fw-bold mb-2 required">Charge</label>
                                 <!--end::Label-->
@@ -51,7 +67,7 @@
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
-                            <div class="col-md-4 fv-row">
+                            <div class="col-md-3 fv-row">
                                 <!--end::Label-->
                                 <label class="fs-5 fw-bold mb-2 required">Trx ID</label>
                                 <!--end::Label-->
@@ -66,7 +82,7 @@
                             </div>
                             <!--end::Col-->
                             <!--begin::Col-->
-                            <div class="col-md-4 fv-row">
+                            <div class="col-md-3 fv-row">
                                 <!--end::Label-->
                                 <label class="fs-5 fw-bold mb-2">Screenshot</label>
                                 <!--end::Label-->
