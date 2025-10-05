@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Campaign;
 use App\Models\Page;
+use App\Models\User;
 use App\Models\Dollar_rate;
 use App\Models\Transection;
 use App\Models\Client_wallet;
@@ -28,6 +29,8 @@ class CampaignController extends Controller
      */
     public function index()
     {
+        // return User::role('Client')->count();
+        // return $campaigns = Campaign::with('user')->latest()->get()->groupBy('user_id');
         $campaigns = Campaign::with('user')->latest()->get()->groupBy('user_id');
         return view('backend.campaign.index', compact('campaigns'));
     }

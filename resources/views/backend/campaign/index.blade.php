@@ -22,7 +22,6 @@
                 <div class="d-flex justify-content-between align-items-center mb-9">
                     <h1 class="fw-bolder text-dark mb-0">
                         Clients List
-                        <input type="text" id="searchInput" placeholder="Search Here..." style="margin-left:10px;">
                     </h1>
                     <a href="{{ route('campaign.create') }}" class="btn btn-primary">
                         Add Campaign
@@ -33,10 +32,10 @@
                     @session('delete_success')
                         <div class="alert alert-danger">{{ session('delete_success') }}</div>
                     @endsession
-                    <table id="myTable" class="table table-bordered table-striped align-middle">
+                    <table id="client_list_table" class="table table-bordered table-striped align-middle">
                         <thead class="fw-bold">
                             <tr>
-                                <th>SL. No.</th>
+                                <th>Last Updated</th>
                                 <th>Page Name</th>
                                 <th>Owner Name</th>
                                 <th>Campaign</th>
@@ -47,11 +46,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($campaigns as $userId => $userCampaigns)
+                            @foreach ($campaigns as $userId => $userCampaigns)
                                 @if (empty($userCampaigns->first()->user->deleted_at))
                                     <tr>
                                         <td>
-                                            {{ $loop->index + 1 }}
+                                            @if (App\Models\Transection::where('user_id', $userId)->latest()->count() == 0)
+                                                -
+                                            @else
+                                                {{ App\Models\Transection::where('user_id', $userId)->latest()->first()->updated_at->format('Y-m-d h:i:s A') }}
+                                            @endif
                                         </td>
                                         <td>
                                             @foreach ($userCampaigns->unique('page_id') as $pageinfo)
@@ -101,11 +104,7 @@
                                         </td>
                                     </tr>
                                 @endif
-                            @empty
-                                <tr class="text-center">
-                                    <td colspan="50" class="text-danger">Nothing to show here</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -118,14 +117,15 @@
 
 @section('footer_scripts')
     <script>
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase();
-            let rows = document.querySelectorAll('#myTable tbody tr');
-
-            rows.forEach(row => {
-                let text = row.textContent.toLowerCase();
-                row.style.display = text.includes(filter) ? '' : 'none';
-            });
+        let client_list_table = new DataTable('#client_list_table', {
+            order: [
+                [0, 'desc']
+            ],
+            pageLength: 10, // default rows per page
+            searching: true, // enables search box
+            ordering: true, // enables sorting
+            paging: true, // enables pagination
+            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
         });
     </script>
 @endsection

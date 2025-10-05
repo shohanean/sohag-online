@@ -40,7 +40,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($works as $work)
+                            @foreach ($works as $work)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>
@@ -78,11 +78,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="50" class="text-center text-danger">Nothing to show here</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -114,7 +110,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($done_works as $done_work)
+                            @foreach ($done_works as $done_work)
                                 <tr>
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>
@@ -141,11 +137,7 @@
                                     </td>
                                     <td>{{ $done_work->updated_at->format('d M, Y h:i:s A') }}</td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="50" class="text-center text-danger">Nothing to show here</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
