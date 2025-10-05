@@ -50,10 +50,19 @@
                                 @if (empty($userCampaigns->first()->user->deleted_at))
                                     <tr>
                                         <td>
+                                            <span class="d-none text-white">
+                                                @if (App\Models\Transection::where('user_id', $userId)->latest()->count() == 0)
+                                                    -
+                                                @else
+                                                    {{ App\Models\Transection::where('user_id', $userId)->latest()->first()->updated_at->format('Y-m-d h:i:s A') }}
+                                                @endif
+                                            </span>
                                             @if (App\Models\Transection::where('user_id', $userId)->latest()->count() == 0)
                                                 -
                                             @else
-                                                {{ App\Models\Transection::where('user_id', $userId)->latest()->first()->updated_at->format('Y-m-d h:i:s A') }}
+                                                {{ App\Models\Transection::where('user_id', $userId)->latest()->first()->updated_at->format('jS F, Y') }}
+                                                <span
+                                                    class="badge bg-secondary text-dark">{{ App\Models\Transection::where('user_id', $userId)->latest()->first()->updated_at->diffForHumans() }}</span>
                                             @endif
                                         </td>
                                         <td>
