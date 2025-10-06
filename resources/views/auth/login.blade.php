@@ -10,9 +10,9 @@
             <h1 class="text-dark mb-3">Sign In to {{ env('APP_NAME') }}</h1>
             <!--end::Title-->
             <!--begin::Link-->
-            <div class="text-gray-400 fw-bold fs-4">New Here?
+            {{-- <div class="text-gray-400 fw-bold fs-4">New Here?
                 <a href="{{ route('register') }}" class="link-primary fw-bolder">Create an Account</a>
-            </div>
+            </div> --}}
             <!--end::Link-->
         </div>
         <!--begin::Heading-->
@@ -22,8 +22,8 @@
             <label class="form-label fs-6 fw-bolder text-dark">Email</label>
             <!--end::Label-->
             <!--begin::Input-->
-            <input class="@error('email') is-invalid @enderror form-control form-control-lg form-control-solid"
-                type="text" name="email" autocomplete="off" value="{{ old('email') }}" />
+            <input class="@error('email') is-invalid @enderror form-control form-control-lg form-control-solid" type="text"
+                name="email" autocomplete="off" value="{{ old('email') }}" />
             <!--end::Input-->
             @error('email')
                 <span class="text-danger">{{ $message }}</span>
