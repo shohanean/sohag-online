@@ -130,11 +130,11 @@
             order: [
                 [0, 'desc']
             ],
-            pageLength: 10, // default rows per page
+            pageLength: 100, // default rows per page
             searching: true, // enables search box
             ordering: true, // enables sorting
             paging: true, // enables pagination
-            lengthMenu: [5, 10, 25, 50, 100], // dropdown to change page size
+            lengthMenu: [5, 10, 25, 50, 100, 500, 1000], // dropdown to change page size
         });
     </script>
 @endsection

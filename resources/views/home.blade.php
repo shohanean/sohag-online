@@ -91,7 +91,7 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @forelse ($worker_works->whereNotNull('user_id')->where('status', 'running') as $worker_work)
+                                        @foreach ($worker_works->whereNotNull('user_id')->where('status', 'running') as $worker_work)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
@@ -140,11 +140,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="50" class="text-center text-danger">Nothing to show here</td>
-                                            </tr>
-                                        @endforelse
+                                        @endforeach
                                     <tbody>
                                         <!--end::Table body-->
                                 </table>
@@ -196,7 +192,7 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @forelse ($worker_works->whereNotNull('user_id')->whereIn('status', ['delivered', 'done'])->sortBy('status') as $worker_work)
+                                        @foreach ($worker_works->whereNotNull('user_id')->whereIn('status', ['delivered', 'done'])->sortBy('status') as $worker_work)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
@@ -234,11 +230,7 @@
                                                     @endif
                                                 </td>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="50" class="text-center text-danger">Nothing to show here</td>
-                                            </tr>
-                                        @endforelse
+                                        @endforeach
                                     <tbody>
                                         <!--end::Table body-->
                                 </table>
@@ -285,7 +277,7 @@
                                     <!--end::Table head-->
                                     <!--begin::Table body-->
                                     <tbody>
-                                        @forelse ($worker_works->whereNull('user_id')->whereNotNull('subscription')->sortByDesc('created_at') as $worker_work)
+                                        @foreach ($worker_works->whereNull('user_id')->whereNotNull('subscription')->sortByDesc('created_at') as $worker_work)
                                             <tr>
                                                 <td>{{ $loop->index + 1 }}</td>
                                                 <td>
@@ -330,12 +322,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                        @empty
-                                            <tr>
-                                                <td colspan="50" class="text-center text-danger">Nothing to show here
-                                                </td>
-                                            </tr>
-                                        @endforelse
+                                        @endforeach
                                     <tbody>
                                         <!--end::Table body-->
                                 </table>
