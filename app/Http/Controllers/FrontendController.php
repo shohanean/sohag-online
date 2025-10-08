@@ -10,11 +10,11 @@ class FrontendController extends Controller
 {
     function index()
     {
-        $details = [
-            'message' => 'This is a test email sent from Laravel 10.'
-        ];
+        // $details = [
+        //     'message' => 'This is a test email sent from Laravel 10.'
+        // ];
 
-        Mail::to('shohanh1@gmail.com')->send(new TestMail($details));
+        // Mail::to('shohanh1@gmail.com')->send(new TestMail($details));
         return view('index');
     }
 }
