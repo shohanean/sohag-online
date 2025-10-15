@@ -106,6 +106,7 @@ class HomeController extends Controller
     public function change_client_info(User $user, Request $request)
     {
         $request->validate([
+            'new_page_name' => 'required',
             'new_name' => 'required',
             'new_email' => 'required|email|unique:users,email,' . $user->id,
         ]);
@@ -115,9 +116,18 @@ class HomeController extends Controller
         $user->save();
 
         //changing the page name
-        Page::find($request->page_id)->update([
-            'page_name' => $request->new_page_name
-        ]);
+        if ($request->page_id) {
+            //if page already exists
+            Page::find($request->page_id)->update([
+                'page_name' => $request->new_page_name
+            ]);
+        }else{
+            //if not page does not exist
+            Page::create([
+                'user_id' => $user->id,
+                'page_name' => $request->new_page_name
+            ]);
+        }
         return back()->with('success', 'Client Information Changed Successfully!');
     }
     public function subscriptions()
