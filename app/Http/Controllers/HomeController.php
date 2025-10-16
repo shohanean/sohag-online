@@ -36,6 +36,16 @@ class HomeController extends Controller
      */
     public function index()
     {
+        ////////////////////////////////////////////////////
+        // foreach(Page::all() as $page){
+        //     if (!Client_wallet::where('user_id', $page->user_id)->exists()) {
+        //         echo "nai<br>";
+        //         Client_wallet::create([
+        //             'user_id' => $page->user_id
+        //         ]);
+        //     }
+        // }
+        ////////////////////////////////////////////////////
         // foreach (Subscription::all() as $key => $subs) {
         //     Work::create([
         //         'subscription_id' => $subs->id
@@ -126,6 +136,9 @@ class HomeController extends Controller
             Page::create([
                 'user_id' => $user->id,
                 'page_name' => $request->new_page_name
+            ]);
+            Client_wallet::create([
+                'user_id' => $user->id
             ]);
         }
         return back()->with('success', 'Client Information Changed Successfully!');
