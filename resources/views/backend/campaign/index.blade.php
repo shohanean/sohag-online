@@ -32,6 +32,14 @@
                     @session('delete_success')
                         <div class="alert alert-danger">{{ session('delete_success') }}</div>
                     @endsession
+                    <style>
+                        #page_name,
+                        #owner_name {
+                            white-space: normal !important;
+                            word-wrap: break-word;
+                            word-break: break-word;
+                        }
+                    </style>
                     <table id="client_list_table" class="table table-bordered table-striped align-middle">
                         <thead class="fw-bold">
                             <tr>
@@ -65,13 +73,13 @@
                                                     class="badge bg-secondary text-dark">{{ App\Models\Transection::where('user_id', $userId)->latest()->first()->updated_at->diffForHumans() }}</span>
                                             @endif
                                         </td>
-                                        <td>
+                                        <td id="page_name">
                                             @foreach ($userCampaigns->unique('page_id') as $pageinfo)
                                                 {{ $pageinfo->page->page_name }}
                                                 <br>
                                             @endforeach
                                         </td>
-                                        <td>
+                                        <td id="owner_name">
                                             {{ $userCampaigns->first()->user->name }}
                                         </td>
                                         <td>
